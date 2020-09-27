@@ -1,15 +1,17 @@
 import axios from 'axios'
 
 const apiClient = axios.create({
-  baseURL: process.env.VUE_API_BASE_URL,
+  baseURL: process.env.VUE_APP_API_BASE_URL,
   withCredentials: true
 })
+
+
 
 const apiCall = ({ path, data, method }) =>
   new Promise((resolve, reject) => {
     apiClient.get('sanctum/csrf-cookie').then(response => {
       apiClient.post(path, data).then(response => {
-        // console.log('User signed in!')
+        console.log(process.env.VUE_APP_API_BASE_URL)
         resolve(response)
       }).catch(error => {
         // console.log(error)
