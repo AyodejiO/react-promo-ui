@@ -5,12 +5,11 @@ const apiClient = axios.create({
   withCredentials: true
 })
 
-
-
 const apiCall = ({ path, data, method }) =>
   new Promise((resolve, reject) => {
     apiClient.get('sanctum/csrf-cookie').then(response => {
       apiClient.post(path, data).then(response => {
+        /* eslint-disable no-console */
         console.log(process.env.VUE_APP_API_BASE_URL)
         resolve(response)
       }).catch(error => {
