@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8000/',
+  baseURL: process.env.VUE_API_BASE_URL || 'http://localhost:8000/',
   withCredentials: true
 })
 
@@ -9,10 +9,10 @@ const apiCall = ({ path, data, method }) =>
   new Promise((resolve, reject) => {
     apiClient.get('sanctum/csrf-cookie').then(response => {
       apiClient.post(path, data).then(response => {
-        console.log('User signed in!')
+        // console.log('User signed in!')
         resolve(response)
       }).catch(error => {
-        console.log(error)
+        // console.log(error)
         reject(error)
       }) // credentials didn't match
     })
