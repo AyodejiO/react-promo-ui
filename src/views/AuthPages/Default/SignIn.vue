@@ -26,7 +26,7 @@
         <button type="submit" class="btn btn-primary float-right">Sign in</button>
       </div>
       <div class="sign-info">
-        <span class="dark-color d-inline-block line-height-2">Don't have an account? <router-link :to="{ name: 'auth1.sign-up1'}">Sign up</router-link></span>
+        <span class="dark-color d-inline-block line-height-2">Don't have an account? <router-link :to="{ name: 'auth1.sign-up'}">Sign up</router-link></span>
         <ul class="iq-social-media">
           <li><a href="#"><i class="ri-facebook-box-line"></i></a></li>
           <li><a href="#"><i class="ri-twitter-line"></i></a></li>
@@ -38,7 +38,8 @@
 </template>
 
 <script>
-import { AUTH_REQUEST } from '../../../store/Auth/constants'
+// import { AUTH_REQUEST } from '../../../store/Auth/constants'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'SignIn1',
@@ -52,16 +53,19 @@ export default {
   mounted () {
   },
   methods: {
+    ...mapActions({
+      signIn: 'Auth/AUTH_REQUEST'
+    }),
     login: function () {
       const { email, password, remember } = this
-      this.$store.dispatch(AUTH_REQUEST, { email, password, remember })
+      this.signIn({ email, password, remember })
         .then(() => {
-          this.$router.push('/')
+          this.$router.push({ name: 'social.list' })
         })
         .catch(error => {
           this.errors = error.response.data.errors
           this.message = error.response.data.message
-          // console.log(error.response.data)
+        // console.log(error.response.data)
         })
     }
   }

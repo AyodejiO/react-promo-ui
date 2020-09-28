@@ -252,7 +252,7 @@
                                 </div>
                               </router-link>
                               <div class="d-inline-block w-100 text-center p-3">
-                                <a class="bg-primary iq-sign-btn" href="#" role="button">Sign out<i class="ri-login-box-line ml-2"></i></a>
+                                <button class="bg-primary iq-sign-btn" @click.prevent="logout" role="button">Sign out<i class="ri-login-box-line ml-2"></i></button>
                               </div>
                           </div>
                         </div>
@@ -267,8 +267,9 @@
 </template>
 <script>
 import SideBarItems from '../../../FackApi/json/SideBar'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import Lottie from '../../../components/socialvue/lottie/Lottie'
+
 export default {
   name: 'NavBarStyle1',
   props: {
@@ -286,7 +287,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      bookmark: 'Setting/bookmarkState'
+      bookmark: 'Setting/bookmarkState',
+      authenticated: 'Auth/isAuthenticated'
     })
   },
   data () {
@@ -321,6 +323,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      signOut: 'Auth/AUTH_LOGOUT'
+    }),
     miniSidebar () {
       this.$emit('toggle')
     },
@@ -339,6 +344,16 @@ export default {
       this.showSearch = false
       this.showMenu = ''
       this.globalSearch = ''
+    },
+    logout: function () {
+      this.signOut()
+        .then(() => {
+          this.$router.push({ name: 'auth1.sign-in' })
+        })
+        // eslint-disable-next-line handle-callback-err
+        .catch(error => {
+          // this.errors = error.response.data.errors
+        })
     }
   }
 }

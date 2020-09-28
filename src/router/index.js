@@ -40,8 +40,8 @@ const UiTabs = () => import('../views/core/UiTabs.vue')
 const UiPagination = () => import('../views/core/UiPagination.vue')
 const UiProgressBars = () => import('../views/core/UiProgressBars.vue')
 /* Authentic View */
-const SignIn1 = () => import('../views/AuthPages/Default/SignIn1')
-const SignUp1 = () => import('../views/AuthPages/Default/SignUp1')
+const SignIn = () => import('../views/AuthPages/Default/SignIn')
+const SignUp = () => import('../views/AuthPages/Default/SignUp')
 const RecoverPassword1 = () => import('../views/AuthPages/Default/RecoverPassword1')
 const LockScreen1 = () => import('../views/AuthPages/Default/LockScreen1')
 const ConfirmMail1 = () => import('../views/AuthPages/Default/ConfirmMail1')
@@ -88,7 +88,7 @@ const childRoutes = (prop, mode) => [
   {
     path: '/',
     name: prop + '.list',
-    meta: { auth: false, name: 'Social App' },
+    meta: { auth: true, name: 'Social App' },
     component: SocialApp
   },
   {
@@ -409,27 +409,27 @@ const appChildRoute = (prop, mode = false) => [
 
 const authChildRoutes = (prop, mode = false) => [
   {
-    path: 'sign-in1',
-    name: prop + '.sign-in1',
-    meta: { auth: true },
-    component: SignIn1
+    path: 'sign-in',
+    name: prop + '.sign-in',
+    meta: { auth: false },
+    component: SignIn
   },
   {
-    path: 'sign-up1',
-    name: prop + '.sign-up1',
-    meta: { auth: true },
-    component: SignUp1
+    path: 'sign-up',
+    name: prop + '.sign-up',
+    meta: { auth: false },
+    component: SignUp
   },
   {
     path: 'password-reset1',
     name: prop + '.password-reset1',
-    meta: { auth: true },
+    meta: { auth: false },
     component: RecoverPassword1
   },
   {
     path: 'lock-screen1',
     name: prop + '.lock-screen1',
-    meta: { auth: true },
+    meta: { auth: false },
     component: LockScreen1
   },
   {
@@ -588,13 +588,28 @@ const routes = [
     meta: { auth: true },
     children: formChildRoute('form')
   }
-
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.VUE_APP_BASE_URL,
   routes
+})
+
+function isLoggedIn () {
+  return localStorage.getItem('auth')
+}
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.auth && !isLoggedIn()) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    next({
+      name: 'auth1.sign-in',
+      query: { redirect: to.fullPath }
+    })
+  }
+  next() // make sure to always call next()!
 })
 
 export default router

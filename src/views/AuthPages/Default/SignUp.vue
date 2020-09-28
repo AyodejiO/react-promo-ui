@@ -23,7 +23,7 @@
         <button type="submit" class="btn btn-primary float-right" @click="$router.push({name: 'social.list'})">Sign Up</button>
       </div>
       <div class="sign-info">
-        <span class="dark-color d-inline-block line-height-2">Already Have Account ? <router-link :to="{ name: 'auth1.sign-in1'}">Log In</router-link></span>
+        <span class="dark-color d-inline-block line-height-2">Already Have Account ? <router-link :to="{ name: 'auth1.sign-in'}">Log In</router-link></span>
         <ul class="iq-social-media">
           <li><a href="#"><i class="ri-facebook-box-line"></i></a></li>
           <li><a href="#"><i class="ri-twitter-line"></i></a></li>

@@ -124,7 +124,7 @@ export default {
     logout () {
       localStorage.removeItem('user')
       localStorage.removeItem('access_token')
-      this.$router.push({ name: 'auth1.sign-in1' })
+      this.$router.push({ name: 'auth1.sign-in' })
     },
     langChange (lang) {
       this.langChangeState(lang)

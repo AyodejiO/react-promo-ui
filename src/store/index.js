@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Auth from './Auth'
+import User from './User'
 import Setting from './Setting/index'
 Vue.use(Vuex)
 
@@ -9,7 +10,8 @@ const debug = process.env.NODE_ENV !== 'production'
 export default new Vuex.Store({
   modules: {
     Auth,
-    Setting
+    Setting,
+    User
   },
   state: {
     // token: localStorage.getItem('user-token') || '',

@@ -661,7 +661,7 @@
             "name": "sidebar.login",
             "is_active": false,
             "link": {
-              "name": "auth1.sign-in1"
+              "name": "auth1.sign-in"
             },
             "class_name": "",
             "is_icon_class": true,
@@ -672,7 +672,7 @@
             "name": "sidebar.register",
             "is_active": false,
             "link": {
-              "name": "auth1.sign-up1"
+              "name": "auth1.sign-up"
             },
             "class_name": "",
             "is_icon_class": true,
