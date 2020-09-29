@@ -1,11 +1,9 @@
-// Bootstrap Css
-//@import "~bootstrap/scss/bootstrap";
-//@import "~bootstrap/scss/bootstrap-grid";
+
 @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,800,900&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap');
 @import "../css/bootstrap";
 
-// Animate css
+
 @import "~animate.css/animate.min.css";
 
 @import '~node-snackbar/src/sass/snackbar.sass';
@@ -22,14 +20,8 @@
 @mixin rtl-dark-body {
   font-family: 'Montserrat', sans-serif; font-weight: 400; font-style: normal; font-size: 14px; line-height: 1.8; padding: 0; margin: 0; color: var(--iq-dark-body-text); background: var(--iq-dark-bg);
 }
-// Bootstrap Css
-//@import "~bootstrap/scss/bootstrap";
-//@import "~bootstrap/scss/bootstrap-grid";
 
 @import "../css/bootstrap";
-
-// Animate css
-@import "~animate.css/animate.min.css";
 
 @import '~node-snackbar/src/sass/snackbar.sass';
 
@@ -70,5 +62,4 @@
   }
 }
 
-// Font awesome icon Css
 @import "~@fortawesome/fontawesome-free/css/all.min.css";

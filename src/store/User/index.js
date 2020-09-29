@@ -1,7 +1,9 @@
 /* eslint-disable promise/param-names */
 import {
+  AUTH_USER,
   USER_REQUEST,
   USER_SUCCESS,
+  USER_TYPES,
   USER_ERROR
 } from './constants'
 import apiClient from '../../Utils/api'
@@ -20,12 +22,25 @@ const getters = {
 }
 
 const actions = {
-  [USER_REQUEST]: ({ commit, dispatch }) => {
+  [AUTH_USER]: ({ commit }) => {
     return new Promise((resolve, reject) => {
       commit(USER_REQUEST)
       apiClient.get('api/user').then(response => {
-        apiClient.post('login').then(response => {
-          // /* eslint-disable no-console */
+        // /* eslint-disable no-console */
+        commit(USER_SUCCESS, response)
+        resolve(response)
+      }).catch(error => {
+        commit(USER_ERROR, error)
+        reject(error)
+      })
+    })
+  },
+  [USER_TYPES]: ({ commit }) => {
+    return new Promise((resolve, reject) => {
+      commit(USER_REQUEST)
+      apiClient.get('sanctum/csrf-cookie').then(response => {
+        apiClient.get('api/usertypes').then(response => {
+        // /* eslint-disable no-console */
           commit(USER_SUCCESS, response)
           resolve(response)
         }).catch(error => {
@@ -54,6 +69,7 @@ const mutations = {
 }
 
 export default {
+  namespaced: true,
   state,
   getters,
   actions,

@@ -7,9 +7,6 @@ import {
   AUTH_SUCCESS,
   AUTH_LOGOUT
 } from './constants'
-import {
-  USER_REQUEST
-} from '../User/constants'
 import apiClient from '../../Utils/api'
 
 const state = {
@@ -32,7 +29,6 @@ const actions = {
           // /* eslint-disable no-console */
           localStorage.setItem('auth', true)
           commit(AUTH_SUCCESS, response)
-          dispatch(USER_REQUEST)
           resolve(response)
         }).catch(error => {
           commit(AUTH_ERROR, error)
@@ -49,12 +45,11 @@ const actions = {
           // /* eslint-disable no-console */
           localStorage.setItem('auth', true)
           commit(AUTH_SUCCESS, response)
-          dispatch(USER_REQUEST)
           resolve(response)
         }).catch(error => {
           commit(AUTH_ERROR, error)
           reject(error)
-        }) // credentials didn't match
+        }) // invalid form params
       })
     })
   },

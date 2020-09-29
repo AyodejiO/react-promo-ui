@@ -45,13 +45,15 @@
 </template>
 <script>
 import Loader from '../../components/socialvue/loader/Loader'
+import Slick from 'vue-slick'
 import logo from '../../assets/images/logo-white.png'
 import { socialvue } from '../../config/pluginInit'
 import bgImage from '../../assets/images/login/login-2.jpg'
 export default {
   name: 'AuthLayout1',
   components: {
-    Loader
+    Loader,
+    Slick
   },
   mounted () {
     socialvue.index()
@@ -60,7 +62,10 @@ export default {
     return {
       slickOptions: {
         slidesToShow: 1,
-        arrows: false
+        arrows: false,
+        autoplay: true,
+        dots: true,
+        autoplaySpeed: 3000
       },
       logo: logo,
       bgImageURL: bgImage
@@ -68,3 +73,6 @@ export default {
   }
 }
 </script>
+<style scoped>
+  @import "../../assets/css/custom.css"
+</style>

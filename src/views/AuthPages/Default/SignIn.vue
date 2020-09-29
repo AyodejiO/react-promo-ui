@@ -38,11 +38,10 @@
 </template>
 
 <script>
-// import { AUTH_REQUEST } from '../../../store/Auth/constants'
 import { mapActions } from 'vuex'
 
 export default {
-  name: 'SignIn1',
+  name: 'SignIn',
   data: () => ({
     email: '',
     password: '',
@@ -54,7 +53,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      signIn: 'Auth/AUTH_REQUEST'
+      signIn: 'Auth/SIGN_IN'
     }),
     login: function () {
       const { email, password, remember } = this
