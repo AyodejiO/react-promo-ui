@@ -26,8 +26,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       commit(USER_REQUEST)
       apiClient.get('api/user').then(response => {
-        // /* eslint-disable no-console */
-        console.log(response)
         localStorage.setItem('user', JSON.stringify(response.data))
         commit(USER_SUCCESS, response)
         resolve(response)
