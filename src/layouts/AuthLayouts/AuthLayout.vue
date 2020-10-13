@@ -73,6 +73,7 @@ export default {
   }
 }
 </script>
-<style scoped>
-  @import "../../assets/css/custom.css"
+<style>
+  @import url("../../assets/css/custom.css");
+  @import url("../../assets/css/slick.css");
 </style>

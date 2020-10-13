@@ -19,7 +19,7 @@
           {{ errors.email[0] }}
         </span>
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="user_type">User Type</label>
         <select class="form-control mb-0" v-model="user_type" name="user_type" id="user_type" required>
           <option value="">Select Type</option>
@@ -30,7 +30,7 @@
         <span class="text-danger" v-if="errors.user_type">
           {{ errors.user_type[0] }}
         </span>
-      </div>
+      </div> -->
       <div class="form-group" v-if="user_type == 1">
         <label for="user_type">Stage Name</label>
         <input type="stage_name" v-model="stage_name" class="form-control mb-0" id="exampleInputStageName2" placeholder="Enter stage_name" required>
@@ -88,8 +88,8 @@ export default {
     }),
     createUser: function () {
       // eslint-disable-next-line camelcase
-      const { name, email, user_type, tac, password } = this
-      this.signUp({ name, email, user_type, tac, password })
+      const { name, email, user_type, stage_name, tac, password } = this
+      this.signUp({ name, email, user_type, stage_name, tac, password })
         .then(() => {
           this.$router.push({ name: 'social.list' })
         })
@@ -101,13 +101,13 @@ export default {
     }
   },
   mounted () {
-    this.getUserTypes()
-      .then(response => {
-        this.types = response.data
-      })
-      .catch(error => {
-        this.errors = error.response.data.errors
-      })
+    // this.getUserTypes()
+    //   .then(response => {
+    //     this.types = response.data
+    //   })
+    //   .catch(error => {
+    //     this.errors = error.response.data.errors
+    //   })
   }
 }
 </script>

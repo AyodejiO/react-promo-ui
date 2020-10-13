@@ -1,7 +1,12 @@
 {
   "sidebar": {
     "newsfeed": "Newsfeed",
+    "dashboard": "Dashboard",
+    "campaigns": "Campaigns",
+    "dj": "DJs",
+    "label": "Labels",
     "profile": "Profile",
+    "settings": "Settings",
     "socialApp": "Social App",
     "friend_list": "Friend Lists",
     "group": "Group",

@@ -7,10 +7,6 @@
       <!-- TOP Nav Bar -->
       <NavBarStyle1 title="Dashboard" :homeURL="{ name: 'dashboard1.home' }" @toggle="sidebarMini" :logo="logo">
       </NavBarStyle1>
-      <!-- Right Nav Bar -->
-      <RightSideBar toggleClass="top-50 setting-toggle iq-card">
-        <i class="ri-sound-module-fill font-size-18 text-primary" slot="icon" />
-      </RightSideBar>
 
         <div  v-if ="
         (this.$route.name == 'social.friend-list' ||
@@ -63,7 +59,6 @@ import NavBarStyle1 from '../components/socialvue/navbars/NavBarStyle1'
 import SideBarItems from '../FackApi/json/SideBar'
 import profile from '../assets/images/user/user-1.jpeg'
 import loader from '../assets/images/logo.png'
-import RightSideBar from '../components/socialvue/rightsidebar/RightSideBar'
 import FooterStyle1 from '../components/socialvue/footer/FooterStyle1'
 import { socialvue } from '../config/pluginInit'
 import { Users } from '../FackApi/api/chat'
@@ -74,7 +69,6 @@ export default {
     Loader,
     SideBarStyle1,
     NavBarStyle1,
-    RightSideBar,
     FooterStyle1
   },
   mounted () {
@@ -123,7 +117,7 @@ export default {
     },
     logout () {
       localStorage.removeItem('user')
-      localStorage.removeItem('access_token')
+      localStorage.removeItem('auth')
       this.$router.push({ name: 'auth1.sign-in' })
     },
     langChange (lang) {

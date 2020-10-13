@@ -10,7 +10,7 @@ import apiClient from '../../Utils/api'
 
 const state = {
   status: '',
-  user: null,
+  user: JSON.parse(localStorage.getItem('user')),
   loading: false,
   hasLoadedOnce: false
 }
@@ -27,6 +27,8 @@ const actions = {
       commit(USER_REQUEST)
       apiClient.get('api/user').then(response => {
         // /* eslint-disable no-console */
+        console.log(response)
+        localStorage.setItem('user', JSON.stringify(response.data))
         commit(USER_SUCCESS, response)
         resolve(response)
       }).catch(error => {

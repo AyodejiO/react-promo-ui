@@ -27,15 +27,10 @@
               <ul class="navbar-nav ml-auto navbar-list">
                   <li>
                     <a href="#" class="iq-waves-effect d-flex align-items-center">
-                        <img src="../../../assets/images/user/1.jpg" class="img-fluid rounded-circle mr-3" alt="user">
+                        <img :src="defaultImg" class="img-fluid rounded-circle mr-3" alt="user">
                         <div class="caption">
-                          <h6 class="mb-0 line-height">Bni Cyst</h6>
+                          <h6 class="mb-0 line-height">{{ user != null? user.username : '' }}</h6>
                         </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="iq-waves-effect d-flex align-items-center">
-                    <i class="ri-home-line"></i>
                     </a>
                   </li>
                   <li class="nav-item">
@@ -96,7 +91,7 @@
                               <a href="#" class="iq-sub-card" >
                                 <div class="media align-items-center">
                                     <div class="">
-                                      <img class="avatar-40 rounded" src="../../../assets/images/user/02.jpg" alt="">
+                                      <img class="avatar-40 rounded" :src="defaultImg" alt="">
                                     </div>
                                     <div class="media-body ml-3">
                                       <h6 class="mb-0 ">New customer is join</h6>
@@ -276,6 +271,7 @@ export default {
     homeURL: { type: Object, default: () => ({ name: 'layout1.dashboard' }) },
     title: { type: String, default: 'Dashboard' },
     logo: { type: String, default: require('../../../assets/images/logo.png') },
+    defaultImg: { type: String, default: require('../../../assets/images/user.png') },
     horizontal: { type: Boolean, default: false },
     items: { type: Array }
   },
@@ -288,7 +284,7 @@ export default {
   computed: {
     ...mapGetters({
       bookmark: 'Setting/bookmarkState',
-      authenticated: 'Auth/isAuthenticated'
+      user: 'User/user'
     })
   },
   data () {

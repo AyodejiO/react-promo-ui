@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 /* Layouts */
 const Layout = () => import('../layouts/Layout')
 const Default = () => import('../layouts/BlankLayout')
@@ -600,14 +601,30 @@ function isLoggedIn () {
   return localStorage.getItem('auth')
 }
 
+function getCurrentUser () {
+  return localStorage.getItem('user')
+}
+
 router.beforeEach((to, from, next) => {
-  if (to.meta.auth && !isLoggedIn()) {
+  const { auth, authorize, roles } = to.meta
+  if (auth && !isLoggedIn()) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
     next({
       name: 'auth1.sign-in',
       query: { redirect: to.fullPath }
     })
+  }
+
+  if (authorize) {
+    let user = getCurrentUser()
+    // eslint-disable-next-line eqeqeq
+    if (!user || !roles.include(user.type) || roles !== '*') {
+      next({
+        name: 'auth1.sign-in',
+        query: { redirect: to.fullPath }
+      })
+    }
   }
   next() // make sure to always call next()!
 })
