@@ -26,7 +26,6 @@ const actions = {
       commit(AUTH_REQUEST)
       apiClient.get('sanctum/csrf-cookie').then(response => {
         apiClient.post('login', user).then(response => {
-          // /* eslint-disable no-console */
           localStorage.setItem('auth', true)
           commit(AUTH_SUCCESS, response)
           dispatch('User/AUTH_USER', null, { root: true })
@@ -43,7 +42,6 @@ const actions = {
       commit(AUTH_REQUEST)
       apiClient.get('sanctum/csrf-cookie').then(response => {
         apiClient.post('register', user).then(response => {
-          // /* eslint-disable no-console */
           localStorage.setItem('auth', true)
           commit(AUTH_SUCCESS, response)
           dispatch('User/AUTH_USER', null, { root: true })
@@ -60,7 +58,6 @@ const actions = {
       commit(AUTH_REQUEST)
       apiClient.get('sanctum/csrf-cookie').then(response => {
         apiClient.post('logout').then(response => {
-          // /* eslint-disable no-console */
           localStorage.removeItem('user')
           localStorage.removeItem('auth')
           commit(AUTH_LOGOUT)

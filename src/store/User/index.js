@@ -40,7 +40,6 @@ const actions = {
       commit(USER_REQUEST)
       apiClient.get('sanctum/csrf-cookie').then(response => {
         apiClient.get('api/usertypes').then(response => {
-        // /* eslint-disable no-console */
           commit(USER_SUCCESS, response)
           resolve(response)
         }).catch(error => {
