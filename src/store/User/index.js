@@ -4,6 +4,8 @@ import {
   USER_REQUEST,
   USER_SUCCESS,
   USER_TYPES,
+  CHANGE_PASSWORD,
+  REFRESH_USER,
   USER_ERROR
 } from './constants'
 import apiClient from '../../Utils/api'
@@ -48,12 +50,31 @@ const actions = {
         }) // credentials didn't match
       })
     })
+  },
+  [CHANGE_PASSWORD]: ({ commit }, password) => {
+    return new Promise((resolve, reject) => {
+      commit(USER_REQUEST)
+      apiClient.get('sanctum/csrf-cookie').then(response => {
+        apiClient.post('api/user/change-password', password).then(response => {
+          localStorage.setItem('user', JSON.stringify(response.data))
+          commit(USER_SUCCESS)
+          commit(USER_SUCCESS, response)
+          resolve(response)
+        }).catch(error => {
+          commit(USER_ERROR, error)
+          reject(error)
+        }) // credentials didn't match
+      })
+    })
   }
 }
 
 const mutations = {
   [USER_REQUEST]: state => {
     state.loading = true
+  },
+  [REFRESH_USER]: (state, user) => {
+    state.user = user
   },
   [USER_SUCCESS]: state => {
     state.status = 'success'

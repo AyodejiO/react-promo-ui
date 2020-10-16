@@ -199,7 +199,7 @@ export default {
           checked: true
         },
         {
-          label: '<i class="fa fa-times"></i> Cancle',
+          label: '<i class="fa fa-times"></i> Cancel',
           checked: true
         },
         {

@@ -50,7 +50,7 @@
                 </div>
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
-              <button type="reset" class="btn iq-bg-danger">Cancle</button>
+              <button type="reset" class="btn iq-bg-danger">Cancel</button>
             </form>
           </div>
         </div>
@@ -87,7 +87,7 @@
                 <input type="text" class="form-control" id="youtube" value="www.youtube.com">
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
-              <button type="reset" class="btn iq-bg-danger">Cancle</button>
+              <button type="reset" class="btn iq-bg-danger">Cancel</button>
             </form>
           </div>
         </div>

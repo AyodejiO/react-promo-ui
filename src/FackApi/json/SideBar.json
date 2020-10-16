@@ -21,7 +21,52 @@
     },
     "class_name": "",
     "is_icon_class": true,
-    "icon": "ri-play-circle-line"
+    "icon": "ri-speaker-line"
+  },
+  {
+    "title": "Users",
+    "name": "sidebar.users",
+    "is_heading": false,
+    "is_active": false,
+    "link": "",
+    "class_name": "",
+    "is_icon_class": true,
+    "icon": "las la-user-friends",
+    "children": [
+      {
+        "title": "Labels",
+        "name": "sidebar.label",
+        "is_active": false,
+        "link": {
+          "name" : "app.email"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-disc-line"
+      },
+      {
+        "title": "Djs",
+        "name": "sidebar.dj",
+        "is_active": false,
+        "link": {
+          "name" : "app.email.compose"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-headphone-line"
+      },
+      {
+        "title": "Radios",
+        "name": "sidebar.radio",
+        "is_active": false,
+        "link": {
+          "name" : "app.email.compose"
+        },
+        "class_name": "",
+        "is_icon_class": true,
+        "icon": "ri-radio-line"
+      }
+    ]
   },
   {
     "title": "Notification",
@@ -34,54 +79,5 @@
     "class_name": "",
     "is_icon_class": true,
     "icon": "las la-bell"
-  },
-  {
-    "title": "DJs",
-    "name": "sidebar.dj",
-    "is_heading": false,
-    "is_active": false,
-    "link": {
-      "name": "social.friend-list"
-    },
-    "class_name": "",
-    "is_icon_class": true,
-    "icon": "las la-headphones"
-  },
-  
-  {
-    "title": "Labels",
-    "name": "sidebar.label",
-    "is_heading": false,
-    "is_active": false,
-    "link": {
-      "name": "social.friend-list"
-    },
-    "class_name": "",
-    "is_icon_class": true,
-    "icon": "las la-compact-disc"
-  },
-  {
-    "title": "Profile",
-    "name": "sidebar.profile",
-    "is_heading": false,
-    "is_active": false,
-    "link": {
-      "name": "social.profile"
-    },
-    "class_name": "",
-    "is_icon_class": true,
-    "icon": "las la-user"
-  },
-  {
-    "title": "Settings",
-    "name": "sidebar.settings",
-    "is_heading": false,
-    "is_active": false,
-    "link": {
-      "name": "social.group"
-    },
-    "class_name": "",
-    "is_icon_class": true,
-    "icon": "las la-user-cog"
   }
 ]

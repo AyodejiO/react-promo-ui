@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import 'mutationobserver-shim'
-import './Utils/fliter'
+import './Utils/filter'
 import App from './App.vue'
 import router from './router'
 import store from './store'
