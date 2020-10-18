@@ -59,7 +59,7 @@ export default {
       const { email, password, remember } = this
       this.signIn({ email, password, remember })
         .then(() => {
-          this.$router.push({ name: 'social.list' })
+          this.$router.push({ name: 'promo.list' })
         })
         .catch(error => {
           this.errors = error.response.data.errors

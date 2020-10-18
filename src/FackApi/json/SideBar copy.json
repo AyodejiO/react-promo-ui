@@ -5,7 +5,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.list"
+      "name": "promo.list"
     },
     "class_name": "",
     "is_icon_class": true,
@@ -17,7 +17,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.list"
+      "name": "promo.list"
     },
     "class_name": "",
     "is_icon_class": true,
@@ -29,7 +29,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.notification"
+      "name": "promo.notification"
     },
     "class_name": "",
     "is_icon_class": true,
@@ -41,7 +41,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.friend-list"
+      "name": "promo.friend-list"
     },
     "class_name": "",
     "is_icon_class": true,
@@ -54,7 +54,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.friend-list"
+      "name": "promo.friend-list"
     },
     "class_name": "",
     "is_icon_class": true,
@@ -66,7 +66,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.profile"
+      "name": "promo.profile"
     },
     "class_name": "",
     "is_icon_class": true,
@@ -78,7 +78,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.group"
+      "name": "promo.group"
     },
     "class_name": "",
     "is_icon_class": true,
@@ -90,7 +90,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.profile-image"
+      "name": "promo.profile-image"
     },
     "class_name": "",
     "is_icon_class": true,
@@ -102,7 +102,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.profile-video"
+      "name": "promo.profile-video"
     },
     "class_name": "",
     "is_icon_class": true,
@@ -114,7 +114,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.profile-event"
+      "name": "promo.profile-event"
     },
     "class_name": "",
     "is_icon_class": true,
@@ -126,7 +126,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.file"
+      "name": "promo.file"
     },
     "class_name": "",
     "is_icon_class": true,
@@ -138,7 +138,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.friend-request"
+      "name": "promo.friend-request"
     },
     "class_name": "",
     "is_icon_class": true,
@@ -186,7 +186,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.birthday"
+      "name": "promo.birthday"
     },
     "class_name": "",
     "is_icon_class": true,
@@ -198,7 +198,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.weather"
+      "name": "promo.weather"
     },
     "class_name": "",
     "is_icon_class": true,
@@ -210,7 +210,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.music"
+      "name": "promo.music"
     },
     "class_name": "",
     "is_icon_class": true,

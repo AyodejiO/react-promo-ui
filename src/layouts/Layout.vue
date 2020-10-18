@@ -9,14 +9,14 @@
       </NavBarStyle1>
 
         <div  v-if ="
-        (this.$route.name == 'social.friend-list' ||
-         this.$route.name == 'social.group' ||
-         this.$route.name == 'social.profile-image'  ||
-         this.$route.name == 'social.profile-video' ||
-          this.$route.name == 'social.profile-event' ||
-          this.$route.name == 'social.birthday' ||
-          this.$route.name == 'social.weather' ||
-          this.$route.name == 'social.music' ||
+        (this.$route.name == 'promo.friend-list' ||
+         this.$route.name == 'promo.group' ||
+         this.$route.name == 'promo.profile-image'  ||
+         this.$route.name == 'promo.profile-video' ||
+          this.$route.name == 'promo.profile-event' ||
+          this.$route.name == 'promo.birthday' ||
+          this.$route.name == 'promo.weather' ||
+          this.$route.name == 'promo.music' ||
           this.$route.name == 'app.calendar'
           )
         " class="header-for-bg"

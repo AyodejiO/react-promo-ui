@@ -305,7 +305,7 @@ export default {
       // console.log({ old_pwd, new_pwd, new_pwd_confirmation })
       this.changeUserPwd({ old_pwd, new_pwd, new_pwd_confirmation })
         .then(() => {
-          this.$router.push({ name: 'social.list' })
+          this.$router.push({ name: 'promo.list' })
         })
         .catch(error => {
           this.errors = error.response.data.errors

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Auth from './Auth'
 import User from './User'
+import Users from './Users'
 import Setting from './Setting/index'
 Vue.use(Vuex)
 
@@ -11,7 +12,8 @@ export default new Vuex.Store({
   modules: {
     Auth,
     Setting,
-    User
+    User,
+    Users
   },
   state: {
     // token: localStorage.getItem('user-token') || '',

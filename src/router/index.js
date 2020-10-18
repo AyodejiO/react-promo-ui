@@ -6,6 +6,9 @@ const Layout = () => import('../layouts/Layout')
 const Default = () => import('../layouts/BlankLayout')
 const AuthLayout = () => import('../layouts/AuthLayouts/AuthLayout')
 
+/* User routes */
+const AllUsers = () => import('../views/PromoMain/Users/AllUsers')
+
 /* all routes */
 const SocialProfile = () => import('../views/SocailMain/Profile/Profile')
 const ProfileImage = () => import('../views/SocailMain/Profile/ProfileImage')
@@ -91,6 +94,12 @@ const childRoutes = (prop, mode) => [
     name: prop + '.list',
     meta: { auth: true, reset: true, name: 'Social App' },
     component: SocialApp
+  },
+  {
+    path: '/users/:type?',
+    name: prop + '.users',
+    meta: { auth: true, reset: true, name: 'Users' },
+    component: AllUsers
   },
   {
     path: '/profile',
@@ -478,7 +487,14 @@ const defaultlayout = (prop, mode = false) => [
     component: FAQ
   }
 ]
-
+// const usersChildRoutes = (prop, mode = false) => [
+//   {
+//     path: ':type',
+//     name: prop + '.all',
+//     meta: { auth: true, reset: true, name: 'AllUsers' },
+//     component: AllUsers
+//   }
+// ]
 const pagesChildRoutes = (prop, mode = false) => [
   {
     path: 'error/:code',
@@ -522,10 +538,17 @@ const userChildRoute = (prop, mode = false) => [
 const routes = [
   {
     path: '/',
-    name: 'social',
+    // name: 'promo',
     component: Layout,
-    children: childRoutes('social')
+    children: childRoutes('promo')
   },
+  // {
+  //   path: '/users',
+  //   name: 'users',
+  //   component: Layout,
+  //   meta: { auth: true, reset: true },
+  //   children: usersChildRoutes('users')
+  // },
   {
     path: '/core',
     name: 'core',

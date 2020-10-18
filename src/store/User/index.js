@@ -27,7 +27,7 @@ const actions = {
   [AUTH_USER]: ({ commit }) => {
     return new Promise((resolve, reject) => {
       commit(USER_REQUEST)
-      apiClient.get('api/user').then(response => {
+      apiClient.get('api/users/me').then(response => {
         localStorage.setItem('user', JSON.stringify(response.data))
         commit(USER_SUCCESS, response)
         resolve(response)
@@ -55,7 +55,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       commit(USER_REQUEST)
       apiClient.get('sanctum/csrf-cookie').then(response => {
-        apiClient.post('api/user/change-password', password).then(response => {
+        apiClient.post('api/users/change-password', password).then(response => {
           localStorage.setItem('user', JSON.stringify(response.data))
           commit(USER_SUCCESS)
           commit(USER_SUCCESS, response)

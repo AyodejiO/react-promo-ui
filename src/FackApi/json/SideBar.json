@@ -5,7 +5,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.list"
+      "name": "promo.list"
     },
     "class_name": "",
     "is_icon_class": true,
@@ -17,7 +17,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.list"
+      "name": "promo.list"
     },
     "class_name": "",
     "is_icon_class": true,
@@ -38,7 +38,8 @@
         "name": "sidebar.label",
         "is_active": false,
         "link": {
-          "name" : "app.email"
+          "name" : "users.all",
+          "params": { "type" : "label"}
         },
         "class_name": "",
         "is_icon_class": true,
@@ -49,7 +50,8 @@
         "name": "sidebar.dj",
         "is_active": false,
         "link": {
-          "name" : "app.email.compose"
+          "name" : "users.all",
+          "params": { "type" : "dj"}
         },
         "class_name": "",
         "is_icon_class": true,
@@ -60,7 +62,8 @@
         "name": "sidebar.radio",
         "is_active": false,
         "link": {
-          "name" : "app.email.compose"
+          "name" : "users.all",
+          "params": { "type" : "radio"}
         },
         "class_name": "",
         "is_icon_class": true,
@@ -74,7 +77,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "social.notification"
+      "name": "promo.notification"
     },
     "class_name": "",
     "is_icon_class": true,

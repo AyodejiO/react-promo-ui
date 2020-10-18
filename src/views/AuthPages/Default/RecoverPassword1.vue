@@ -10,7 +10,7 @@
       </div>
 
       <div class="d-inline-block w-100">
-        <button type="submit" class="btn btn-primary float-right" @click="$router.push({name: 'social.list'})">Reset Password</button>
+        <button type="submit" class="btn btn-primary float-right" @click="$router.push({name: 'promo.list'})">Reset Password</button>
       </div>
 
     </form>

@@ -91,7 +91,7 @@ export default {
       const { name, email, user_type, stage_name, tac, password } = this
       this.signUp({ name, email, user_type, stage_name, tac, password })
         .then(() => {
-          this.$router.push({ name: 'social.list' })
+          this.$router.push({ name: 'promo.list' })
         })
         .catch(error => {
           this.errors = error.response.data.errors

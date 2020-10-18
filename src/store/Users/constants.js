@@ -1,0 +1,7 @@
+export const GET_USERS = 'GET_USERS'
+export const INVITE_USER = 'INVITE_USER'
+export const USERS_REQUEST = 'USERS_REQUEST'
+export const USERS_SUCCESS = 'USERS_SUCCESS'
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
+export const REFRESH_USER = 'REFRESH_USER'
+export const USERS_ERROR = 'USERS_ERROR'
