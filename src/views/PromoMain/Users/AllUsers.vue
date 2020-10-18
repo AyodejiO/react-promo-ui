@@ -57,7 +57,6 @@
 <script>
 import { socialvue } from '../../../config/pluginInit'
 import { mapActions, mapGetters } from 'vuex'
-// eslint-disable-next-line no-unused-vars
 import _ from 'lodash'
 
 export default {
