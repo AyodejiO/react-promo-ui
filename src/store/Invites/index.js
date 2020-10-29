@@ -1,7 +1,8 @@
 /* eslint-disable promise/param-names */
 import {
-  GET_USERS,
   GET_INVITED_USERS,
+  SET_INVITED_USERS,
+  UPDATE_INVITED_USERS,
   USERS_REQUEST,
   USERS_SUCCESS,
   REFRESH_USER,
@@ -12,41 +13,25 @@ import apiClient from '../../Utils/api'
 
 const state = {
   status: '',
-  users: [],
-  invited_users: [],
+  invitees: [],
   loading: false,
   hasLoadedOnce: false
 }
 
 const getters = {
   // isAuthenticated: state => !!state.token,
-  users: state => state.users
+  invitees: state => state.invitees
   // authStatus: state => state.status
 }
 
 const actions = {
-  [GET_USERS]: ({ commit }, type) => {
-    return new Promise((resolve, reject) => {
-      commit(USERS_REQUEST)
-      apiClient.get('api/users', {
-        params: {
-          type: type
-        }
-      }).then(response => {
-        commit(USERS_SUCCESS, response.data)
-        resolve(response)
-      }).catch(error => {
-        commit(USERS_ERROR, error)
-        reject(error)
-      })
-    })
-  },
   [GET_INVITED_USERS]: ({ commit }, type) => {
     return new Promise((resolve, reject) => {
       commit(USERS_REQUEST)
       apiClient.get('api/users/invitees')
         .then(response => {
-          commit(USERS_SUCCESS, response.data)
+          commit(USERS_SUCCESS)
+          commit(SET_INVITED_USERS, response.data)
           resolve(response)
         }).catch(error => {
           commit(USERS_ERROR, error)
@@ -54,12 +39,13 @@ const actions = {
         })
     })
   },
-  [INVITE_USER]: ({ commit }) => {
+  [INVITE_USER]: ({ commit }, user) => {
     return new Promise((resolve, reject) => {
       commit(USERS_REQUEST)
-      apiClient.get('api/users/invite').then(response => {
+      apiClient.post('api/users/invite', user).then(response => {
         // localStorage.setItem('user', JSON.stringify(response.data))
-        commit(USERS_SUCCESS, response)
+        commit(USERS_SUCCESS)
+        commit(UPDATE_INVITED_USERS, response.data)
         resolve(response)
       }).catch(error => {
         commit(USERS_ERROR, error)
@@ -76,11 +62,16 @@ const mutations = {
   [REFRESH_USER]: (state, user) => {
     state.user = user
   },
-  [USERS_SUCCESS]: (state, data) => {
+  [USERS_SUCCESS]: (state) => {
     state.status = 'success'
     state.loading = false
     state.hasLoadedOnce = true
-    state.users = data
+  },
+  [SET_INVITED_USERS]: (state, data) => {
+    state.invitees = data
+  },
+  [UPDATE_INVITED_USERS]: (state, data) => {
+    state.invitees.push(data)
   },
   [USERS_ERROR]: state => {
     state.status = 'error'

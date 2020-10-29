@@ -28,46 +28,34 @@
     "name": "sidebar.users",
     "is_heading": false,
     "is_active": false,
-    "link": "",
+    "link": "", 
     "class_name": "",
     "is_icon_class": true,
     "icon": "las la-user-friends",
     "children": [
       {
-        "title": "Labels",
-        "name": "sidebar.label",
+        "title": "Users",
+        "name": "sidebar.users-all",
+        "is_heading": false,
         "is_active": false,
         "link": {
-          "name" : "users.all",
-          "params": { "type" : "label"}
-        },
+          "name": "users.all"
+        }, 
         "class_name": "",
         "is_icon_class": true,
-        "icon": "ri-disc-line"
+        "icon": "las la-users"
       },
       {
-        "title": "Djs",
-        "name": "sidebar.dj",
+        "title": "Users",
+        "name": "sidebar.users-invite",
+        "is_heading": false,
         "is_active": false,
         "link": {
-          "name" : "users.all",
-          "params": { "type" : "dj"}
-        },
+          "name": "users.invite"
+        }, 
         "class_name": "",
         "is_icon_class": true,
-        "icon": "ri-headphone-line"
-      },
-      {
-        "title": "Radios",
-        "name": "sidebar.radio",
-        "is_active": false,
-        "link": {
-          "name" : "users.all",
-          "params": { "type" : "radio"}
-        },
-        "class_name": "",
-        "is_icon_class": true,
-        "icon": "ri-radio-line"
+        "icon": "las la-user-plus"
       }
     ]
   },

@@ -63,12 +63,12 @@ export default {
   name: 'AllUsers',
   data () {
     return {
-      title: _.capitalize(this.$route.params.type) || 'All User',
+      // title: _.capitalize(this.$route.params.type || 'All User'),
       navs: [
         {
           name: 'All Users',
           link: {
-            name: 'promo.users',
+            name: 'users.all',
             params: {
               type: undefined
             }
@@ -77,7 +77,7 @@ export default {
         {
           name: 'Labels',
           link: {
-            name: 'promo.users',
+            name: 'users.all',
             params: {
               type: 'label'
             }
@@ -86,7 +86,7 @@ export default {
         {
           name: 'DJs',
           link: {
-            name: 'promo.users',
+            name: 'users.all',
             params: {
               type: 'dj'
             }
@@ -95,7 +95,7 @@ export default {
         {
           name: 'Radios',
           link: {
-            name: 'promo.users',
+            name: 'users.all',
             params: {
               type: 'radio'
             }
@@ -108,15 +108,16 @@ export default {
     ...mapGetters({
       bookmark: 'Setting/bookmarkState',
       users: 'Users/users'
-    })
+    }),
+    title: function () {
+      return _.capitalize(this.$route.params.type || 'All User')
+    }
   },
   methods: {
     ...mapActions({
       getAllUser: 'Users/GET_USERS'
     }),
-    getUsers: function () {
-      // eslint-disable-next-line camelcase
-      let type = this.$route.params.type || null
+    getUsers: function (type) {
       this.getAllUser(type)
       // .then(() => {
       // })
@@ -131,13 +132,18 @@ export default {
   },
   mounted () {
     socialvue.index()
-    this.getUsers()
+    let type = this.$route.params.type || null
+    this.getUsers(type)
     // .then(response => {
     //   // this.types = response.data
     // })
     // .catch(error => {
     //   this.errors = error.response.data.errors
     // })
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.getUsers(to.params.type)
+    next()
   }
 }
 

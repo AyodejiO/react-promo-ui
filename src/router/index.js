@@ -8,6 +8,7 @@ const AuthLayout = () => import('../layouts/AuthLayouts/AuthLayout')
 
 /* User routes */
 const AllUsers = () => import('../views/PromoMain/Users/AllUsers')
+const InviteUser = () => import('../views/PromoMain/Users/InviteUser')
 
 /* all routes */
 const SocialProfile = () => import('../views/SocailMain/Profile/Profile')
@@ -94,12 +95,6 @@ const childRoutes = (prop, mode) => [
     name: prop + '.list',
     meta: { auth: true, reset: true, name: 'Social App' },
     component: SocialApp
-  },
-  {
-    path: '/users/:type?',
-    name: prop + '.users',
-    meta: { auth: true, reset: true, name: 'Users' },
-    component: AllUsers
   },
   {
     path: '/profile',
@@ -535,6 +530,20 @@ const userChildRoute = (prop, mode = false) => [
     component: AddUser
   }
 ]
+const usersChildRoute = (prop, mode = false) => [
+  {
+    path: 'invite',
+    name: prop + '.invite',
+    meta: { auth: true, reset: false, name: 'Edit Profile' },
+    component: InviteUser
+  },
+  {
+    path: ':type?',
+    name: prop + '.all',
+    meta: { auth: true, reset: true, name: 'Users' },
+    component: AllUsers
+  }
+]
 const routes = [
   {
     path: '/',
@@ -604,6 +613,13 @@ const routes = [
     component: Layout,
     meta: { auth: true, reset: true },
     children: userChildRoute('user')
+  },
+  {
+    path: '/users',
+    name: 'users',
+    component: Layout,
+    meta: { auth: true, reset: true },
+    children: usersChildRoute('users')
   },
   {
     path: '/form',
