@@ -1,55 +1,54 @@
 /* eslint-disable promise/param-names */
 import {
-  GET_INVITED_USERS,
-  SET_INVITED_USERS,
-  UPDATE_INVITED_USERS,
-  USERS_REQUEST,
-  USERS_SUCCESS,
+  GET_CAMPAIGNS,
+  SET_CAMPAIGNS,
+  UPDATE_CAMPAIGNS,
+  CAMPAIGN_REQUEST,
+  CAMPAIGN_SUCCESS,
   REFRESH_USER,
-  USERS_ERROR,
-  INVITE_USER
+  CAMPAIGN_ERROR,
+  NEW_CAMPAIGN
 } from './constants'
 import apiClient from '../../Utils/api'
 
 const state = {
   status: '',
-  invitees: [],
+  campaigns: [],
   loading: false,
   hasLoadedOnce: false
 }
 
 const getters = {
   // isAuthenticated: state => !!state.token,
-  invitees: state => state.invitees
+  campaigns: state => state.campaigns
   // authStatus: state => state.status
 }
 
 const actions = {
-  [GET_INVITED_USERS]: ({ commit }, type) => {
+  [GET_CAMPAIGNS]: ({ commit }) => {
     return new Promise((resolve, reject) => {
-      commit(USERS_REQUEST)
-      apiClient.get('api/users/invitees')
+      commit(CAMPAIGN_REQUEST)
+      apiClient.get('api/campaigns')
         .then(response => {
-          commit(USERS_SUCCESS)
-          commit(SET_INVITED_USERS, response.data)
+          commit(CAMPAIGN_SUCCESS)
+          commit(SET_CAMPAIGNS, response.data)
           resolve(response)
         }).catch(error => {
-          commit(USERS_ERROR, error)
+          commit(CAMPAIGN_ERROR, error)
           reject(error)
         })
     })
   },
-  [INVITE_USER]: ({ commit }, user) => {
+  [NEW_CAMPAIGN]: ({ commit }, campaign) => {
     return new Promise((resolve, reject) => {
-      commit(USERS_REQUEST)
+      commit(CAMPAIGN_REQUEST)
       apiClient.get('sanctum/csrf-cookie').then(response => {
-        apiClient.post('api/users/invite', user).then(response => {
-        // localStorage.setItem('user', JSON.stringify(response.data))
-          commit(USERS_SUCCESS)
-          commit(UPDATE_INVITED_USERS, response.data)
+        apiClient.post('api/campaigns', campaign).then(response => {
+          commit(CAMPAIGN_SUCCESS)
+          commit(UPDATE_CAMPAIGNS, response.data)
           resolve(response)
         }).catch(error => {
-          commit(USERS_ERROR, error)
+          commit(CAMPAIGN_ERROR, error)
           reject(error)
         })
       })
@@ -58,24 +57,24 @@ const actions = {
 }
 
 const mutations = {
-  [USERS_REQUEST]: state => {
+  [CAMPAIGN_REQUEST]: state => {
     state.loading = true
   },
   [REFRESH_USER]: (state, user) => {
     state.user = user
   },
-  [USERS_SUCCESS]: (state) => {
+  [CAMPAIGN_SUCCESS]: (state) => {
     state.status = 'success'
     state.loading = false
     state.hasLoadedOnce = true
   },
-  [SET_INVITED_USERS]: (state, data) => {
-    state.invitees = data
+  [SET_CAMPAIGNS]: (state, data) => {
+    state.campaigns = data
   },
-  [UPDATE_INVITED_USERS]: (state, data) => {
-    state.invitees.push(data)
+  [UPDATE_CAMPAIGNS]: (state, data) => {
+    state.campaigns.push(data)
   },
-  [USERS_ERROR]: state => {
+  [CAMPAIGN_ERROR]: state => {
     state.status = 'error'
     state.loading = false
     state.hasLoadedOnce = true

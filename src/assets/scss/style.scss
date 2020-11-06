@@ -25,6 +25,11 @@
 
 @import '~node-snackbar/src/sass/snackbar.sass';
 
+.btn-group > .btn-group:not(:first-child) > .btn, .btn-group > .btn:not(:first-child) {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
 [dir="ltr"] {
   &[mode="light"] {
     body { @include light-body; }

@@ -10,14 +10,15 @@
             <img class="avatar-60 rounded-circle" src="../../../../assets/images/user/user-01.jpg">
             </div>
             <form  class="post-text ml-3 w-100">
+            <input type="text" placeholder="Campaign Title" class="rounded form-control" v-model="post.title" style="border:none;" />
             <input type="text" placeholder="Write something about post..." class="rounded form-control" v-model="post.description" style="border:none;" />
             </form>
         </div>
         <hr />
          <ul class="post-opt-block d-flex align-items-center list-inline m-0 p-0">
-            <li class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="../../../../assets/images/small/07.png" alt="icon" class="img-fluid"> Photo/Video</li>
+            <!-- <li class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="../../../../assets/images/small/07.png" alt="icon" class="img-fluid"> Photo/Video</li>
             <li class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="../../../../assets/images/small/08.png" alt="icon" class="img-fluid"> Tag Friend</li>
-            <li class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="../../../../assets/images/small/09.png" alt="icon" class="img-fluid"> Feeling/Activity</li>
+            <li class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="../../../../assets/images/small/09.png" alt="icon" class="img-fluid"> Feeling/Activity</li> -->
             <li class="iq-bg-primary rounded p-2 pointer">
               <div class="iq-card-header-toolbar d-flex align-items-center">
                   <div class="dropdown">

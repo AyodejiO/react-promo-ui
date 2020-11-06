@@ -11,18 +11,18 @@ const AllUsers = () => import('../views/PromoMain/Users/AllUsers')
 const InviteUser = () => import('../views/PromoMain/Users/InviteUser')
 
 /* all routes */
-const SocialProfile = () => import('../views/SocailMain/Profile/Profile')
-const ProfileImage = () => import('../views/SocailMain/Profile/ProfileImage')
-const ProfileVideo = () => import('../views/SocailMain/Profile/ProfileVideo')
-const ProfileEvent = () => import('../views/SocailMain/Profile/ProfileEvent')
-const FriendList = () => import('../views/SocailMain/Friends/FriendList')
-const File = () => import('../views/SocailMain/File/File')
-const Group = () => import('../views/SocailMain/Group/Group')
-const Birthday = () => import('../views/SocailMain/Bithdate/Bithdate')
-const Music = () => import('../views/SocailMain/Music/Music')
-const Notification = () => import('../views/SocailMain/Notifications/Notification')
-const Weather = () => import('../views/SocailMain/Weather/Weather')
-const FriendRequest = () => import('../views/SocailMain/Friends/FriendRequest')
+const SocialProfile = () => import('../views/PromoMain/Profile/Profile')
+const ProfileImage = () => import('../views/PromoMain/Profile/ProfileImage')
+const ProfileVideo = () => import('../views/PromoMain/Profile/ProfileVideo')
+const ProfileEvent = () => import('../views/PromoMain/Profile/ProfileEvent')
+const FriendList = () => import('../views/PromoMain/Friends/FriendList')
+const File = () => import('../views/PromoMain/File/File')
+const Group = () => import('../views/PromoMain/Group/Group')
+const Birthday = () => import('../views/PromoMain/Bithdate/Bithdate')
+const Music = () => import('../views/PromoMain/Music/Music')
+const Notification = () => import('../views/PromoMain/Notifications/Notification')
+const Weather = () => import('../views/PromoMain/Weather/Weather')
+const FriendRequest = () => import('../views/PromoMain/Friends/FriendRequest')
 /* UIElements View */
 const UiAlerts = () => import('../views/core/UiAlerts.vue')
 const UiButtons = () => import('../views/core/UiButtons.vue')
@@ -83,7 +83,7 @@ const FormCheckboxes = () => import('../views/Forms/FormCheckboxes')
 const Profile = () => import('../views/User/Profile')
 const ProfileEdit = () => import('../views/User/ProfileEdit')
 const AddUser = () => import('../views/User/AddUser')
-const SocialApp = () => import('../views/Apps/Social/SocialApp')
+const Campaigns = () => import('../views/Apps/Social/Campaigns')
 /* Todo */
 const TodoListing = () => import('../views/Apps/Todo/TodoListing')
 const ChatIndex = () => import('../views/Apps/Chat/Index')
@@ -94,7 +94,7 @@ const childRoutes = (prop, mode) => [
     path: '/',
     name: prop + '.list',
     meta: { auth: true, reset: true, name: 'Social App' },
-    component: SocialApp
+    component: Campaigns
   },
   {
     path: '/profile',

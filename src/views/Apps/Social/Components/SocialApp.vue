@@ -2,15 +2,15 @@
     <b-row>
       <b-col sm="12">
         <b-row class=" m-0 p-0">
-          <b-col lg="8">
+          <b-col lg="12">
             <tab-content id="pills-tabContent-2">
               <tab-content-item :active="true" id="profile-feed" aria-labelled-by="pills-feed-tab">
                 <AddSocialPost @addPost="addPost"></AddSocialPost>
                 <div  v-for="post in socialPosts" :key="post.id">
-                  <social-post :post="post"></social-post>
+                  <campaign :post="post"></campaign>
                 </div>
               </tab-content-item>
-              <tab-content-item :active="false" id="profile-activity" aria-labelled-by="pills-activity-tab">
+              <!-- <tab-content-item :active="false" id="profile-activity" aria-labelled-by="pills-activity-tab">
                 <iq-card>
                   <template v-slot:headerTitle>
                     <h4 class="card-title">Activity timeline</h4>
@@ -31,8 +31,8 @@
                     <TimeLine :items="timelineItems" />
                   </template>
                 </iq-card>
-              </tab-content-item>
-              <tab-content-item :active="false" id="profile-friends" aria-labelled-by="pills-friend-tab">
+              </tab-content-item> -->
+              <!-- <tab-content-item :active="false" id="profile-friends" aria-labelled-by="pills-friend-tab">
                 <iq-card>
                   <template v-slot:headerTitle>
                     <h4 class="card-title">Friends</h4>
@@ -62,8 +62,8 @@
                     <b-button href="javascript:void(0);" variant="primary" class="d-block"><i class="ri-add-line"></i> Load More</b-button>
                   </template>
                 </iq-card>
-              </tab-content-item>
-              <tab-content-item :active="false" id="profile-profile" aria-labelled-by="pills-profile-tab">
+              </tab-content-item> -->
+              <!-- <tab-content-item :active="false" id="profile-profile" aria-labelled-by="pills-profile-tab">
                 <iq-card>
                   <template v-slot:headerTitle>
                     <h4 class="card-title">Profile</h4>
@@ -95,10 +95,10 @@
                     </div>
                   </template>
                 </iq-card>
-              </tab-content-item>
+              </tab-content-item> -->
             </tab-content>
           </b-col>
-          <b-col lg="4" >
+          <!-- <b-col lg="4" >
             <iq-card>
               <template v-slot:headerTitle>
                 <h4 class="card-title">Stories</h4>
@@ -177,7 +177,7 @@
                 </ul>
               </template>
             </iq-card>
-          </b-col>
+          </b-col> -->
         </b-row>
       </b-col>
        <div class="col-sm-12 text-center">
@@ -187,14 +187,15 @@
 </template>
 <script>
 import { socialvue } from '../../../config/pluginInit'
-import SocialPost from './Components/SocialPost'
+import Campaign from './Components/Campaign'
 import { Posts } from '../../../FackApi/api/SocialPost'
 import AddSocialPost from './Components/AddSocialPost'
 import IqCard from '../../../components/socialvue/cards/iq-card'
 
 export default {
   name: 'SocialApp',
-  components: { IqCard, AddSocialPost, SocialPost },
+  // eslint-disable-next-line vue/no-unused-components
+  components: { IqCard, AddSocialPost, Campaign },
   mounted () {
     socialvue.index()
   },

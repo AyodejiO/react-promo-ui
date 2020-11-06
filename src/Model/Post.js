@@ -3,7 +3,7 @@ import { is } from 'ramda'
 export default class Post {
   constructor (post = {}) {
     this.id = is(String, post.id) ? post.id : ''
-    this.images = is(Array, post.images) ? post.images : []
+    this.tags = is(Array, post.tags) ? post.tags : []
     this.description = is(String, post.description) ? post.description : ''
     this.likes = is(Number, post.likes) ? post.likes : 0
     this.time = is(Date, post.time) ? post.time : new Date()

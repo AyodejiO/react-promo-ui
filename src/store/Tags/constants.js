@@ -1,0 +1,7 @@
+export const GET_TAGS = 'GET_TAGS'
+export const TAG_REQUEST = 'TAG_REQUEST'
+export const TAG_SUCCESS = 'TAG_SUCCESS'
+export const TAG_TYPES = 'TAG_TYPES'
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
+export const REFRESH_TAG = 'REFRESH_TAG'
+export const TAG_ERROR = 'TAG_ERROR'

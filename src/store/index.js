@@ -4,6 +4,8 @@ import Auth from './Auth'
 import User from './User'
 import Users from './Users'
 import Invites from './Invites'
+import Campaigns from './Campaigns'
+import Tags from './Tags'
 import Setting from './Setting/index'
 Vue.use(Vuex)
 
@@ -15,7 +17,9 @@ export default new Vuex.Store({
     Setting,
     User,
     Users,
-    Invites
+    Campaigns,
+    Invites,
+    Tags
   },
   state: {
     // token: localStorage.getItem('user-token') || '',
