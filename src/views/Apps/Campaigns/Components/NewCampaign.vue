@@ -164,7 +164,7 @@ export default {
   methods: {
     ...mapActions({
       getTags: 'Tags/GET_TAGS',
-      createCampaign: 'Campaigns/NEW_CAMPAIGN'
+      createCampaign: 'Campaigns/CREATE_CAMPAIGN'
     }),
     tagValidator (tag) {
       return tag.length >= 1
