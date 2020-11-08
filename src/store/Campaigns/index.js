@@ -1,25 +1,32 @@
 /* eslint-disable promise/param-names */
 import {
   GET_CAMPAIGNS,
+  SINGLE_CAMPAIGN,
+  UPDATE_CAMPAIGN,
+  MODIFY_CAMPAIGN,
+  MODIFY_CAMPAIGNS,
   SET_CAMPAIGNS,
-  UPDATE_CAMPAIGNS,
   CAMPAIGN_REQUEST,
   CAMPAIGN_SUCCESS,
+  PUBLISH_CAMPAIGN,
   REFRESH_USER,
   CAMPAIGN_ERROR,
-  NEW_CAMPAIGN
+  DELETE_CAMPAIGN,
+  CREATE_CAMPAIGN
 } from './constants'
 import apiClient from '../../Utils/api'
 
 const state = {
   status: '',
   campaigns: [],
+  campaign: null,
   loading: false,
   hasLoadedOnce: false
 }
 
 const getters = {
   // isAuthenticated: state => !!state.token,
+  campaign: state => state.campaign,
   campaigns: state => state.campaigns
   // authStatus: state => state.status
 }
@@ -39,13 +46,72 @@ const actions = {
         })
     })
   },
-  [NEW_CAMPAIGN]: ({ commit }, campaign) => {
+  [SINGLE_CAMPAIGN]: ({ commit }, slug) => {
+    return new Promise((resolve, reject) => {
+      commit(CAMPAIGN_REQUEST)
+      apiClient.get(`api/campaigns/${slug}`)
+        .then(response => {
+          commit(CAMPAIGN_SUCCESS)
+          commit(MODIFY_CAMPAIGN, response.data)
+          resolve(response)
+        }).catch(error => {
+          commit(CAMPAIGN_ERROR, error)
+          reject(error)
+        })
+    })
+  },
+  [CREATE_CAMPAIGN]: ({ commit }, campaign) => {
     return new Promise((resolve, reject) => {
       commit(CAMPAIGN_REQUEST)
       apiClient.get('sanctum/csrf-cookie').then(response => {
         apiClient.post('api/campaigns', campaign).then(response => {
           commit(CAMPAIGN_SUCCESS)
-          commit(UPDATE_CAMPAIGNS, response.data)
+          commit(MODIFY_CAMPAIGNS, response.data)
+          resolve(response)
+        }).catch(error => {
+          commit(CAMPAIGN_ERROR, error)
+          reject(error)
+        })
+      })
+    })
+  },
+  [UPDATE_CAMPAIGN]: ({ commit }, { slug, campaign }) => {
+    return new Promise((resolve, reject) => {
+      commit(CAMPAIGN_REQUEST)
+      apiClient.get('sanctum/csrf-cookie').then(response => {
+        apiClient.put(`api/campaigns/${slug}`, campaign).then(response => {
+          commit(CAMPAIGN_SUCCESS)
+          commit(MODIFY_CAMPAIGN, response.data)
+          resolve(response)
+        }).catch(error => {
+          commit(CAMPAIGN_ERROR, error)
+          reject(error)
+        })
+      })
+    })
+  },
+  [PUBLISH_CAMPAIGN]: ({ commit }, slug) => {
+    return new Promise((resolve, reject) => {
+      commit(CAMPAIGN_REQUEST)
+      apiClient.get('sanctum/csrf-cookie').then(response => {
+        apiClient.post(`api/campaigns/${slug}/publish`).then(response => {
+          commit(CAMPAIGN_SUCCESS)
+          commit(MODIFY_CAMPAIGN, response.data)
+          resolve(response)
+        }).catch(error => {
+          commit(CAMPAIGN_ERROR, error)
+          reject(error)
+        })
+      })
+    })
+  },
+  [DELETE_CAMPAIGN]: ({ commit }, slug) => {
+    return new Promise((resolve, reject) => {
+      commit(CAMPAIGN_REQUEST)
+      apiClient.get('sanctum/csrf-cookie').then(response => {
+        apiClient.delete(`api/campaigns/${slug}`).then(response => {
+          commit(CAMPAIGN_SUCCESS)
+          commit(MODIFY_CAMPAIGN, response.data)
           resolve(response)
         }).catch(error => {
           commit(CAMPAIGN_ERROR, error)
@@ -68,10 +134,13 @@ const mutations = {
     state.loading = false
     state.hasLoadedOnce = true
   },
+  [MODIFY_CAMPAIGN]: (state, data) => {
+    state.campaign = data
+  },
   [SET_CAMPAIGNS]: (state, data) => {
     state.campaigns = data
   },
-  [UPDATE_CAMPAIGNS]: (state, data) => {
+  [MODIFY_CAMPAIGNS]: (state, data) => {
     state.campaigns.unshift(data)
   },
   [CAMPAIGN_ERROR]: state => {

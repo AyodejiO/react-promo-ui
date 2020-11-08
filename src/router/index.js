@@ -83,7 +83,9 @@ const FormCheckboxes = () => import('../views/Forms/FormCheckboxes')
 const Profile = () => import('../views/User/Profile')
 const ProfileEdit = () => import('../views/User/ProfileEdit')
 const AddUser = () => import('../views/User/AddUser')
-const Campaigns = () => import('../views/Apps/Social/Campaigns')
+const AllCampaigns = () => import('../views/Apps/Campaigns/AllCampaigns')
+const EditCampaign = () => import('../views/Apps/Campaigns/EditCampaign')
+const SingleCampaign = () => import('../views/Apps/Campaigns/SingleCampaign')
 /* Todo */
 const TodoListing = () => import('../views/Apps/Todo/TodoListing')
 const ChatIndex = () => import('../views/Apps/Chat/Index')
@@ -94,7 +96,7 @@ const childRoutes = (prop, mode) => [
     path: '/',
     name: prop + '.list',
     meta: { auth: true, reset: true, name: 'Social App' },
-    component: Campaigns
+    component: AllCampaigns
   },
   {
     path: '/profile',
@@ -544,12 +546,32 @@ const usersChildRoute = (prop, mode = false) => [
     component: AllUsers
   }
 ]
+const campaignsChildRoute = (prop, mode = false) => [
+  {
+    path: 'edit/:campaign',
+    name: prop + '.edit',
+    meta: { auth: true, reset: false, name: 'Edit Profile' },
+    component: EditCampaign
+  },
+  {
+    path: ':campaign',
+    name: prop + '.single',
+    meta: { auth: true, reset: true, name: 'Users' },
+    component: SingleCampaign
+  }
+]
 const routes = [
   {
     path: '/',
     // name: 'promo',
     component: Layout,
     children: childRoutes('promo')
+  },
+  {
+    path: '/campaigns',
+    name: 'campaigns',
+    component: Layout,
+    children: campaignsChildRoute('campaigns')
   },
   // {
   //   path: '/users',

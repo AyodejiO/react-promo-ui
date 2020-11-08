@@ -113,7 +113,7 @@ export default {
       campaign: new Campaign(),
       formData: new FormData(),
       // tags: ['Deep House', 'Tech House'],
-      options: ['Public', 'Circle'],
+      options: ['public', 'circle'],
       errors: [],
       message: null,
       url: null,

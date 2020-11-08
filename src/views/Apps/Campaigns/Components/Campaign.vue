@@ -68,12 +68,12 @@
       <b-col md="3" class="text-center">
         <b-img thumbnail class="w-75 mx-auto" :src="campaign.artwork || `/img/default/compact-disk.jpg`" fluid alt="Responsive image"> </b-img>
         <p class="my-2 my-md-3 w-75 mx-auto">
-          <a class="btn btn-primary btn-lg btn-block" v-if="campaign.status != 'draft'">
+          <router-link :to="{ name: 'campaigns.single', params: { campaign: campaign.slug }}" class="btn btn-primary btn-lg btn-block" v-if="campaign.status != 'draft'">
             <i class="far fa-play-circle fa-lg"></i> <b>Listen</b>
-          </a>
-          <a class="btn btn-secondary btn-lg btn-block" v-if="campaign.status == 'draft'">
+          </router-link>
+          <router-link :to="{ name: 'campaigns.edit', params: { campaign: campaign.slug }}" class="btn btn-secondary btn-lg btn-block" v-if="campaign.status == 'draft'">
             <i class="fas fa-pen-square fa-lg"></i> <b>Edit</b>
-          </a>
+          </router-link>
         </p>
       </b-col>
       <b-col>

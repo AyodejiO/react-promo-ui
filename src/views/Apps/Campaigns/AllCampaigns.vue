@@ -22,13 +22,12 @@
 <script>
 import { socialvue } from '../../../config/pluginInit'
 import Campaign from './Components/Campaign'
-import { Posts } from '../../../FackApi/api/SocialPost'
 import NewCampaign from './Components/NewCampaign'
 import IqCard from '../../../components/socialvue/cards/iq-card'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  name: 'Campaigns',
+  name: 'AllCampaigns',
   // eslint-disable-next-line vue/no-unused-components
   components: { IqCard, NewCampaign, Campaign },
   mounted () {
@@ -79,7 +78,6 @@ export default {
         location: 'USA',
         careated_date: '07 Jan 2020'
       },
-      socialPosts: Posts,
       galary: [
         { image: require('../../../assets/images/page-img/g1.jpg'), href: 'javascript:void(0);' },
         { image: require('../../../assets/images/page-img/g2.jpg'), href: 'javascript:void(0);' },
