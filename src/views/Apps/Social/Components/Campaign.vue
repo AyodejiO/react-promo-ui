@@ -8,9 +8,11 @@
             </div>
             <div class="media-support-info mt-2">
               <h5 class="mb-0"><b-link href="javascript:void(0)" class="">{{campaign.user.name}}</b-link></h5>
-              <p class="mb-0 text-secondary">{{campaign.time | formatDate }}</p>
+              <p class="mb-0 text-secondary">Created {{campaign.created_at | formatDate }}</p>
             </div>
             <div class="iq-card-header-toolbar d-flex align-items-center">
+              <b-badge v-if="campaign.status == 'draft' || campaign.status == 'active'" variant="info">{{campaign.status}}</b-badge>
+              <b-badge v-if="campaign.status == 'completed'" variant="success">{{campaign.status}}</b-badge>
               <b-dropdown id="dropdownMenuButton40" right variant="none" menu-class="p-0">
                 <template v-slot:button-content>
                   <b-link href="javascript:void(0)" class="text-secondary"><i class="ml-3 ri-more-2-line"></i></b-link>
@@ -63,18 +65,24 @@
       </template>
       <hr class="m-0" />
     <b-row class="p-4">
-      <b-col md="5" class="text-center">
-        <b-img thumbnail src="https://picsum.photos/250/250/?image=54" fluid alt="Responsive image"> </b-img>
+      <b-col md="3" class="text-center">
+        <b-img thumbnail class="w-75 mx-auto" :src="campaign.artwork || `/img/default/compact-disk.jpg`" fluid alt="Responsive image"> </b-img>
         <p class="my-2 my-md-3 w-75 mx-auto">
-          <a class="btn btn-primary btn-lg btn-block">
+          <a class="btn btn-primary btn-lg btn-block" v-if="campaign.status != 'draft'">
             <i class="far fa-play-circle fa-lg"></i> <b>Listen</b>
+          </a>
+          <a class="btn btn-secondary btn-lg btn-block" v-if="campaign.status == 'draft'">
+            <i class="fas fa-pen-square fa-lg"></i> <b>Edit</b>
           </a>
         </p>
       </b-col>
       <b-col>
       <div class="user-post">
-        <h4 class="p-2" v-if="campaign.description">{{campaign.description}}</h4>
-        <p class="p-2" v-if="campaign.description">{{campaign.description}}</p>
+        <h4 class="p-2">{{campaign.title}}</h4>
+        <p class="p-2">{{campaign.content}}</p>
+      </div>
+      <div class="tags-area">
+        <b-badge class="py-2 px-3 mr-2" variant="primary" v-for="(tag, index) in campaign.tags" :key="index">{{tag}}</b-badge>
       </div>
       <div class="comment-area p-3">
         <div class="d-flex justify-content-between align-items-center">
@@ -82,54 +90,21 @@
             <div class="like-block position-relative d-flex align-items-center">
               <div class="d-flex align-items-center">
                 <div class="like-data">
-                  <i class="las la-record-vinyl" style="font-size: 24px; line-height: 1.7"></i>
-                  <!-- <div class="dropdown">
-                    <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                      <img :src="require('../../../../assets/images/icon/01.png')" class="img-fluid" alt="">
-                    </span>
-                    <div class="dropdown-menu" style="">
-                      <a class="ml-2 mr-2" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" @click="isLiked(!campaign.is_liked)" title="" data-original-title="Like"><img :src="require('../../../../assets/images/icon/01.png')" class="img-fluid" alt=""></a>
-                      <a class="mr-2" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" @click="isLiked(!campaign.is_liked)" title="" data-original-title="Love"><img :src="require('../../../../assets/images/icon/02.png')" class="img-fluid" alt=""></a>
-                      <a class="mr-2" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" @click="isLiked(!campaign.is_liked)" title="" data-original-title="Happy"><img :src="require('../../../../assets/images/icon/03.png')" class="img-fluid" alt=""></a>
-                      <a class="mr-2" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" @click="isLiked(!campaign.is_liked)" title="" data-original-title="HaHa"><img :src="require('../../../../assets/images/icon/04.png')" class="img-fluid" alt=""></a>
-                      <a class="mr-2" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" @click="isLiked(!campaign.is_liked)" title="" data-original-title="Think"><img :src="require('../../../../assets/images/icon/05.png')" class="img-fluid" alt=""></a>
-                      <a class="mr-2" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" @click="isLiked(!campaign.is_liked)" title="" data-original-title="Sade"><img :src="require('../../../../assets/images/icon/06.png')" class="img-fluid" alt=""></a>
-                      <a class="mr-2" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" @click="isLiked(!campaign.is_liked)" title="" data-original-title="Lovely"><img :src="require('../../../../assets/images/icon/07.png')" class="img-fluid" alt=""></a>
-                    </div>
-                  </div> -->
+                  <i class="las la-record-vinyl" style="font-size: 20px; line-height: 1.7"></i>
                 </div>
                 <div class="total-like-block ml-2 mr-3">
-                  <div class="dropdown">
-                  <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                  {{campaign.likes}} Tracks
+                  <span>
+                  {{campaign.tracks_count}} Tracks
                   </span>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="javascript:void(0)">Max Emum</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Bill Yerds</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Hap E. Birthday</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Tara Misu</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Midge Itz</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Sal Vidge</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Other</a>
-                    </div>
-                  </div>
                 </div>
               </div>
-              <div class="total-comment-block">
-                <div class="dropdown">
-                <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                {{campaign.comments.length}} Comments
-                </span>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="javascript:void(0)">Max Emum</a>
-                    <a class="dropdown-item" href="javascript:void(0)">Bill Yerds</a>
-                    <a class="dropdown-item" href="javascript:void(0)">Hap E. Birthday</a>
-                    <a class="dropdown-item" href="javascript:void(0)">Tara Misu</a>
-                    <a class="dropdown-item" href="javascript:void(0)">Midge Itz</a>
-                    <a class="dropdown-item" href="javascript:void(0)">Sal Vidge</a>
-                    <a class="dropdown-item" href="javascript:void(0)">Other</a>
-                  </div>
+              <div class="like-data mr-2">
+                  <i class="las la-comment" style="font-size: 20px; line-height: 1.7"></i>
                 </div>
+              <div class="total-comment-block">
+                <span>
+                {{campaign.feedbacks_count}} Feedback
+                </span>
               </div>
             </div>
           </div>
@@ -138,8 +113,8 @@
               <span class="ml-1">99 Share</span></a>
           </div>
         </div>
-        <hr>
-        <ul class="post-comments p-0 m-0">
+        <!-- <hr> -->
+        <!-- <ul class="post-comments p-0 m-0">
           <li class="mb-2" v-for="(postComment, postCommentIndex) in campaign.comments" :key="postComment.id">
             <div class="d-flex flex-wrap">
               <div class="user-img">
@@ -159,7 +134,7 @@
               </div>
             </div>
           </li>
-        </ul>
+        </ul> -->
         <!-- <b-form class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
           <b-form-input type="text" @keyup.enter="saveComment(commentMessage)" v-model="commentMessage" class="rounded" placeholder="Lovely!" />
           <div class="comment-attagement d-flex">

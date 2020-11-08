@@ -72,7 +72,7 @@ const mutations = {
     state.campaigns = data
   },
   [UPDATE_CAMPAIGNS]: (state, data) => {
-    state.campaigns.push(data)
+    state.campaigns.unshift(data)
   },
   [CAMPAIGN_ERROR]: state => {
     state.status = 'error'

@@ -6,7 +6,7 @@
       </template>
       <div class="iq-card-body">
         <div class="d-flex align-items-center">
-            <form class="w-100" @submit.prevent="addNewCampaign">
+            <form class="w-100" ref="newCampaignForm" @submit.prevent="addNewCampaign">
               <div class="row">
                 <div class="col-md-3 text-center mb-sm-3">
                   <!-- <img class="avatar-60 rounded-circle" src="../../../../assets/images/user/user-01.jpg"> -->
@@ -93,83 +93,11 @@
               <hr />
                 <ul class="campaign-opt-block d-flex align-items-center list-inline m-0 p-0">
                     <li><b-btn variant="primary" type="submit" class="ml-2 px-5">Create</b-btn></li>
+                    <li><b-btn variant="warning" type="reset" class="ml-2 px-5" @click="onReset">Cancel</b-btn></li>
                 </ul>
             </form>
         </div>
       </div>
-      <b-modal id="modal1" centered title="Create Campaign" hide-footer>
-          <div class="d-flex align-items-center">
-            <div class="user-img">
-                <img src="../../../../assets/images/user/1.jpg" alt="userimg" class="avatar-60 rounded-circle img-fluid">
-            </div>
-            <form  class="campaign-text ml-3 w-100">
-              <input type="text" placeholder="Write something about campaign..." class="rounded form-control" v-model="campaign.description" style="border:none;" />
-            </form>
-          </div>
-        <hr />
-        <ul class="d-flex flex-wrap align-items-center list-inline m-0 p-0">
-          <li class="col-md-6 mb-3" v-for="(item,index) in tab" :key="index">
-            <div class="iq-bg-primary rounded p-2 pointer mr-3">
-              <a href="#"></a><img :src="item.icon" alt="icon" class="img-fluid">
-              {{item.name}}
-            </div>
-          </li>
-        </ul>
-        <div class="other-option">
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="d-flex align-items-center">
-              <div class="user-img mr-3">
-                <img src="../../../../assets/images/user/1.jpg" alt="userimg" class="avatar-60 rounded-circle img-fluid">
-              </div>
-              <h6>Your Story</h6>
-            </div>
-            <div class="iq-card-campaign-toolbar">
-            <b-dropdown id="dropdownMenuButton40" right variant="none" menu-class="p-0">
-              <template v-slot:button-content>
-                <button href="#" class="dropdown-toggle btn btn-primary">Friends</button>
-              </template>
-              <b-dropdown-item href="#" class="dropdown-item p-3">
-                <div class="d-flex align-items-top">
-                  <div class="d-flex align-items-top"><i class="ri-save-line"></i></div>
-                  <div class="data ml-2">
-                    <h6>Public</h6>
-                    <p class="mb-0">Anyone on or off Facebook</p>
-                  </div>
-                </div>
-              </b-dropdown-item>
-              <b-dropdown-item href="#" class="dropdown-item p-3">
-                <div class="d-flex align-items-top">
-                  <div class="d-flex align-items-top"><i class="ri-close-circle-line"></i></div>
-                  <div class="data ml-2">
-                    <h6>Friends</h6>
-                    <p class="mb-0">Your friend on facebook</p>
-                  </div>
-                </div>
-              </b-dropdown-item>
-              <b-dropdown-item href="#" class="dropdown-item p-3">
-                <div class="d-flex align-items-top">
-                  <div class="d-flex align-items-top"><i class="ri-user-unfollow-line"></i></div>
-                  <div class="data ml-2">
-                    <h6>Friend expect</h6>
-                    <p class="mb-0">Dont show to some friend</p>
-                  </div>
-                </div>
-              </b-dropdown-item>
-              <b-dropdown-item href="#" class="dropdown-item p-3">
-                <div class="d-flex align-items-top">
-                  <div class="d-flex align-items-top"><i class="ri-notification-line"></i></div>
-                  <div class="data ml-2">
-                    <h6>Only me</h6>
-                    <p class="mb-0">Only me</p>
-                  </div>
-                </div>
-              </b-dropdown-item>
-            </b-dropdown>
-            </div>
-          </div>
-        </div>
-        <button class="btn btn-primary d-block w-100 mt-3" @click="addNewCampaign(campaign)">Campaign</button>
-      </b-modal>
     </iq-card>
   </div>
 </template>
@@ -252,6 +180,8 @@ export default {
       this.createCampaign(this.formData)
         .then(() => {
           this.campaign = new Campaign()
+          this.$refs.newCampaignForm.reset()
+          this.url = null
         })
         .catch(error => {
           this.errors = error.response.data.errors
@@ -262,6 +192,11 @@ export default {
     },
     openDialog: function () {
       this.$refs.art.click()
+    },
+    onReset: function () {
+      this.campaign = new Campaign()
+      this.$refs.newCampaignForm.reset()
+      this.url = null
     },
     onFileChange: function (e) {
       const file = e.target.files[0]
