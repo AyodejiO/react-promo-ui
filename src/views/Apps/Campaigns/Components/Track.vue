@@ -1,7 +1,7 @@
 <template>
-  <iq-card body-class="p-0">
+  <div body-class="p-0">
     Track
-  </iq-card>
+  </div>
 </template>
 <script>
 export default {

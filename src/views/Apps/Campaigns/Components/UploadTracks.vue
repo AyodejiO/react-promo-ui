@@ -96,7 +96,6 @@ export default {
   },
   mounted () {
     this.getTags()
-    console.log(apiClient.defaults.baseURL)
     this.dropzoneOptions.url = process.env.VUE_APP_API_BASE_URL + 'api/campaigns/' + this.campaign.slug + '/tracks '
   }
 }
