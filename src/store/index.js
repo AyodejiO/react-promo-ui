@@ -5,6 +5,7 @@ import User from './User'
 import Users from './Users'
 import Invites from './Invites'
 import Campaigns from './Campaigns'
+import Tracks from './Tracks'
 import Tags from './Tags'
 import Setting from './Setting/index'
 Vue.use(Vuex)
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     User,
     Users,
     Campaigns,
+    Tracks,
     Invites,
     Tags
   },

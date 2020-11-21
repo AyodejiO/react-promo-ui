@@ -46,13 +46,14 @@ const actions = {
         })
     })
   },
-  [SINGLE_CAMPAIGN]: ({ commit }, slug) => {
+  [SINGLE_CAMPAIGN]: ({ commit, dispatch }, slug) => {
     return new Promise((resolve, reject) => {
       commit(CAMPAIGN_REQUEST)
       apiClient.get(`api/campaigns/${slug}`)
         .then(response => {
           commit(CAMPAIGN_SUCCESS)
           commit(MODIFY_CAMPAIGN, response.data)
+          commit('Tracks/SET_TRACKS', response.data.tracks, { root: true })
           resolve(response)
         }).catch(error => {
           commit(CAMPAIGN_ERROR, error)
