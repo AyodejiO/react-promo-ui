@@ -6,7 +6,7 @@
       </template>
       <div class="iq-card-body">
         <div class="d-flex align-items-center">
-            <form class="w-100" ref="newCampaignForm" @submit.prevent="addNewCampaign">
+            <form class="w-100" ref="newCampaignForm" @submit.prevent="modifyCampaign">
               <div class="row">
                 <div class="col-md-3 text-center mb-sm-3">
                   <!-- <img class="avatar-60 rounded-circle" src="../../../../assets/images/user/user-01.jpg"> -->
@@ -95,10 +95,10 @@
                     <li><b-btn variant="primary" type="submit" class="ml-2 px-5">Modify</b-btn></li>
                     <li>
                       <b-dropdown id="dropdown-1" text="Other Action" class="m-md-2">
-                        <b-dropdown-item @click="onReset">Clear Form</b-dropdown-item>
-                        <b-dropdown-item>Publish Campaign</b-dropdown-item>
-                        <b-dropdown-divider></b-dropdown-divider>
-                        <b-dropdown-item>Delete Campaign</b-dropdown-item>
+                        <!-- <b-dropdown-item @click="onReset">Clear Form</b-dropdown-item> -->
+                        <b-dropdown-item @click.prevent="publish"><i class="fas fa-rocket mr-1" aria-hidden="true"></i>  Publish Campaign</b-dropdown-item>
+                        <!-- <b-dropdown-divider></b-dropdown-divider> -->
+                        <b-dropdown-item @click.prevent="forceDelete"><i class="far fa-trash-alt mr-1" aria-hidden="true"></i>  Delete Campaign</b-dropdown-item>
                       </b-dropdown>
                     </li>
                 </ul>
@@ -139,12 +139,14 @@ export default {
   methods: {
     ...mapActions({
       getTags: 'Tags/GET_TAGS',
-      createCampaign: 'Campaigns/NEW_CAMPAIGN'
+      createCampaign: 'Campaigns/UPDATE_CAMPAIGN',
+      deleteCampaign: 'Campaigns/DELETE_CAMPAIGN',
+      publishCampaign: 'Campaigns/PUBLISH_CAMPAIGN'
     }),
     tagValidator (tag) {
       return tag.length >= 1
     },
-    addNewCampaign () {
+    modifyCampaign () {
       // for (var key in this.campaign) {
       //   this.formData.append(key, this.campaign[key])
       // }
@@ -164,6 +166,45 @@ export default {
         })
       // this.campaign = new Campaign()
       // this.$bvModal.hide('modal1')
+    },
+    publish: function () {
+      this.publishCampaign(this.campaign.slug)
+        .then(() => {
+          this.$bvToast.toast(`Campaign successfully activated.`, {
+            title: 'Success',
+            variant: 'success',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
+        })
+        .catch(() => {
+          this.$bvToast.toast(`Something awful happened`, {
+            title: 'Error',
+            variant: 'danger',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
+        })
+    },
+    forceDelete: function () {
+      this.deleteCampaign(this.campaign.slug)
+        .then(() => {
+          this.$bvToast.toast(`Campaign successfully deleted.`, {
+            title: 'Success',
+            variant: 'success',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
+          this.$router.push({ name: 'promo.list' })
+        })
+        .catch(() => {
+          this.$bvToast.toast(`Something awful happened`, {
+            title: 'Error',
+            variant: 'danger',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
+        })
     },
     openDialog: function () {
       this.$refs.art.click()

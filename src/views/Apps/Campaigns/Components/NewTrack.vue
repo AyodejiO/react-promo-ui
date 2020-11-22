@@ -75,6 +75,12 @@ export default {
       this.uploadTrack({ track: this.formData, campaign: this.campaign.slug })
         .then(() => {
           this.onReset()
+          this.$bvToast.toast(`Track added successfully.`, {
+            title: 'Success',
+            variant: 'success',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
         })
         .catch(error => {
           this.errors = error.response.data.errors
@@ -84,22 +90,6 @@ export default {
     onReset: function () {
       this.track = new Track()
       this.$refs.newTrackForm.reset()
-    },
-    onFileChange: function (e) {
-      const file = e.target.files[0]
-      this.url = URL.createObjectURL(file)
-      this.formData.append('artwork', file)
-    },
-    previewImage: function (event) {
-      const files = event.target.files
-      Object.keys(files).forEach(i => {
-        const file = files[i]
-        const reader = new FileReader()
-        reader.onload = (e) => {
-          this.campaign.images.push(e.target.result)
-        }
-        reader.readAsDataURL(file)
-      })
     }
   }
 }

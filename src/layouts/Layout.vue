@@ -47,7 +47,7 @@
         <li class="list-inline-item"><a href="#">Terms of Use</a></li>
       </template>
       <template v-slot:right>
-        Copyright 2020 <a href="#">SocialV</a> All Rights Reserved.
+        Copyright 2020 <a href="#">React Promo</a> All Rights Reserved.
       </template>
     </FooterStyle1>
   </div>

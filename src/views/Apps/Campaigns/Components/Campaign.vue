@@ -66,7 +66,7 @@
       <hr class="m-0" />
     <b-row class="p-4">
       <b-col md="3" class="text-center">
-        <b-img thumbnail class="w-75 mx-auto" :src="campaign.artwork || `/img/default/compact-disk.jpg`" fluid alt="Responsive image"> </b-img>
+        <b-img thumbnail class="w-75 mx-auto" :src="campaign.artwork || `/img/default/compact-disk.jpg`" fluid alt="Artwork"> </b-img>
         <p class="my-2 my-md-3 w-75 mx-auto">
           <router-link :to="{ name: 'campaigns.single', params: { campaign: campaign.slug }}" class="btn btn-primary btn-lg btn-block" v-if="campaign.status != 'draft'">
             <i class="far fa-play-circle fa-lg"></i> <b>Listen</b>

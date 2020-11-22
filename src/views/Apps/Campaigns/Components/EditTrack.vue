@@ -40,6 +40,14 @@ export default {
     }),
     deleteTrack () {
       this.forceDeleteTrack(this.track.id)
+        .then(() => {
+          this.$bvToast.toast(`Track deleted successfully.`, {
+            title: 'Success',
+            variant: 'success',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
+        })
     }
   }
 }

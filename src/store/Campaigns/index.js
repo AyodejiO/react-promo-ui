@@ -91,11 +91,11 @@ const actions = {
       })
     })
   },
-  [PUBLISH_CAMPAIGN]: ({ commit }, slug) => {
+  [PUBLISH_CAMPAIGN]: ({ commit }, campaign) => {
     return new Promise((resolve, reject) => {
       commit(CAMPAIGN_REQUEST)
       apiClient.get('sanctum/csrf-cookie').then(response => {
-        apiClient.post(`api/campaigns/${slug}/publish`).then(response => {
+        apiClient.post(`api/campaigns/${campaign}/publish`).then(response => {
           commit(CAMPAIGN_SUCCESS)
           commit(MODIFY_CAMPAIGN, response.data)
           resolve(response)
@@ -106,13 +106,14 @@ const actions = {
       })
     })
   },
-  [DELETE_CAMPAIGN]: ({ commit }, slug) => {
+  [DELETE_CAMPAIGN]: ({ commit }, campaign) => {
     return new Promise((resolve, reject) => {
       commit(CAMPAIGN_REQUEST)
       apiClient.get('sanctum/csrf-cookie').then(response => {
-        apiClient.delete(`api/campaigns/${slug}`).then(response => {
+        apiClient.delete(`api/campaigns/${campaign}`).then(response => {
           commit(CAMPAIGN_SUCCESS)
-          commit(MODIFY_CAMPAIGN, response.data)
+          commit(MODIFY_CAMPAIGN, null)
+          commit('Tracks/SET_TRACKS', null, { root: true })
           resolve(response)
         }).catch(error => {
           commit(CAMPAIGN_ERROR, error)

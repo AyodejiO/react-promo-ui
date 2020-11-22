@@ -116,41 +116,7 @@ export default {
       options: ['public', 'circle'],
       errors: [],
       message: null,
-      url: null,
-      tab: [
-        {
-          icon: require('../../../../assets/images/small/07.png'),
-          name: ' Photo/Video'
-        },
-        {
-          icon: require('../../../../assets/images/small/08.png'),
-          name: ' Tag Friend'
-        },
-        {
-          icon: require('../../../../assets/images/small/09.png'),
-          name: 'Feeling/Activity'
-        },
-        {
-          icon: require('../../../../assets/images/small/10.png'),
-          name: 'Check in'
-        },
-        {
-          icon: require('../../../../assets/images/small/11.png'),
-          name: 'Live Video'
-        },
-        {
-          icon: require('../../../../assets/images/small/12.png'),
-          name: ' Gif'
-        },
-        {
-          icon: require('../../../../assets/images/small/13.png'),
-          name: 'Watch Party'
-        },
-        {
-          icon: require('../../../../assets/images/small/14.png'),
-          name: ' Play with Friends'
-        }
-      ]
+      url: null
     }
   },
   computed: {
@@ -170,15 +136,20 @@ export default {
       return tag.length >= 1
     },
     addNewCampaign () {
-      // for (var key in this.campaign) {
-      //   this.formData.append(key, this.campaign[key])
-      // }
+      this.errors = []
+      this.message = null
       this.formData.append('title', this.campaign['title'])
       this.formData.append('content', this.campaign['content'])
       this.formData.append('visibility', this.campaign['visibility'])
       this.formData.append('tags', this.campaign['tags'])
       this.createCampaign(this.formData)
         .then(() => {
+          this.$bvToast.toast(`Campaign successfully created`, {
+            title: 'Success',
+            variant: 'success',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
           this.campaign = new Campaign()
           this.$refs.newCampaignForm.reset()
           this.url = null
@@ -187,8 +158,6 @@ export default {
           this.errors = error.response.data.errors
           this.message = error.response.data.message
         })
-      // this.campaign = new Campaign()
-      // this.$bvModal.hide('modal1')
     },
     openDialog: function () {
       this.$refs.art.click()
