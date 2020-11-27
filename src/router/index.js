@@ -548,7 +548,7 @@ const usersChildRoute = (prop, mode = false) => [
 ]
 const campaignsChildRoute = (prop, mode = false) => [
   {
-    path: 'edit/:campaign',
+    path: ':campaign/edit',
     name: prop + '.edit',
     meta: { auth: true, reset: false, name: 'Edit Profile' },
     component: EditCampaign

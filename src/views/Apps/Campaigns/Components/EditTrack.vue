@@ -2,7 +2,7 @@
   <b-list-group-item class="flex-column align-items-start">
     <b-media>
         <template #aside>
-          <b-button variant="link" v-if="!isPlaying" @click.prevent="playTrack(track.id)">
+          <b-button variant="link" v-if="!isPlaying" @click.prevent="play(track.id)">
             <i class="far fa-play-circle fa-4x"></i>
           </b-button>
           <i  v-if="isPlaying" class="fas fa-compact-disc fa-4x text-success mr-2 fa-spin"></i>
@@ -38,6 +38,9 @@ export default {
     ...mapActions({
       forceDeleteTrack: 'Tracks/DELETE_TRACK'
     }),
+    play (trackId) {
+      this.$emit('playtrack', trackId)
+    },
     deleteTrack () {
       this.forceDeleteTrack(this.track.id)
         .then(() => {
@@ -52,13 +55,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  .dropdown-item{
-    color: #212529 !important;
-  }
-  .dropdown-menu .dropdown-item:focus, .dropdown-menu .dropdown-item:hover{
-    background: transparent;
-    color: var(--iq-primary) !important;
-  }
-</style>

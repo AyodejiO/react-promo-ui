@@ -176,6 +176,7 @@ export default {
             autoHideDelay: 5000,
             appendToast: true
           })
+          this.$emit('published')
         })
         .catch(() => {
           this.$bvToast.toast(`Something awful happened`, {
