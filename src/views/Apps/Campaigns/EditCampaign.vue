@@ -15,8 +15,8 @@
         </div>
       </b-card-header>
       <new-track class="my-2" :campaign="campaign"></new-track>
-      <b-list-group flush v-for="track in tracks" :key="track.id">
-        <edit-track @playtrack="playTrack" :campaign="campaign" :track="track" :isPlaying="isPlaying(track.id)" />
+      <b-list-group flush>
+        <edit-track v-for="track in tracks" :key="track.id" @playtrack="playTrack" :campaign="campaign" :track="track" :isPlaying="isPlaying(track.id)" />
       </b-list-group>
     </b-card>
   </div>

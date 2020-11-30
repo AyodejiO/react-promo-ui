@@ -1,5 +1,5 @@
 <template>
-  <b-form class="p-4 my-3"  ref="newTrackForm" @submit.prevent="uploadNewFeedback">
+  <b-form class="p-4 my-3"  ref="newTrackForm" @submit.prevent="newFeedback">
     <b-alert v-if="message" show variant="danger"><a href="#" class="alert-link">{{ message }}</a></b-alert>
     <h4 class="my-2">Feedback</h4>
     <!-- <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone> -->
@@ -32,7 +32,7 @@ import Feedback from '../../../../Model/Feedback'
 import { mapActions } from 'vuex'
 export default {
   name: 'NewFeedback',
-  props: ['tracks'],
+  props: ['campaign', 'tracks'],
   data () {
     return {
       feedback: new Feedback(),
@@ -42,9 +42,11 @@ export default {
   },
   methods: {
     ...mapActions({
-      postFeedback: 'Tracks/UPLOAD_TRACK'
+      postFeedback: 'Feedbacks/NEW_FEEDBACK'
     }),
-    uploadNewFeedback () {
+    newFeedback () {
+      this.errors = []
+      this.message = null
       this.postFeedback({ feedback: this.feedback, campaign: this.campaign.slug })
         .then(() => {
           this.onReset()

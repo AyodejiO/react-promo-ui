@@ -9,7 +9,10 @@
                   <template #title>
                     <i class="far fa-play-circle fa-2x mr-1 align-bottom"></i> <strong>Campaign</strong>
                   </template>
-                  <new-feedback :tracks="campaign.tracks"></new-feedback>
+                  <div class="p-2">
+                    <music-player v-if="campaign" :tracks="tracks" :campaign="campaign"></music-player>
+                    <new-feedback :campaign="campaign" :tracks="tracks" />
+                  </div>
                 </b-tab>
                 <b-tab>
                   <template #title>
@@ -32,18 +35,19 @@ import { socialvue } from '../../../config/pluginInit'
 import NewFeedback from './Components/NewFeedback'
 import IqCard from '../../../components/socialvue/cards/iq-card'
 import { mapActions, mapGetters } from 'vuex'
+import MusicPlayer from './Components/MusicPlayer.vue'
 
 export default {
   name: 'SingleCampaign',
-  // eslint-disable-next-line vue/no-unused-components
-  components: { IqCard, NewFeedback },
+  components: { IqCard, NewFeedback, MusicPlayer },
   mounted () {
     socialvue.index()
     this.getCampaign()
   },
   computed: {
     ...mapGetters({
-      campaign: 'Campaigns/campaign'
+      campaign: 'Campaigns/campaign',
+      tracks: 'Tracks/tracks'
     })
   },
   data () {
