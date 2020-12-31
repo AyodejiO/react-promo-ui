@@ -1,7 +1,7 @@
 <template>
     <b-row>
       <b-col sm="12">
-        <b-row class=" m-0 p-0">
+        <b-row class=" m-0 p-0" v-if="campaign">
           <b-col lg="12">
             <iq-card>
               <b-tabs pills card>
@@ -18,6 +18,9 @@
                   <template #title>
                     <i class="fas fa-chart-pie fa-2x mr-1 align-bottom"></i> <strong>Analytics</strong>
                   </template>
+                  <div class="p-2">
+                    <analytics></analytics>
+                  </div>
                 </b-tab>
               </b-tabs>
             </iq-card>
@@ -35,11 +38,12 @@ import { socialvue } from '../../../config/pluginInit'
 import NewFeedback from './Components/NewFeedback'
 import IqCard from '../../../components/socialvue/cards/iq-card'
 import { mapActions, mapGetters } from 'vuex'
-import MusicPlayer from './Components/MusicPlayer.vue'
+import MusicPlayer from './Components/MusicPlayer'
+import Analytics from './Components/Analytics/Index'
 
 export default {
   name: 'SingleCampaign',
-  components: { IqCard, NewFeedback, MusicPlayer },
+  components: { Analytics, IqCard, NewFeedback, MusicPlayer },
   mounted () {
     socialvue.index()
     this.getCampaign()

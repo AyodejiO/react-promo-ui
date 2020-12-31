@@ -4,12 +4,41 @@
       <img :src="campaign.artwork" class="align-middle" alt="Campaign Artwork">
     </b-col>
     <b-col>
-      <b-list-group flush v-for="track in tracks" :key="track.id">
-        <music-track @playtrack="playTrack" :campaign="campaign" :track="track" :isPlaying="isPlaying(track.id)"></music-track>
-      </b-list-group>
-    </b-col>
-    <b-col md="12" sm="12" lg="12">
-      <div class="mt-2" id="waveform"></div>
+      <b-row>
+        <b-col sm="12" md="12">
+          <b-list-group flush v-for="track in tracks" :key="track.id">
+            <music-track
+              @playtrack="playTrack"
+              :campaign="campaign"
+              :track="track"
+              :isPlaying="isPlaying(track.id)"
+              active="playingTrackId === track.id"
+            >
+            </music-track>
+          </b-list-group>
+        </b-col>
+        <b-col sm="12" md="12">
+            <div class="mt-2" id="waveform"></div>
+            <div v-if="wavesurfer" class="media-controls text-center mt-3">
+              <b-button-group size="lg">
+                <b-button variant="dark" disabled>
+                  {{ minutes }} : {{ seconds }}
+                </b-button>
+                <b-button variant="dark" @click="play"><i class="mr-0 fas fa-backward fa-1x"></i></b-button>
+                <b-button variant="dark" @click="play">
+                  <i v-if="!wavesurfer.isPlaying()" class="mr-0 far fa-play-circle fa-2x"></i>
+                  <i v-if="wavesurfer.isPlaying()" class="mr-0 far fa-pause-circle fa-2x"></i>
+                </b-button>
+                <b-button variant="dark" @click="play"><i class="mr-0 fas fa-forward fa-1x"></i></b-button>
+                <b-button variant="dark" @click="wavesurfer.toggleMute()">
+                  <i v-if="!wavesurfer.getMute()" class="mr-0 fas fa-volume-up fa-1x"></i>
+                  <i v-if="wavesurfer.getMute()" class="mr-0 fas fa-volume-mute fa-1x"></i>
+                </b-button>
+              </b-button-group>
+            </div>
+          <!-- <vue-wave-surfer :src="file" :options="options"></vue-wave-surfer> -->
+        </b-col>
+      </b-row>
     </b-col>
   </b-row>
 </template>
@@ -17,59 +46,122 @@
 // import Campaign from '../../../../Model/Campaign'
 import { mapActions } from 'vuex'
 import MusicTrack from './MusicTrack'
-import WaveSurfer from 'wavesurfer'
+import WaveSurfer from 'wavesurfer.js'
+import VueWaveSurfer from 'vue-wave-surfer'
 // eslint-disable-next-line no-unused-vars
 import { Howl, Howler } from 'howler'
 
 export default {
   name: 'MusicPlayer',
-  components: { MusicTrack },
+  // eslint-disable-next-line vue/no-unused-components
+  components: { MusicTrack, VueWaveSurfer },
   props: [ 'campaign', 'tracks' ],
   data () {
     return {
       // campaign: new Campaign(),
+      init: true,
+      playingTrackId: null,
+      playingTrackDuration: 0,
+      options: {},
       errors: [],
       message: null,
+      timer: null,
+      trackTime: '0:00',
       wavesurfer: null
     }
   },
+  computed: {
+    minutes () {
+      const minutes = Math.floor(this.playingTrackDuration / 60)
+      return this.padTime(minutes)
+    },
+    seconds () {
+      const seconds = this.playingTrackDuration - (this.minutes * 60)
+      return this.padTime(seconds)
+    }
+  },
   mounted () {
-    this.wavesurfer = WaveSurfer.create({
-      container: '#waveform',
-      waveColor: 'violet',
-      progressColor: 'purple',
-      mediaControls: true,
-      responsive: true,
-      xhr: {
-        method: 'GET',
-        credentials: 'same-origin',
-        withCredentials: true
-      }
-    })
+    if (this.tracks.length > 0) {
+      this.playingTrackId = this.tracks[0].id
+      this.$nextTick(function () {
+        this.wavesurfer = WaveSurfer.create({
+          container: '#waveform',
+          waveColor: '#1402ff',
+          progressColor: 'purple',
+          fillParent: true,
+          responsive: true,
+          xhr: {
+            method: 'GET',
+            cache: 'default',
+            mode: 'cors',
+            credentials: 'include'
+          }
+        })
+        this.wavesurfer.load(process.env.VUE_APP_API_BASE_URL + 'api/tracks/' + this.tracks[0].id)
+        this.wavesurfer.on('finish', () => {
+          this.playingTrackId = null
+          this.stopTimer()
+        })
+        this.wavesurfer.on('audioprocess', () => {
+          if (this.wavesurfer.isPlaying()) {
+            this.trackTime = this.wavesurfer.getDuration() - this.wavesurfer.getCurrentTime()
+          }
+        })
+        this.wavesurfer.on('pause', () => {
+          this.stopTimer()
+          this.playingTrackDuration = Math.round(this.wavesurfer.getDuration() - this.wavesurfer.getCurrentTime())
+        })
+        this.wavesurfer.on('play', () => {
+          this.startTimer()
+        })
+        this.wavesurfer.on('ready', () => {
+          this.playingTrackDuration = Math.round(this.wavesurfer.getDuration() - this.wavesurfer.getCurrentTime())
+          if (!this.init) this.wavesurfer.play()
+          this.init = false
+        })
+      })
+    }
   },
   methods: {
     ...mapActions({
       postCampaign: 'Tracks/UPLOAD_TRACK'
     }),
     isPlaying (trackId) {
-      return this.playingTrackId === trackId
+      if (!this.wavesurfer) return false
+      return this.playingTrackId === trackId && this.wavesurfer.isPlaying()
     },
-    playTrack (trackId) {
+    play (e) {
+      e.preventDefault()
+      this.wavesurfer.playPause()
+    },
+    backward (e) {
+      e.preventDefault()
+      this.wavesurfer.playPause()
+    },
+    forward (e) {
+      e.preventDefault()
+      this.wavesurfer.playPause()
+    },
+    async playTrack (trackId) {
       this.playingTrackId = trackId
-      // this.howler.src = process.env.VUE_APP_API_BASE_URL + 'api/tracks/' + trackId // this.getTrackUrl
-      this.wavesurfer.load(process.env.VUE_APP_API_BASE_URL + 'api/tracks/' + trackId)
-      this.howler = new Howl({
-        src: process.env.VUE_APP_API_BASE_URL + 'api/tracks/' + trackId,
-        format: ['mp3', 'webm'],
-        xhr: {
-          method: 'GET',
-          withCredentials: true
-        },
-        autoplay: true,
-        onend: () => {
-          this.playingTrackId = null
-        }
-      })
+      await this.wavesurfer.load(process.env.VUE_APP_API_BASE_URL + 'api/tracks/' + trackId)
+    },
+    async loadNextTrack (trackId) {
+      this.playingTrackId = trackId
+      await this.wavesurfer.load(process.env.VUE_APP_API_BASE_URL + 'api/tracks/' + trackId)
+    },
+    countdown () {
+      this.playingTrackDuration--
+    },
+    padTime (time) {
+      return (time < 10 ? '0' : '') + time
+    },
+    startTimer () {
+      this.timer = setInterval(() => this.countdown(), 1000)
+    },
+    stopTimer () {
+      clearInterval(this.timer)
+      this.timer = null
     }
   }
 }

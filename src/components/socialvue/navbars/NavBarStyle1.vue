@@ -6,7 +6,7 @@
             <div class="iq-navbar-logo d-flex justify-content-between">
               <a href="#">
                 <img :src="logo" class="img-fluid" alt="logo">
-                <span>SocialV</span>
+                <!-- <span>SocialV</span> -->
               </a>
               <div class="iq-menu-bt align-self-center">
                 <div class="wrapper-menu" @click="miniSidebar">
@@ -210,7 +210,7 @@
                         <div class="iq-card shadow-none m-0">
                           <div class="iq-card-body p-0 ">
                               <div class="bg-primary p-3 line-height">
-                                <h5 class="mb-0 text-white line-height">Hello Bni Cyst</h5>
+                                <h5 class="mb-0 text-white line-height">Hello {{ user != null? user.username : '' }}</h5>
                                 <span class="text-white font-size-12">Available</span>
                               </div>
                               <router-link to="/" class="iq-sub-card iq-bg-primary-hover">
