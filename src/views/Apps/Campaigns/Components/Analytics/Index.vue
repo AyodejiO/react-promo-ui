@@ -62,7 +62,6 @@ export default {
       refs.forEach(ref => html2canvas(ref)
         .then(canvas => {
           const img = canvas.toDataURL('image/jpeg', 1.0)
-          console.log(img)
           doc.addImage(img, 'JPEG', 5, 5, 200)
           doc.save(this.campaign.title + '.pdf')
         })
