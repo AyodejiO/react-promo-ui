@@ -102,7 +102,6 @@ export default {
   },
   mounted () {
     this.getFeedbacks(this.campaign.slug)
-    console.log(this.$refs)
   }
 }
 </script>
