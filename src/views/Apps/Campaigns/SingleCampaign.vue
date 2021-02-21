@@ -9,8 +9,8 @@
                   <template #title>
                     <i class="far fa-play-circle fa-2x mr-1 align-bottom"></i> <strong>Campaign</strong>
                   </template>
-                  <div class="p-2">
-                    <music-player v-if="campaign" :tracks="tracks" :campaign="campaign"></music-player>
+                  <div class="p-2" v-if="campaign">
+                    <music-player :tracks="tracks" :campaign="campaign"></music-player>
                     <new-feedback :campaign="campaign" :tracks="tracks" />
                   </div>
                 </b-tab>
@@ -27,9 +27,6 @@
           </b-col>
         </b-row>
       </b-col>
-       <div class="col-sm-12 text-center">
-          <img src="../../../assets/images/page-img/page-load-loader.gif" alt="loader" style="height: 100px;">
-        </div>
     </b-row>
 </template>
 <script>

@@ -4,26 +4,26 @@
     <h4 class="my-2">Feedback</h4>
     <!-- <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone> -->
     <b-form-group label="Campaign Rating">
-      <b-form-rating v-model="feedback.rating" variant="primary"></b-form-rating>
+      <b-form-rating v-model="feedback.rating" variant="primary" :disabled="campaign.status != 'active'"></b-form-rating>
       <span class="text-danger" v-if="errors.rating">
         {{ errors.rating[0] }}
       </span>
     </b-form-group>
     <b-form-group label="Favourite Track">
-      <b-form-select v-model="feedback.track_id" :options="tracks" value-field="id" text-field="title"></b-form-select>
+      <b-form-select v-model="feedback.track_id" :options="tracks" value-field="id" text-field="title" :disabled="campaign.status != 'active'"></b-form-select>
       <span class="text-danger" v-if="errors.track_id">
         {{ errors.track_id[0] }}
       </span>
     </b-form-group>
     <b-form-group>
-      <b-form-textarea id="remark" v-model="feedback.remark" rows="3" max-rows="4" placeholder="Final remark..." required trim></b-form-textarea>
+      <b-form-textarea id="remark" v-model="feedback.remark" rows="3" max-rows="4" placeholder="Final remark..." required trim  :disabled="campaign.status != 'active'"></b-form-textarea>
       <span class="text-danger" v-if="errors.remark">
         {{ errors.remark[0] }}
       </span>
     </b-form-group>
     <div class="mt-3">
-      <b-button type="submit" size="sm" class="mr-2" variant="primary">Submit</b-button>
-      <b-button type="reset" size="sm" class="mr-2" variant="danger" @click="onReset">Reset</b-button>
+      <b-button type="submit" size="sm" class="mr-2" variant="primary" v-if="campaign.status == 'active'">Submit</b-button>
+      <b-button type="reset" size="sm" class="mr-2" variant="danger" @click="onReset" v-if="campaign.status == 'active'">Reset</b-button>
     </div>
   </b-form>
 </template>
@@ -35,7 +35,7 @@ export default {
   props: ['campaign', 'tracks'],
   data () {
     return {
-      feedback: new Feedback(),
+      feedback: this.campaign.feedback || new Feedback(),
       errors: [],
       message: null
     }
@@ -49,8 +49,7 @@ export default {
       this.message = null
       this.postFeedback({ feedback: this.feedback, campaign: this.campaign.slug })
         .then(() => {
-          this.onReset()
-          this.$bvToast.toast(`Feedback added successfully.`, {
+          this.$bvToast.toast(`Feedback saved successfully.`, {
             title: 'Success',
             variant: 'success',
             autoHideDelay: 5000,

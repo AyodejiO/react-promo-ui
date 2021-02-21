@@ -19,6 +19,7 @@ import apiClient from '../../Utils/api'
 const state = {
   status: '',
   campaigns: [],
+  currentPage: 1,
   campaign: null,
   loading: false,
   hasLoadedOnce: false
@@ -27,7 +28,8 @@ const state = {
 const getters = {
   // isAuthenticated: state => !!state.token,
   campaign: state => state.campaign,
-  campaigns: state => state.campaigns
+  campaigns: state => state.campaigns,
+  loading: state => state.loading
   // authStatus: state => state.status
 }
 
@@ -35,7 +37,7 @@ const actions = {
   [GET_CAMPAIGNS]: ({ commit }) => {
     return new Promise((resolve, reject) => {
       commit(CAMPAIGN_REQUEST)
-      apiClient.get('api/campaigns')
+      apiClient.get('api/campaigns', { params: { page: state.currentPage } })
         .then(response => {
           commit(CAMPAIGN_SUCCESS)
           commit(SET_CAMPAIGNS, response.data)
@@ -139,8 +141,9 @@ const mutations = {
   [MODIFY_CAMPAIGN]: (state, data) => {
     state.campaign = data
   },
-  [SET_CAMPAIGNS]: (state, data) => {
-    state.campaigns = data
+  [SET_CAMPAIGNS]: (state, response) => {
+    state.campaigns = state.campaigns.concat(response.data)
+    state.currentPage = response.current_page + 1
   },
   [MODIFY_CAMPAIGNS]: (state, data) => {
     state.campaigns.unshift(data)

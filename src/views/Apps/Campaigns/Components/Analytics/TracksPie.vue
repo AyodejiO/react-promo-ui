@@ -34,22 +34,6 @@ export default {
     }
   },
   methods: {
-    toggleSlice (item) {
-      var slice = this.pieSeries.dataItems.getIndex(item)
-      if (slice.visible) {
-        slice.hide()
-      } else {
-        slice.show()
-      }
-    },
-    hoverSlice (item) {
-      var slice = this.pieSeries.slices.getIndex(item)
-      slice.isHover = true
-    },
-    blurSlice (item) {
-      var slice = this.pieSeries.slices.getIndex(item)
-      slice.isHover = false
-    }
   },
   mounted () {
     this.chart = am4core.create(this.$refs.chartdiv, am4charts.PieChart)

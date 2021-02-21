@@ -21,6 +21,7 @@ const state = {
   feedbacks: [],
   feedbacksStat: [],
   feedback: null,
+  geoips: [],
   loading: false,
   hasLoadedOnce: false
 }
@@ -30,6 +31,7 @@ const getters = {
   feedback: state => state.feedback,
   feedbacks: state => state.feedbacks,
   feedbacksStat: state => state.feedbacksStat,
+  geoips: state => state.geoips,
   totalFeedbacks: state => state.feedbacks.length,
   totalRating: state => state.totalRating
   // authStatus: state => state.status
@@ -130,6 +132,8 @@ const mutations = {
       total += obj.rating
       return total
     }, 0)
+
+    state.geoips = state.feedbacks.map(f => f.geoip)
   },
   [MODIFY_FEEDBACKS]: (state, data) => {
     state.feedbacks.unshift(data)
