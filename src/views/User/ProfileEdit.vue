@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="user">
     <b-alert :show="user.needs_reset" variant=" " class="text-white font-weight-bold bg-danger">
       <div class="iq-alert-text">Please change your password to proceed!</div>
     </b-alert>
@@ -213,7 +213,7 @@
                     </div>
                     <div class="form-group">
                       <label for="email">Email:</label>
-                      <input type="text" class="form-control" id="email" value="Bnijone@demo.com">
+                      <input type="text" class="form-control" value="Bnijone@demo.com">
                     </div>
                     <div class="form-group">
                       <label for="url">Url:</label>
@@ -302,14 +302,18 @@ export default {
     changePassword: function () {
       // eslint-disable-next-line camelcase
       const { old_pwd, new_pwd, new_pwd_confirmation } = this.password
-      // console.log({ old_pwd, new_pwd, new_pwd_confirmation })
       this.changeUserPwd({ old_pwd, new_pwd, new_pwd_confirmation })
         .then(() => {
+          this.$bvToast.toast(`Password changed successfully`, {
+            title: 'Success',
+            variant: 'success',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
           this.$router.push({ name: 'promo.list' })
         })
         .catch(error => {
           this.errors = error.response.data.errors
-          // this.message = error.response.data.message
         })
     },
     previewImage: function (event) {

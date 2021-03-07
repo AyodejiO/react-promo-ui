@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import store from '@/store'
 import authenticated from '@/middleware/authenticated'
 import guest from '@/middleware/guest'
+import needsReset from '@/middleware/needsReset'
 import middlewarePipeline from './middlewarePipeline'
 
 /* Layouts */
@@ -101,10 +102,9 @@ const childRoutes = (prop, mode) => [
     name: prop + '.list',
     meta: {
       middleware: [
-        authenticated
+        authenticated,
+        needsReset
       ],
-      auth: true,
-      reset: true,
       name: 'Social App'
     },
     component: AllCampaigns
@@ -114,7 +114,8 @@ const childRoutes = (prop, mode) => [
     name: prop + '.profile',
     meta: {
       middleware: [
-        authenticated
+        authenticated,
+        needsReset
       ],
       auth: true,
       reset: true,
@@ -157,10 +158,9 @@ const childRoutes = (prop, mode) => [
     name: prop + '.notification',
     meta: {
       middleware: [
-        authenticated
+        authenticated,
+        needsReset
       ],
-      auth: true,
-      reset: true,
       name: 'Notification'
     },
     component: Notification
@@ -566,7 +566,8 @@ const userChildRoute = (prop, mode = false) => [
     name: prop + '.profile',
     meta: {
       middleware: [
-        authenticated
+        authenticated,
+        needsReset
       ],
       name: 'Profile'
     },
@@ -588,7 +589,8 @@ const userChildRoute = (prop, mode = false) => [
     name: prop + '.add',
     meta: {
       middleware: [
-        authenticated
+        authenticated,
+        needsReset
       ],
       name: 'Add Profile'
     },
@@ -601,7 +603,8 @@ const usersChildRoute = (prop, mode = false) => [
     name: prop + '.invite',
     meta: {
       middleware: [
-        authenticated
+        authenticated,
+        needsReset
       ],
       name: 'Edit Profile'
     },
@@ -612,7 +615,8 @@ const usersChildRoute = (prop, mode = false) => [
     name: prop + '.all',
     meta: {
       middleware: [
-        authenticated
+        authenticated,
+        needsReset
       ],
       name: 'Users'
     },
@@ -625,7 +629,8 @@ const campaignsChildRoute = (prop, mode = false) => [
     name: prop + '.edit',
     meta: {
       middleware: [
-        authenticated
+        authenticated,
+        needsReset
       ],
       name: 'Edit Campaign'
     },
@@ -636,7 +641,8 @@ const campaignsChildRoute = (prop, mode = false) => [
     name: prop + '.single',
     meta: {
       middleware: [
-        authenticated
+        authenticated,
+        needsReset
       ],
       name: 'Single Campaign'
     },
@@ -741,14 +747,6 @@ const router = new VueRouter({
   routes
 })
 
-// function isLoggedIn () {
-//   return Boolean(localStorage.getItem('auth'))
-// }
-
-// function getCurrentUser () {
-//   return JSON.parse(localStorage.getItem('user')) || null
-// }
-
 router.beforeEach((to, from, next) => {
   const { middleware } = to.meta
 
@@ -762,41 +760,6 @@ router.beforeEach((to, from, next) => {
     ...context,
     next: middlewarePipeline(context, middleware, 1)
   })
-
-  // let user = getCurrentUser()
-  // if (auth) {
-  //   if (!isLoggedIn()) {
-  //     next({
-  //       name: 'auth1.sign-in',
-  //       query: { redirect: to.fullPath }
-  //     })
-  //   }
-
-  //   if (user && user.needs_reset && reset) {
-  //     next({
-  //       name: 'user.edit',
-  //       query: { redirect: to.fullPath }
-  //     })
-  //   }
-
-  //   if (authorize) {
-  //     // eslint-disable-next-line eqeqeq
-  //     if (!user || !roles.include(user.type) || roles !== '*') {
-  //       next({
-  //         name: 'auth1.sign-in',
-  //         query: { redirect: to.fullPath }
-  //       })
-  //     }
-  //   }
-  // } else {
-  //   if (isLoggedIn()) {
-  //     next({
-  //       name: 'promo.list'
-  //     })
-  //   }
-  // }
-
-  // next()
 })
 
 export default router

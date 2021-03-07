@@ -38,7 +38,7 @@
     </b-row>
 </template>
 <script>
-import { socialvue } from '../../../config/pluginInit'
+import { socialvue } from '@/config/pluginInit'
 import Campaign from './Components/Campaign'
 import NewCampaign from './Components/NewCampaign'
 import InfiniteLoading from 'vue-infinite-loading'

@@ -46,7 +46,7 @@ const actions = {
         }).catch(error => {
           commit(USER_ERROR, error)
           reject(error)
-        }) // credentials didn't match
+        })
       })
     })
   },
@@ -55,14 +55,13 @@ const actions = {
       commit(USER_REQUEST)
       apiClient.get('sanctum/csrf-cookie').then(response => {
         apiClient.post('api/users/change-password', password).then(response => {
-          localStorage.setItem('user', JSON.stringify(response.data))
-          commit(USER_SUCCESS)
-          commit(USER_SUCCESS, response)
+          console.log(response.data)
+          commit(USER_SUCCESS, response.data.data)
           resolve(response)
         }).catch(error => {
           commit(USER_ERROR, error)
           reject(error)
-        }) // credentials didn't match
+        })
       })
     })
   }
