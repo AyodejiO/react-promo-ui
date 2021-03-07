@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store'
+import authenticated from '@/middleware/authenticated'
+import guest from '@/middleware/guest'
+import middlewarePipeline from './middlewarePipeline'
 
 /* Layouts */
 const Layout = () => import('../layouts/Layout')
@@ -95,13 +99,27 @@ const childRoutes = (prop, mode) => [
   {
     path: '/',
     name: prop + '.list',
-    meta: { auth: true, reset: true, name: 'Social App' },
+    meta: {
+      middleware: [
+        authenticated
+      ],
+      auth: true,
+      reset: true,
+      name: 'Social App'
+    },
     component: AllCampaigns
   },
   {
     path: '/profile',
     name: prop + '.profile',
-    meta: { auth: true, reset: true, name: 'Profile' },
+    meta: {
+      middleware: [
+        authenticated
+      ],
+      auth: true,
+      reset: true,
+      name: 'Profile'
+    },
     component: SocialProfile
   },
   {
@@ -137,7 +155,14 @@ const childRoutes = (prop, mode) => [
   {
     path: 'notification',
     name: prop + '.notification',
-    meta: { auth: true, reset: true, name: 'Notification' },
+    meta: {
+      middleware: [
+        authenticated
+      ],
+      auth: true,
+      reset: true,
+      name: 'Notification'
+    },
     component: Notification
   },
   {
@@ -173,7 +198,14 @@ const childRoutes = (prop, mode) => [
   {
     path: '/account-setting',
     name: 'accountSetting',
-    meta: { auth: true, reset: true, name: 'AccountSettings' },
+    meta: {
+      middleware: [
+        authenticated
+      ],
+      auth: true,
+      reset: true,
+      name: 'AccountSettings'
+    },
     component: AccountSettings
   }
 ]
@@ -418,19 +450,31 @@ const authChildRoutes = (prop, mode = false) => [
   {
     path: 'sign-in',
     name: prop + '.sign-in',
-    meta: { auth: false },
+    meta: {
+      middleware: [
+        guest
+      ]
+    },
     component: SignIn
   },
   {
     path: 'sign-up',
     name: prop + '.sign-up',
-    meta: { auth: false },
+    meta: {
+      middleware: [
+        guest
+      ]
+    },
     component: SignUp
   },
   {
     path: 'password-reset1',
     name: prop + '.password-reset1',
-    meta: { auth: false },
+    meta: {
+      middleware: [
+        guest
+      ]
+    },
     component: RecoverPassword1
   },
   {
@@ -442,7 +486,11 @@ const authChildRoutes = (prop, mode = false) => [
   {
     path: 'confirm-mail1',
     name: prop + '.confirm-mail1',
-    meta: { auth: true, reset: true },
+    meta: {
+      middleware: [
+        authenticated
+      ]
+    },
     component: ConfirmMail1
   }
 ]
@@ -516,19 +564,34 @@ const userChildRoute = (prop, mode = false) => [
   {
     path: 'profile',
     name: prop + '.profile',
-    meta: { auth: true, reset: true, name: 'Profile' },
+    meta: {
+      middleware: [
+        authenticated
+      ],
+      name: 'Profile'
+    },
     component: Profile
   },
   {
     path: 'profile-edit',
     name: prop + '.edit',
-    meta: { auth: true, reset: false, name: 'Edit Profile' },
+    meta: {
+      middleware: [
+        authenticated
+      ],
+      name: 'Edit Profile'
+    },
     component: ProfileEdit
   },
   {
     path: 'add-user',
     name: prop + '.add',
-    meta: { auth: true, reset: true, name: 'Add Profile' },
+    meta: {
+      middleware: [
+        authenticated
+      ],
+      name: 'Add Profile'
+    },
     component: AddUser
   }
 ]
@@ -536,13 +599,23 @@ const usersChildRoute = (prop, mode = false) => [
   {
     path: 'invite',
     name: prop + '.invite',
-    meta: { auth: true, reset: false, name: 'Edit Profile' },
+    meta: {
+      middleware: [
+        authenticated
+      ],
+      name: 'Edit Profile'
+    },
     component: InviteUser
   },
   {
     path: ':type?',
     name: prop + '.all',
-    meta: { auth: true, reset: true, name: 'Users' },
+    meta: {
+      middleware: [
+        authenticated
+      ],
+      name: 'Users'
+    },
     component: AllUsers
   }
 ]
@@ -550,13 +623,23 @@ const campaignsChildRoute = (prop, mode = false) => [
   {
     path: ':campaign/edit',
     name: prop + '.edit',
-    meta: { auth: true, reset: false, name: 'Edit Profile' },
+    meta: {
+      middleware: [
+        authenticated
+      ],
+      name: 'Edit Campaign'
+    },
     component: EditCampaign
   },
   {
     path: ':campaign',
     name: prop + '.single',
-    meta: { auth: true, reset: true, name: 'Users' },
+    meta: {
+      middleware: [
+        authenticated
+      ],
+      name: 'Single Campaign'
+    },
     component: SingleCampaign
   }
 ]
@@ -658,47 +741,62 @@ const router = new VueRouter({
   routes
 })
 
-function isLoggedIn () {
-  return Boolean(localStorage.getItem('auth'))
-}
+// function isLoggedIn () {
+//   return Boolean(localStorage.getItem('auth'))
+// }
 
-function getCurrentUser () {
-  return JSON.parse(localStorage.getItem('user')) || {}
-}
+// function getCurrentUser () {
+//   return JSON.parse(localStorage.getItem('user')) || null
+// }
 
 router.beforeEach((to, from, next) => {
-  const { auth, reset, authorize, roles } = to.meta
-  let user = getCurrentUser()
+  const { middleware } = to.meta
 
-  if (auth) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
-    if (!isLoggedIn()) {
-      next({
-        name: 'auth1.sign-in',
-        query: { redirect: to.fullPath }
-      })
-    }
-
-    if (user.needs_reset && reset) {
-      next({
-        name: 'user.edit',
-        query: { redirect: to.fullPath }
-      })
-    }
-
-    if (authorize) {
-      // eslint-disable-next-line eqeqeq
-      if (!user || !roles.include(user.type) || roles !== '*') {
-        next({
-          name: 'auth1.sign-in',
-          query: { redirect: to.fullPath }
-        })
-      }
-    }
+  if (!middleware) {
+    return next()
   }
 
-  next() // make sure to always call next()!
+  const context = { to, from, next, store }
+
+  return middleware[0]({
+    ...context,
+    next: middlewarePipeline(context, middleware, 1)
+  })
+
+  // let user = getCurrentUser()
+  // if (auth) {
+  //   if (!isLoggedIn()) {
+  //     next({
+  //       name: 'auth1.sign-in',
+  //       query: { redirect: to.fullPath }
+  //     })
+  //   }
+
+  //   if (user && user.needs_reset && reset) {
+  //     next({
+  //       name: 'user.edit',
+  //       query: { redirect: to.fullPath }
+  //     })
+  //   }
+
+  //   if (authorize) {
+  //     // eslint-disable-next-line eqeqeq
+  //     if (!user || !roles.include(user.type) || roles !== '*') {
+  //       next({
+  //         name: 'auth1.sign-in',
+  //         query: { redirect: to.fullPath }
+  //       })
+  //     }
+  //   }
+  // } else {
+  //   if (isLoggedIn()) {
+  //     next({
+  //       name: 'promo.list'
+  //     })
+  //   }
+  // }
+
+  // next()
 })
 
 export default router

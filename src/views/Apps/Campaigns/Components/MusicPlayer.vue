@@ -21,16 +21,16 @@
             <div class="mt-2" id="waveform"></div>
             <div v-if="wavesurfer" class="media-controls text-center mt-3">
               <b-button-group size="lg">
-                <b-button variant="dark" disabled>
+                <b-button variant="primary" disabled>
                   {{ minutes }} : {{ seconds }}
                 </b-button>
-                <b-button variant="dark" @click="play"><i class="mr-0 fas fa-backward fa-1x"></i></b-button>
-                <b-button variant="dark" @click="play">
+                <b-button variant="primary" @click="play"><i class="mr-0 fas fa-backward fa-1x"></i></b-button>
+                <b-button variant="primary" @click="play">
                   <i v-if="!wavesurfer.isPlaying()" class="mr-0 far fa-play-circle fa-2x"></i>
                   <i v-if="wavesurfer.isPlaying()" class="mr-0 far fa-pause-circle fa-2x"></i>
                 </b-button>
-                <b-button variant="dark" @click="play"><i class="mr-0 fas fa-forward fa-1x"></i></b-button>
-                <b-button variant="dark" @click="wavesurfer.toggleMute()">
+                <b-button variant="primary" @click="play"><i class="mr-0 fas fa-forward fa-1x"></i></b-button>
+                <b-button variant="primary" @click="wavesurfer.toggleMute()">
                   <i v-if="!wavesurfer.getMute()" class="mr-0 fas fa-volume-up fa-1x"></i>
                   <i v-if="wavesurfer.getMute()" class="mr-0 fas fa-volume-mute fa-1x"></i>
                 </b-button>
@@ -86,8 +86,8 @@ export default {
       this.$nextTick(function () {
         this.wavesurfer = WaveSurfer.create({
           container: '#waveform',
-          waveColor: '#1402ff',
-          progressColor: 'purple',
+          waveColor: '#866df5',
+          progressColor: 'blue',
           fillParent: true,
           responsive: true,
           xhr: {

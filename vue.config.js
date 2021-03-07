@@ -9,6 +9,7 @@ module.exports = {
   },
   devServer: {
     // https: true
+    disableHostCheck: true
   },
   pluginOptions: {
     i18n: {
@@ -18,4 +19,4 @@ module.exports = {
       enableInSFC: false
     }
   }
-};
+}

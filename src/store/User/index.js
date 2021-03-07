@@ -12,26 +12,25 @@ import apiClient from '../../Utils/api'
 
 const state = {
   status: '',
-  user: JSON.parse(localStorage.getItem('user')),
+  user: null,
   loading: false,
   hasLoadedOnce: false
 }
 
 const getters = {
-  // isAuthenticated: state => !!state.token,
   user: state => state.user
-  // authStatus: state => state.status
 }
 
 const actions = {
-  [AUTH_USER]: ({ commit }) => {
+  [AUTH_USER]: ({ commit, dispatch }) => {
     return new Promise((resolve, reject) => {
       commit(USER_REQUEST)
       apiClient.get('api/users/me').then(response => {
-        localStorage.setItem('user', JSON.stringify(response.data))
-        commit(USER_SUCCESS, response)
+        // localStorage.setItem('user', JSON.stringify(response.data))
+        commit(USER_SUCCESS, response.data)
         resolve(response)
       }).catch(error => {
+        dispatch('Auth/AUTH_LOGOUT', null, { root: true })
         commit(USER_ERROR, error)
         reject(error)
       })
@@ -76,7 +75,8 @@ const mutations = {
   [REFRESH_USER]: (state, user) => {
     state.user = user
   },
-  [USER_SUCCESS]: state => {
+  [USER_SUCCESS]: (state, user) => {
+    state.user = user
     state.status = 'success'
     state.loading = false
     state.hasLoadedOnce = true

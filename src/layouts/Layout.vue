@@ -47,7 +47,7 @@
         <li class="list-inline-item"><a href="#">Terms of Use</a></li>
       </template>
       <template v-slot:right>
-        Copyright 2020 <a href="#">React Promo</a> All Rights Reserved.
+        Copyright {{year}} <a href="#">React Promo</a> All Rights Reserved.
       </template>
     </FooterStyle1>
   </div>
@@ -73,6 +73,11 @@ export default {
   },
   mounted () {
     this.logo = loader
+    this.getUsers()
+      .catch(() => {
+        this.logout()
+          .then(() => this.$router.push({ name: 'auth1.sign-in' }))
+      })
   },
   computed: {
     currentRouteName () {
@@ -108,7 +113,8 @@ export default {
         { image: require('../assets/images/user/user-03.jpg'), name: 'Barb Ackue', date: '16 hour ago', description: 'Dell Inspiron Laptop: Get speed and performance from' },
         { image: require('../assets/images/user/user-04.jpg'), name: 'Anna Sthesia', date: '21 hour ago', description: 'Deliver your favorite playlist anywhere in your home ' },
         { image: require('../assets/images/user/user-05.jpg'), name: 'Bob Frapples', date: '11 hour ago', description: 'MacBook Air features up to 8GB of memory, a fifth-generation' }
-      ]
+      ],
+      year: new Date().getFullYear()
     }
   },
   methods: {
@@ -126,7 +132,9 @@ export default {
       document.getElementsByClassName('iq-show')[0].classList.remove('iq-show')
     },
     ...mapActions({
-      langChangeState: 'Setting/setLangAction'
+      langChangeState: 'Setting/setLangAction',
+      getUsers: 'User/AUTH_USER',
+      logout: 'Auth/AUTH_LOGOUT'
     })
   }
 }

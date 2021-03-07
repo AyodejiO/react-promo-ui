@@ -7,10 +7,10 @@ import {
   AUTH_SUCCESS,
   AUTH_LOGOUT
 } from './constants'
-import apiClient from '../../Utils/api'
+import apiClient from '@/Utils/api'
 
 const state = {
-  isAuthenticated: localStorage.getItem('auth'),
+  isAuthenticated: Boolean(localStorage.getItem('auth')) || false,
   status: '',
   hasLoadedOnce: false
 }
@@ -33,7 +33,7 @@ const actions = {
         }).catch(error => {
           commit(AUTH_ERROR, error)
           reject(error)
-        }) // credentials didn't match
+        })
       })
     })
   },
@@ -49,7 +49,7 @@ const actions = {
         }).catch(error => {
           commit(AUTH_ERROR, error)
           reject(error)
-        }) // invalid form params
+        })
       })
     })
   },
@@ -58,14 +58,13 @@ const actions = {
       commit(AUTH_REQUEST)
       apiClient.get('sanctum/csrf-cookie').then(response => {
         apiClient.post('logout').then(response => {
-          localStorage.removeItem('user')
-          localStorage.removeItem('auth')
+          localStorage.setItem('auth', false)
           commit(AUTH_LOGOUT)
           resolve(response)
         }).catch(error => {
           commit(AUTH_ERROR, error)
           reject(error)
-        }) // credentials didn't match
+        })
       })
     })
   }
@@ -75,7 +74,8 @@ const mutations = {
   [AUTH_REQUEST]: state => {
     state.status = 'loading'
   },
-  [AUTH_SUCCESS]: (state) => {
+  [AUTH_SUCCESS]: state => {
+    state.isAuthenticated = true
     state.status = 'success'
     state.hasLoadedOnce = true
   },
