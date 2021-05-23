@@ -56,15 +56,19 @@ export default {
       signIn: 'Auth/SIGN_IN'
     }),
     login: function () {
+      this.setErrorsAndMessage([], null)
       const { email, password, remember } = this
       this.signIn({ email, password, remember })
         .then(() => {
           this.$router.push({ name: 'promo.list' })
         })
         .catch(error => {
-          this.errors = error.response.data.errors
-          this.message = error.response.data.message
+          this.setErrorsAndMessage(error.response.data.errors, error.response.data.message)
         })
+    },
+    setErrorsAndMessage: function (errors, message) {
+      this.errors = errors
+      this.message = message
     }
   }
 }

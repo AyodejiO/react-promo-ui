@@ -136,8 +136,7 @@ export default {
       return tag.length >= 1
     },
     addNewCampaign () {
-      this.errors = []
-      this.message = null
+      this.setErrorsAndMessage([], null)
       this.formData.append('title', this.campaign['title'])
       this.formData.append('content', this.campaign['content'])
       this.formData.append('visibility', this.campaign['visibility'])
@@ -155,9 +154,18 @@ export default {
           this.url = null
         })
         .catch(error => {
-          this.errors = error.response.data.errors
-          this.message = error.response.data.message
+          this.setErrorsAndMessage(error.response.data.errors, error.response.data.message)
+          this.$bvToast.toast(error.response.data.message, {
+            title: 'Error',
+            variant: 'Error',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
         })
+    },
+    setErrorsAndMessage: function (errors, message) {
+      this.errors = errors
+      this.message = message
     },
     openDialog: function () {
       this.$refs.art.click()
