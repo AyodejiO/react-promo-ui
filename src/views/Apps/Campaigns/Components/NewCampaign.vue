@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div v-if="isAuthorizedUser(audience, user)">
     <iq-card  id="campaign-modal-data" body-class="iq-card iq-card-block iq-card-stretch iq-card-height" >
       <template v-slot:headerTitle >
         <h4 class="card-title">Create Campaign</h4>
@@ -121,10 +121,15 @@ export default {
   },
   computed: {
     ...mapGetters({
+      user: 'User/user',
       tags: 'Tags/tags'
     }),
     availableOptions () {
       return this.tags.filter(opt => this.campaign.tags.indexOf(opt) === -1)
+    },
+    audience () {
+      const { Label } = this.userTypes()
+      return [Label]
     }
   },
   methods: {
