@@ -23,12 +23,12 @@
 </template>
 <script>
 
-import { socialvue } from '../../../config/pluginInit'
+import { socialvue } from 'config/pluginInit'
 import Campaign from './Components/Campaign'
 import NewTrack from './Components/NewTrack'
 import EditTrack from './Components/EditTrack'
 import ModifyCampaign from './Components/ModifyCampaign'
-import IqCard from '../../../components/socialvue/cards/iq-card'
+import IqCard from 'components/socialvue/cards/iq-card'
 import { mapActions, mapGetters } from 'vuex'
 // eslint-disable-next-line no-unused-vars
 import { Howl, Howler } from 'howler'

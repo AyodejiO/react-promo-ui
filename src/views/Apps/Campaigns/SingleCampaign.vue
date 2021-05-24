@@ -30,10 +30,10 @@
     </b-row>
 </template>
 <script>
-import { socialvue } from '../../../config/pluginInit'
+import { socialvue } from 'config/pluginInit'
 // import Campaign from './Components/Campaign'
 import NewFeedback from './Components/NewFeedback'
-import IqCard from '../../../components/socialvue/cards/iq-card'
+import IqCard from 'components/socialvue/cards/iq-card'
 import { mapActions, mapGetters } from 'vuex'
 import MusicPlayer from './Components/MusicPlayer'
 import Analytics from './Components/Analytics/Index'

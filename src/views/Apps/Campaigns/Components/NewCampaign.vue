@@ -103,7 +103,7 @@
 </template>
 <script>
 import Campaign from 'Model/Campaign'
-import Placeholder from '../../../../components/socialvue/others/Placeholder'
+import Placeholder from 'components/socialvue/others/Placeholder'
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'NewCampaign',
