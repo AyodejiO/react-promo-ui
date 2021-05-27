@@ -30,6 +30,7 @@
                         <img :src="defaultImg" class="img-fluid rounded-circle mr-3" alt="user">
                         <div class="caption">
                           <h6 class="mb-0 line-height">{{ user != null? user.username : '' }}</h6>
+                          <small class="mb-0 line-height">{{ user != null? `${user.type} Account` : '' }}</small>
                         </div>
                     </a>
                   </li>
