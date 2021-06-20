@@ -121,7 +121,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: 'User/user',
+      user: 'Auth/user',
       tags: 'Tags/tags'
     }),
     availableOptions () {

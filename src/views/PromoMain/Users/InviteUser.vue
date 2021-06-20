@@ -148,7 +148,7 @@ export default {
     ...mapActions({
       getInvitedUsers: 'Invites/GET_INVITED_USERS',
       inviteUser: 'Invites/INVITE_USER',
-      getUserTypes: 'User/USER_TYPES'
+      getUserTypes: 'Users/USER_TYPES'
     }),
     invite: function () {
       this.inviteUser(this.user)

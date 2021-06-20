@@ -285,7 +285,7 @@ export default {
   computed: {
     ...mapGetters({
       bookmark: 'Setting/bookmarkState',
-      user: 'User/user'
+      user: 'Auth/user'
     })
   },
   data () {

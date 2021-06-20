@@ -73,7 +73,7 @@ export default {
   },
   mounted () {
     this.logo = loader
-    this.getUsers()
+    this.getAuthUser()
       .catch(() => {
         this.logout()
           .then(() => this.$router.push({ name: 'auth1.sign-in' }))
@@ -133,7 +133,7 @@ export default {
     },
     ...mapActions({
       langChangeState: 'Setting/setLangAction',
-      getUsers: 'User/AUTH_USER',
+      getAuthUser: 'Auth/AUTH_USER',
       logout: 'Auth/AUTH_LOGOUT'
     })
   }

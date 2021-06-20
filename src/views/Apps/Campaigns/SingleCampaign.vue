@@ -14,7 +14,7 @@
                     <new-feedback :campaign="campaign" :tracks="tracks" />
                   </div>
                 </b-tab>
-                <b-tab>
+                <b-tab v-if="user && user.type == 'Label'">
                   <template #title>
                     <i class="fas fa-chart-pie fa-2x mr-1 align-bottom"></i> <strong>Analytics</strong>
                   </template>
@@ -47,6 +47,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      user: 'Auth/user',
       campaign: 'Campaigns/campaign',
       tracks: 'Tracks/tracks'
     })

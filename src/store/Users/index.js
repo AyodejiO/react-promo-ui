@@ -6,6 +6,7 @@ import {
   USERS_SUCCESS,
   REFRESH_USER,
   USERS_ERROR,
+  USER_TYPES,
   INVITE_USER
 } from './constants'
 import apiClient from '../../Utils/api'
@@ -64,6 +65,20 @@ const actions = {
       }).catch(error => {
         commit(USERS_ERROR, error)
         reject(error)
+      })
+    })
+  },
+  [USER_TYPES]: ({ commit }) => {
+    return new Promise((resolve, reject) => {
+      commit(USERS_REQUEST)
+      apiClient.get('sanctum/csrf-cookie').then(() => {
+        apiClient.get('api/usertypes').then(response => {
+          commit(USERS_SUCCESS, response)
+          resolve(response)
+        }).catch(error => {
+          commit(USERS_ERROR, error)
+          reject(error)
+        })
       })
     })
   }
