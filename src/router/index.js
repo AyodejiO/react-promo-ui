@@ -89,6 +89,7 @@ const Profile = () => import('../views/User/Profile')
 const ProfileEdit = () => import('../views/User/ProfileEdit')
 const AddUser = () => import('../views/User/AddUser')
 const AllCampaigns = () => import('../views/Apps/Campaigns/AllCampaigns')
+const Circle = () => import('../views/Apps/Circle/Index')
 const EditCampaign = () => import('../views/Apps/Campaigns/EditCampaign')
 const SingleCampaign = () => import('../views/Apps/Campaigns/SingleCampaign')
 /* Todo */
@@ -105,7 +106,7 @@ const childRoutes = (prop, mode) => [
         authenticated,
         needsReset
       ],
-      name: 'Social App'
+      name: 'Home'
     },
     component: AllCampaigns
   },
@@ -117,11 +118,21 @@ const childRoutes = (prop, mode) => [
         authenticated,
         needsReset
       ],
-      auth: true,
-      reset: true,
       name: 'Profile'
     },
     component: SocialProfile
+  },
+  {
+    path: '/circle',
+    name: prop + '.circle',
+    meta: {
+      middleware: [
+        authenticated,
+        needsReset
+      ],
+      name: 'Circle'
+    },
+    component: Circle
   },
   {
     path: 'friend-list',

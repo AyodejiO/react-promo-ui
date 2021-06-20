@@ -26,11 +26,9 @@ const state = {
 }
 
 const getters = {
-  // isAuthenticated: state => !!state.token,
   campaign: state => state.campaign,
   campaigns: state => state.campaigns,
   loading: state => state.loading
-  // authStatus: state => state.status
 }
 
 const actions = {
@@ -40,7 +38,7 @@ const actions = {
       apiClient.get('api/campaigns', { params: { page: state.currentPage } })
         .then(response => {
           commit(CAMPAIGN_SUCCESS)
-          commit(SET_CAMPAIGNS, response.data)
+          commit(SET_CAMPAIGNS, response)
           resolve(response)
         }).catch(error => {
           commit(CAMPAIGN_ERROR, error)

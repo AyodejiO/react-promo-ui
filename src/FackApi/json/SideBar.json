@@ -1,17 +1,5 @@
 [
   {
-    "title": "Dashboard",
-    "name": "sidebar.dashboard",
-    "is_heading": false,
-    "is_active": false,
-    "link": {
-      "name": "promo.list"
-    },
-    "class_name": "",
-    "is_icon_class": true,
-    "icon": "las la-chart-bar"
-  },
-  {
     "title": "Campaigns",
     "name": "sidebar.campaigns",
     "is_heading": false,
@@ -29,7 +17,7 @@
     "is_heading": false,
     "is_active": false,
     "link": {
-      "name": "promo.list"
+      "name": "promo.circle"
     },
     "class_name": "",
     "is_icon_class": true,
