@@ -24,6 +24,18 @@
     "icon": "ri-speaker-line"
   },
   {
+    "title": "Circle",
+    "name": "sidebar.circle",
+    "is_heading": false,
+    "is_active": false,
+    "link": {
+      "name": "promo.list"
+    },
+    "class_name": "",
+    "is_icon_class": true,
+    "icon": "ri-checkbox-blank-circle-line"
+  },
+  {
     "title": "Users",
     "name": "sidebar.users",
     "is_heading": false,
