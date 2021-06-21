@@ -100,9 +100,7 @@
                           <h6>{{item.invitee.type}}</h6>
                           <p>{{item.text}}</p>
                         </div>
-                        <div class="status">
-                          <span><i>{{item.invitee.last_active? 'Active' : 'Inactive'}}</i></span>
-                        </div>
+                        <p class="float-right"><b-badge>{{item.invitee.last_active? 'Active' : 'Inactive'}}</b-badge></p>
                       </div>
                     </div>
                   </div>
