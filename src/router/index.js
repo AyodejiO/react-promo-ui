@@ -12,8 +12,8 @@ const Default = () => import('../layouts/BlankLayout')
 const AuthLayout = () => import('../layouts/AuthLayouts/AuthLayout')
 
 /* User routes */
-const AllUsers = () => import('../views/PromoMain/Users/AllUsers')
-const InviteUser = () => import('../views/PromoMain/Users/InviteUser')
+const AllUsers = () => import('../views/Apps/Users/AllUsers')
+const InviteUser = () => import('../views/Apps/Users/InviteUser')
 
 /* all routes */
 const SocialProfile = () => import('../views/PromoMain/Profile/Profile')

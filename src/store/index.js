@@ -5,6 +5,7 @@ import User from './User'
 import Users from './Users'
 import Invites from './Invites'
 import Campaigns from './Campaigns'
+import Circle from './Circle'
 import Feedbacks from './Feedbacks'
 import Tracks from './Tracks'
 import Tags from './Tags'
@@ -20,6 +21,7 @@ export default new Vuex.Store({
     User,
     Users,
     Campaigns,
+    Circle,
     Tracks,
     Feedbacks,
     Invites,

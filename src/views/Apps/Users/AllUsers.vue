@@ -1,8 +1,12 @@
 <template>
+<b-container fluid>
     <div>
       <iq-card>
           <template v-slot:headerTitle>
             <h4 class="card-title">{{ title }}s</h4>
+          </template>
+          <template v-slot:headerAction>
+            <b-button variant="primary" size="sm" v-b-modal.invite-modal>Invite User</b-button>
           </template>
           <div class="p-2">
             <ul class="nav nav-pills">
@@ -52,15 +56,25 @@
           </iq-card>
         </div>
       </div>
+
+      <b-modal id="invite-modal" centered ok-disabled modal-cancel="Close" size="lg" title="Invite New User">
+        <template v-slot:modal-footer>
+          <b-button @click="$bvModal.hide('invite-modal')">Close</b-button>
+        </template>
+        <invite-user></invite-user>
+      </b-modal>
     </div>
+</b-container>
 </template>
 <script>
 import { socialvue } from '../../../config/pluginInit'
+import InviteUser from './Components/InviteUser'
 import { mapActions, mapGetters } from 'vuex'
 import _ from 'lodash'
 
 export default {
   name: 'AllUsers',
+  components: { InviteUser },
   data () {
     return {
       // title: _.capitalize(this.$route.params.type || 'All User'),

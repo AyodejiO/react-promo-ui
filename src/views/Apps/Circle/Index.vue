@@ -5,9 +5,8 @@
           <b-col lg="12">
             <tab-content id="pills-tabContent-2">
               <tab-content-item :active="true" id="profile-feed" aria-labelled-by="pills-feed-tab">
-                <NewCampaign @addCampaign="addCampaign"></NewCampaign>
-                <div v-for="campaign in campaigns" :key="campaign.id">
-                  <campaign :campaign="campaign"></campaign>
+                <div v-for="circle in circles" :key="circle.id">
+                  <circle :circle="circle"></circle>
                 </div>
                 <b-skeleton-wrapper :loading="loading">
                   <template #loading>
@@ -53,8 +52,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      campaigns: 'Campaigns/campaigns',
-      loading: 'Campaigns/loading'
+      circles: 'Circle/circles',
+      loading: 'Circle/loading'
     })
   },
   data () {
@@ -63,7 +62,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getCampaigns: 'Campaigns/GET_CAMPAIGNS'
+      getCircle: 'Circle/GET_CIRCLES'
     }),
     addCampaign (post) {
       this.socialPosts.unshift(post)
@@ -72,12 +71,12 @@ export default {
       window.onscroll = () => {
         let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight
         if (bottomOfWindow) {
-          this.getCampaigns()
+          this.getCircle()
         }
       }
     },
     infiniteHandler ($state) {
-      this.getCampaigns()
+      this.getCircle()
     }
   }
 }
