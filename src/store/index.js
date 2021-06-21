@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Auth from './Auth'
-import User from './User'
 import Users from './Users'
 import Invites from './Invites'
 import Campaigns from './Campaigns'
@@ -18,7 +17,6 @@ export default new Vuex.Store({
   modules: {
     Auth,
     Setting,
-    User,
     Users,
     Campaigns,
     Circle,
