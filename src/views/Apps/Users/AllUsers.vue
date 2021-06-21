@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <b-modal id="invite-modal" centered ok-disabled modal-cancel="Close" size="lg" title="Invite New User">
+      <b-modal id="invite-modal" centered scrollable ok-disabled modal-cancel="Close" size="lg" title="Invite New User">
         <template v-slot:modal-footer>
           <b-button @click="$bvModal.hide('invite-modal')">Close</b-button>
         </template>
