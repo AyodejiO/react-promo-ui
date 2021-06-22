@@ -13,7 +13,6 @@ const AuthLayout = () => import('../layouts/AuthLayouts/AuthLayout')
 
 /* User routes */
 const AllUsers = () => import('../views/Apps/Users/AllUsers')
-const InviteUser = () => import('../views/Apps/Users/InviteUser')
 
 /* all routes */
 const SocialProfile = () => import('../views/PromoMain/Profile/Profile')
@@ -609,18 +608,6 @@ const userChildRoute = (prop, mode = false) => [
   }
 ]
 const usersChildRoute = (prop, mode = false) => [
-  {
-    path: 'invite',
-    name: prop + '.invite',
-    meta: {
-      middleware: [
-        authenticated,
-        needsReset
-      ],
-      name: 'Edit Profile'
-    },
-    component: InviteUser
-  },
   {
     path: ':type?',
     name: prop + '.all',
