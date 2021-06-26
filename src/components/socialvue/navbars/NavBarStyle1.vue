@@ -68,7 +68,7 @@
                   </li>
                   <li class="nav-item">
                     <a href="#" class="search-toggle iq-waves-effect">
-                      <lottie :option="require('../../../assets/images/small/lottie-bell')" id="lottie-beil" />
+                      <lottie :option="require('assets/images/small/lottie-bell')" id="lottie-beil" />
                         <span class="bg-danger dots"></span>
                     </a>
                     <div class="iq-sub-dropdown">
@@ -133,7 +133,7 @@
                   </li>
                   <li class="nav-item dropdown">
                     <a href="#" class="search-toggle iq-waves-effect">
-                      <lottie :option="require('../../../assets/images/small/lottie-mail')" id="lottie-mail" />
+                      <lottie :option="require('assets/images/small/lottie-mail')" id="lottie-mail" />
                         <span class="bg-primary count-mail"></span>
                     </a>
                     <div class="iq-sub-dropdown">
@@ -271,8 +271,8 @@ export default {
   props: {
     homeURL: { type: Object, default: () => ({ name: 'layout1.dashboard' }) },
     title: { type: String, default: 'Dashboard' },
-    logo: { type: String, default: require('../../../assets/images/logo.png') },
-    defaultImg: { type: String, default: require('../../../assets/images/user.png') },
+    logo: { type: String, default: require('assets/images/logo.png') },
+    defaultImg: { type: String, default: require('assets/images/user.png') },
     horizontal: { type: Boolean, default: false },
     items: { type: Array }
   },
@@ -296,22 +296,22 @@ export default {
       showMenu: false,
       userFriendRequest: [
         {
-          img: require('../../../assets/images/user/05.jpg'),
+          img: require('assets/images/user/05.jpg'),
           name: 'Jaques Amole',
           friend: '40  friends'
         },
         {
-          img: require('../../../assets/images/user/06.jpg'),
+          img: require('assets/images/user/06.jpg'),
           name: 'Lucy Tania',
           friend: '12  friends'
         },
         {
-          img: require('../../../assets/images/user/07.jpg'),
+          img: require('assets/images/user/07.jpg'),
           name: 'Val Adictorian',
           friend: '0  friends'
         },
         {
-          img: require('../../../assets/images/user/08.jpg'),
+          img: require('assets/images/user/08.jpg'),
           name: 'Manny Petty',
           friend: '3  friends'
         }

@@ -42,7 +42,6 @@ import { socialvue } from '@/config/pluginInit'
 import Campaign from './Components/Campaign'
 import NewCampaign from './Components/NewCampaign'
 import InfiniteLoading from 'vue-infinite-loading'
-// import IqCard from '../../../components/socialvue/cards/iq-card'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
