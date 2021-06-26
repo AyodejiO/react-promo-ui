@@ -54,8 +54,9 @@
                     </div>
                   </div>
                   <div class="">
-                    <b-button class="mr-1" size="sm" variant="warning" v-if="user.in_circle"><i class="ri-indeterminate-circle-line"></i> Remove from Circle</b-button>
-                    <b-button class="mr-1" size="sm" block variant="primary" v-if="!user.in_circle"><i class="ri-add-circle-line"></i> Add to Circle</b-button>
+                    <b-button class="mr-1" size="sm" block variant="warning" :disabled="user.id === requestUser" v-if="user.in_circle" @click="unfriendUser(user.id)"><i class="ri-indeterminate-circle-line"></i> Remove from Circle</b-button>
+                    <b-button class="mr-1" size="sm" block disabled variant="info" v-if="user.has_pending_request"><i class="ri-checkbox-blank-circle-line"></i> Request Pending</b-button>
+                    <b-button class="mr-1" size="sm" block variant="primary" :disabled="user.id === requestUser" v-if="!user.in_circle && !user.has_pending_request" @click="befriendUser(user.id)"><i class="ri-add-circle-line"></i> Add to Circle</b-button>
                     <!-- <b-button class="mr-1" size="sm" v-if="!user.is_blocked">Block</b-button> -->
                   </div>
                 </div>
@@ -137,6 +138,7 @@ export default {
   computed: {
     ...mapGetters({
       bookmark: 'Setting/bookmarkState',
+      requestUser: 'Circle/user',
       users: 'Users/users'
     }),
     title: function () {
