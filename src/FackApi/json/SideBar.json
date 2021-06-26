@@ -28,36 +28,12 @@
     "name": "sidebar.users",
     "is_heading": false,
     "is_active": false,
-    "link": "", 
+    "link": {
+      "name": "users.all"
+    }, 
     "class_name": "",
     "is_icon_class": true,
-    "icon": "las la-user-friends",
-    "children": [
-      {
-        "title": "Users",
-        "name": "sidebar.users-all",
-        "is_heading": false,
-        "is_active": false,
-        "link": {
-          "name": "users.all"
-        }, 
-        "class_name": "",
-        "is_icon_class": true,
-        "icon": "las la-users"
-      },
-      {
-        "title": "Users",
-        "name": "sidebar.users-invite",
-        "is_heading": false,
-        "is_active": false,
-        "link": {
-          "name": "users.invite"
-        }, 
-        "class_name": "",
-        "is_icon_class": true,
-        "icon": "las la-user-plus"
-      }
-    ]
+    "icon": "las la-user-friends"
   },
   {
     "title": "Notification",

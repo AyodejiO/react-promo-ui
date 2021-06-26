@@ -293,7 +293,7 @@ export default {
   methods: {
     ...mapActions({
       signUp: 'Auth/SIGN_UP',
-      changeUserPwd: 'User/CHANGE_PASSWORD'
+      changeUserPwd: 'Auth/CHANGE_PASSWORD'
     }),
     onSubmit () {
       this.user.name = this.user.fname + ' ' + this.user.lname

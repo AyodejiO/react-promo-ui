@@ -77,7 +77,6 @@ const actions = {
       commit(AUTH_REQUEST)
       apiClient.get('sanctum/csrf-cookie').then(response => {
         apiClient.post('api/users/change-password', password).then(response => {
-          console.log(response.data)
           commit(AUTH_USER_SUCCESS, response.data.data)
           resolve(response)
         }).catch(error => {

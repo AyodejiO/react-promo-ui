@@ -6,7 +6,7 @@
             <tab-content id="pills-tabContent-2">
               <tab-content-item :active="true" id="profile-feed" aria-labelled-by="pills-feed-tab">
                 <NewCampaign @addCampaign="addCampaign"></NewCampaign>
-                <div v-for="campaign in campaigns" :key="campaign">
+                <div v-for="campaign in campaigns" :key="campaign.id">
                   <campaign :campaign="campaign"></campaign>
                 </div>
                 <b-skeleton-wrapper :loading="loading">

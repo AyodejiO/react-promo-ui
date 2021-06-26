@@ -38,7 +38,7 @@ const actions = {
       apiClient.get('api/campaigns', { params: { page: state.currentPage } })
         .then(response => {
           commit(CAMPAIGN_SUCCESS)
-          commit(SET_CAMPAIGNS, response)
+          commit(SET_CAMPAIGNS, response.data)
           resolve(response)
         }).catch(error => {
           commit(CAMPAIGN_ERROR, error)
@@ -140,7 +140,7 @@ const mutations = {
     state.campaign = data
   },
   [SET_CAMPAIGNS]: (state, response) => {
-    state.campaigns = state.campaigns.concat(response.data)
+    state.campaigns = response.data
     state.currentPage = response.current_page + 1
   },
   [MODIFY_CAMPAIGNS]: (state, data) => {
