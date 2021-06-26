@@ -2,7 +2,7 @@
     <div>
       <iq-card class="bg-none">
           <b-collapse id="invite-form" class="mb-2" visible="visible">
-            <p v-if="message" class="text-danger p-2 p-md-4 mb-0">{{ message }}</p>
+            <!-- <p v-if="message" class="text-danger p-2 p-md-4 mb-0">{{ message }}</p> -->
             <b-form class="p-2 p-md-4" @submit.prevent="invite">
               <b-row>
                 <b-col>
@@ -69,14 +69,6 @@
             </b-form>
           </b-collapse>
       </iq-card>
-      <!-- <div class="iq-card mb-2 p-3">
-        <div class="row">
-          <div class="col">
-
-          </div>
-          <div class="col"><h3>{{ title }}s</h3></div>
-        </div>
-      </div> -->
       <iq-card>
         <template v-slot:headerTitle>
             <h4 class="card-title">Invited Users</h4>
@@ -124,17 +116,14 @@ export default {
       user: {
         type: null
       },
-      visible: true,
       errors: [],
-      types: [
-        { id: null, name: 'Please select an option' }
-      ],
-      message: null
+      message: null,
+      visible: true
     }
   },
   computed: {
     ...mapGetters({
-      // bookmark: 'Setting/bookmarkState',
+      types: 'Users/types',
       invitees: 'Invites/invitees'
     })
   },
@@ -160,6 +149,12 @@ export default {
         .catch(error => {
           this.errors = error.response.data.errors
           this.message = error.response.data.message
+          this.$bvToast.toast(this.message, {
+            title: 'Error',
+            variant: 'error',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
         })
     }
   },
@@ -167,13 +162,6 @@ export default {
     socialvue.index()
     this.getInvitedUsers()
     this.getUserTypes()
-      .then(response => {
-        this.types = this.types.concat(response.data)
-      })
-      .catch(error => {
-        this.errors = error.response.data.errors
-        this.message = error.response.data.message
-      })
   }
 }
 

@@ -1,4 +1,6 @@
 export const GET_USERS = 'GET_USERS'
+export const SET_USERS = 'SET_USERS'
+export const SET_TYPES = 'SET_TYPES'
 export const GET_INVITED_USERS = 'GET_INVITED_USERS'
 export const INVITE_USER = 'INVITE_USER'
 export const USERS_REQUEST = 'USERS_REQUEST'

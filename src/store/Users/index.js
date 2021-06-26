@@ -1,6 +1,8 @@
 /* eslint-disable promise/param-names */
 import {
   GET_USERS,
+  SET_USERS,
+  SET_TYPES,
   GET_INVITED_USERS,
   USERS_REQUEST,
   USERS_SUCCESS,
@@ -13,20 +15,26 @@ import apiClient from '../../Utils/api'
 
 const state = {
   status: '',
+  message: null,
   users: [],
+  errors: [],
+  types: [
+    { id: null, name: 'Please select an option' }
+  ],
   invited_users: [],
   loading: false,
   hasLoadedOnce: false
 }
 
 const getters = {
-  // isAuthenticated: state => !!state.token,
-  users: state => state.users
-  // authStatus: state => state.status
+  users: state => state.users,
+  errors: state => state.errors,
+  message: state => state.message,
+  types: state => state.types
 }
 
 const actions = {
-  [GET_USERS]: ({ commit }, type) => {
+  [GET_USERS]: ({ commit }, type = null) => {
     return new Promise((resolve, reject) => {
       commit(USERS_REQUEST)
       apiClient.get('api/users', {
@@ -34,7 +42,8 @@ const actions = {
           type: type
         }
       }).then(response => {
-        commit(USERS_SUCCESS, response.data)
+        commit(USERS_SUCCESS)
+        commit(SET_USERS, response.data)
         resolve(response)
       }).catch(error => {
         commit(USERS_ERROR, error)
@@ -47,7 +56,7 @@ const actions = {
       commit(USERS_REQUEST)
       apiClient.get('api/users/invitees')
         .then(response => {
-          commit(USERS_SUCCESS, response.data)
+          commit(USERS_SUCCESS)
           resolve(response)
         }).catch(error => {
           commit(USERS_ERROR, error)
@@ -59,8 +68,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       commit(USERS_REQUEST)
       apiClient.get('api/users/invite').then(response => {
-        // localStorage.setItem('user', JSON.stringify(response.data))
-        commit(USERS_SUCCESS, response)
+        commit(USERS_SUCCESS)
         resolve(response)
       }).catch(error => {
         commit(USERS_ERROR, error)
@@ -69,18 +77,21 @@ const actions = {
     })
   },
   [USER_TYPES]: ({ commit }) => {
-    return new Promise((resolve, reject) => {
-      commit(USERS_REQUEST)
-      apiClient.get('sanctum/csrf-cookie').then(() => {
-        apiClient.get('api/usertypes').then(response => {
-          commit(USERS_SUCCESS, response)
-          resolve(response)
-        }).catch(error => {
-          commit(USERS_ERROR, error)
-          reject(error)
+    if (state.types.length === 1) {
+      return new Promise((resolve, reject) => {
+        commit(USERS_REQUEST)
+        apiClient.get('sanctum/csrf-cookie').then(() => {
+          apiClient.get('api/usertypes').then(response => {
+            commit(USERS_SUCCESS)
+            commit(SET_TYPES, response.data)
+            resolve(response)
+          }).catch(error => {
+            commit(USERS_ERROR, error)
+            reject(error)
+          })
         })
       })
-    })
+    }
   }
 }
 
@@ -91,13 +102,20 @@ const mutations = {
   [REFRESH_USER]: (state, user) => {
     state.user = user
   },
-  [USERS_SUCCESS]: (state, data) => {
+  [USERS_SUCCESS]: (state) => {
     state.status = 'success'
     state.loading = false
     state.hasLoadedOnce = true
-    state.users = data
   },
-  [USERS_ERROR]: state => {
+  [SET_USERS]: (state, users) => {
+    state.users = users
+  },
+  [SET_TYPES]: (state, types) => {
+    state.types = state.types.concat(types)
+  },
+  [USERS_ERROR]: (state, error) => {
+    state.errors = error.response.data.errors
+    state.message = error.response.data.message
     state.status = 'error'
     state.loading = false
     state.hasLoadedOnce = true
