@@ -1,4 +1,5 @@
 export const GET_CIRCLES = 'GET_CIRCLES'
+export const SET_USER = 'SET_USER'
 export const SET_CIRCLES = 'SET_CIRCLES'
 export const SET_CIRCLES_REQUESTS = 'SET_CIRCLES_REQUESTS'
 export const UPDATE_CIRCLES = 'UPDATE_CIRCLES'

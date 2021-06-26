@@ -1,5 +1,6 @@
 /* eslint-disable promise/param-names */
 import {
+  SET_USER,
   SET_CIRCLES,
   SET_CIRCLES_REQUESTS,
   GET_CIRCLES,
@@ -20,11 +21,13 @@ const state = {
   status: '',
   circles: [],
   requests: [],
+  user: null,
   loading: false,
   hasLoadedOnce: false
 }
 
 const getters = {
+  user: state => state.user,
   circles: state => state.circles,
   requests: state => state.requests
 }
@@ -125,9 +128,13 @@ const mutations = {
     state.circle = circle
   },
   [CIRCLES_SUCCESS]: (state) => {
+    state.user = null
     state.status = 'success'
     state.loading = false
     state.hasLoadedOnce = true
+  },
+  [SET_USER]: (state, user) => {
+    state.user = user
   },
   [SET_CIRCLES]: (state, data) => {
     state.circles = data
