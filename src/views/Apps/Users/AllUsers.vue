@@ -22,14 +22,6 @@
             </ul>
           </div>
       </iq-card>
-      <!-- <div class="iq-card mb-2 p-3">
-        <div class="row">
-          <div class="col">
-
-          </div>
-          <div class="col"><h3>{{ title }}s</h3></div>
-        </div>
-      </div> -->
       <div class="row">
         <div v-for="(user,index) in users" :key="index" class="col-md-4">
           <iq-card body-class="profile-page p-0">
