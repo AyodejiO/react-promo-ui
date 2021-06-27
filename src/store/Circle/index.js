@@ -160,7 +160,6 @@ const mutations = {
     state.circles.push(data)
   },
   [CIRCLES_ERROR]: (state, errors) => {
-    console.log(errors)
     state.errors = errors.response.data.errors
     state.message = errors.response.data.message
     state.status = 'error'
