@@ -17,6 +17,7 @@ const state = {
   status: '',
   message: null,
   users: [],
+  requests_count: 0,
   errors: [],
   types: [
     { id: null, name: 'Please select an option' }
@@ -30,7 +31,8 @@ const getters = {
   users: state => state.users,
   errors: state => state.errors,
   message: state => state.message,
-  types: state => state.types
+  types: state => state.types,
+  requests_count: state => state.requests_count
 }
 
 const actions = {
@@ -107,8 +109,9 @@ const mutations = {
     state.loading = false
     state.hasLoadedOnce = true
   },
-  [SET_USERS]: (state, users) => {
-    state.users = users
+  [SET_USERS]: (state, data) => {
+    state.users = data.users
+    state.requests_count = data.requests_count
   },
   [SET_TYPES]: (state, types) => {
     state.types = state.types.concat(types)

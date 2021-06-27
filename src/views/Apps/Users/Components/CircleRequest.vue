@@ -1,165 +1,114 @@
 <template>
  <b-row>
      <b-col sm="12">
-         <iq-card v-for="(item,index) in friendRequest" :key="index">
-             <template v-slot:body>
-                 <ul class="request-list list-inline m-0 p-0">
-                     <li class="d-flex align-items-center" v-for="(list,index1) in item.list" :key="index1">
-                         <div class="media-support-info ml-3">
-                             <h6>{{list.name}}</h6>
-                             <p class="mb-0">{{list.friend}}</p>
-                         </div>
-                         <div class="d-flex align-items-center">
-                             <a href="#" class="mr-3 btn btn-primary rounded">Accept</a>
-                             <a href="#" class="mr-3 btn btn-secondary rounded">Decline</a>
-                         </div>
-                     </li>
-                     <li v-if = "(item.title == 'Friend Request')" class="d-block text-center">
-                         <a href="#" class="mr-3 btn">View More Request</a>
-                     </li>
-                 </ul>
-             </template>
-         </iq-card>
-
+       <b-alert variant="primary" :show="!loading && requests.length === 0">No pending requests</b-alert>
+        <iq-card v-if="loading && requests.length === 0">
+          <template v-slot:body>
+            <ul class="request-list list-inline m-0 p-0">
+                <li class="d-flex align-items-center">
+                    <div class="media-support-info ml-3">
+                        <b-skeleton></b-skeleton>
+                        <b-skeleton></b-skeleton>
+                        <b-skeleton></b-skeleton>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <b-skeleton class="mr-3" type="button"></b-skeleton>
+                      <b-skeleton class="mr-3" type="button"></b-skeleton>
+                    </div>
+                </li>
+            </ul>
+          </template>
+        </iq-card>
+        <iq-card v-if="!loading && requests.length > 0">
+          <template v-slot:body>
+            <ul class="request-list list-inline m-0 p-0">
+                <li class="d-flex align-items-center" v-for="(request, index1) in requests" :key="index1">
+                    <div class="media-support-info ml-3">
+                        <h6>{{request.name}}</h6>
+                        <p class="mb-0">{{request.type}}</p>
+                        <small>requested <i>{{request.request_date}}</i></small>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <b-button class="mr-3" size="sm" rounded :disabled="loading && requestUser == request.id" variant="primary" @click="acceptRequest(request.id)">Accept</b-button>
+                      <b-button class="mr-3" size="sm" rounded :disabled="loading && requestUser == request.id" variant="warning" @click="declineRequest(request.id)">Decline</b-button>
+                    </div>
+                </li>
+                <!-- <li v-if = "(item.title == 'Friend Request')" class="d-block text-center">
+                    <a href="#" class="mr-3 btn">View More Request</a>
+                </li> -->
+            </ul>
+          </template>
+        </iq-card>
      </b-col>
  </b-row>
 </template>
 <script>
 import { socialvue } from 'config/pluginInit'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'CircleRequest',
   mounted () {
     socialvue.index()
+    this.getCircleRequests()
+  },
+  computed: {
+    ...mapGetters({
+      loading: 'Circle/loading',
+      message: 'Circle/message',
+      requestUser: 'Circle/user',
+      requests: 'Circle/requests'
+    })
   },
   data () {
     return {
-      friendRequest: [
-        {
-          title: 'Friend Request',
-          btn1: 'Confirm',
-          btn2: 'Delete Request',
-          list: [
-            {
-              img: require('assets/images/user/05.jpg'),
-              name: 'Jaques Amole',
-              friend: '40  friends'
-            },
-            {
-              img: require('assets/images/user/06.jpg'),
-              name: 'Lucy Tania',
-              friend: '12  friends'
-            },
-            {
-              img: require('assets/images/user/07.jpg'),
-              name: 'Val Adictorian',
-              friend: '0  friends'
-            },
-            {
-              img: require('assets/images/user/08.jpg'),
-              name: 'Manny Petty',
-              friend: '3  friends'
-            },
-            {
-              img: require('assets/images/user/09.jpg'),
-              name: 'Marsha Mello',
-              friend: '15  friends'
-            },
-            {
-              img: require('assets/images/user/10.jpg'),
-              name: 'Caire Innet',
-              friend: '8  friends'
-            },
-            {
-              img: require('assets/images/user/11.jpg'),
-              name: 'Gio Metric',
-              friend: '10  friends'
-            },
-            {
-              img: require('assets/images/user/12.jpg'),
-              name: 'Chris P. Cream',
-              friend: '18  friends'
-            },
-            {
-              img: require('assets/images/user/05.jpg'),
-              name: 'Paul Misunday',
-              friend: '6  friends'
-            },
-            {
-              img: require('assets/images/user/13.jpg'),
-              name: 'Reanne Carnation',
-              friend: '12  friends'
-            }
-          ]
-
-        },
-        {
-          title: 'People You May Know',
-          btn1: 'Add Friend',
-          btn2: 'Remove',
-          list: [
-            {
-              img: require('assets/images/user/14.jpg'),
-              name: 'Jen Youfelct',
-              friend: '4 friends'
-            },
-            {
-              img: require('assets/images/user/15.jpg'),
-              name: 'Jen Youfelct',
-              friend: '20  friends'
-            },
-            {
-              img: require('assets/images/user/16.jpg'),
-              name: 'Jaques Amole',
-              friend: '40  friends'
-            },
-            {
-              img: require('assets/images/user/17.jpg'),
-              name: 'Earl E. Riser',
-              friend: '40  friends'
-            },
-            {
-              img: require('assets/images/user/18.jpg'),
-              name: 'Cliff Diver',
-              friend: '40  friends'
-            },
-            {
-              img: require('assets/images/user/19.jpg'),
-              name: 'Cliff Diver',
-              friend: '40  friends'
-            },
-            {
-              img: require('assets/images/user/05.jpg'),
-              name: 'Joyce Tick',
-              friend: '40  friends'
-            },
-            {
-              img: require('assets/images/user/18.jpg'),
-              name: 'Vinny Gret',
-              friend: '40  friends'
-            },
-            {
-              img: require('assets/images/user/06.jpg'),
-              name: 'Paul Samic',
-              friend: '40  friends'
-            },
-            {
-              img: require('assets/images/user/07.jpg'),
-              name: 'Gustav Wind',
-              friend: '40  friends'
-            },
-            {
-              img: require('assets/images/user/05.jpg'),
-              name: 'Minnie Strone',
-              friend: '40  friends'
-            },
-            {
-              img: require('assets/images/user/04.jpg'),
-              name: 'Ray Volver',
-              friend: '40  friends'
-            }
-          ]
-        }
-      ]
+    }
+  },
+  methods: {
+    ...mapActions({
+      getRequests: 'Circle/GET_REQUESTS',
+      acceptUserRequest: 'Circle/ACCEPT_USER_REQUEST',
+      declineUserRequest: 'Circle/DECLINE_USER_REQUEST'
+    }),
+    getCircleRequests: function (type) {
+      this.getRequests(type)
+    },
+    acceptRequest: function (user) {
+      this.acceptUserRequest(user)
+        .then(() => {
+          this.$bvToast.toast('Request Accepted', {
+            title: `Success`,
+            variant: 'success',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
+        })
+        .catch(() => {
+          this.$bvToast.toast(this.message, {
+            title: `Error`,
+            variant: 'error',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
+        })
+    },
+    declineRequest: function (user) {
+      this.declineUserRequest(user)
+        .then(() => {
+          this.$bvToast.toast('Request Declined', {
+            title: `Success`,
+            variant: 'success',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
+        })
+        .catch(() => {
+          this.$bvToast.toast(this.message, {
+            title: `Error`,
+            variant: 'error',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
+        })
     }
   }
 }

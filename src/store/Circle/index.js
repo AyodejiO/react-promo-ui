@@ -8,7 +8,7 @@ import {
   UPDATE_CIRCLES,
   CIRCLES_REQUEST,
   CIRCLES_SUCCESS,
-  REFRESH_CIRCLE,
+  REFRESH_REQUESTS,
   CIRCLES_ERROR,
   ADD_USER_TO_CIRCLE,
   ACCEPT_USER_REQUEST,
@@ -19,15 +19,18 @@ import apiClient from '../../Utils/api'
 
 const state = {
   status: '',
+  errors: [],
   circles: [],
   requests: [],
   user: null,
+  message: null,
   loading: false,
   hasLoadedOnce: false
 }
 
 const getters = {
   user: state => state.user,
+  loading: state => state.loading,
   circles: state => state.circles,
   requests: state => state.requests
 }
@@ -47,8 +50,9 @@ const actions = {
         })
     })
   },
-  [GET_REQUESTS]: ({ commit }, user) => {
+  [GET_REQUESTS]: ({ commit }) => {
     return new Promise((resolve, reject) => {
+      commit(SET_USER, null)
       commit(CIRCLES_REQUEST)
       apiClient.get(`api/circles/requests`)
         .then(response => {
@@ -64,6 +68,7 @@ const actions = {
   [ADD_USER_TO_CIRCLE]: ({ commit, dispatch }, user) => {
     return new Promise((resolve, reject) => {
       commit(CIRCLES_REQUEST)
+      commit(SET_USER, user)
       apiClient.post(`api/circles/add/${user}`)
         .then(response => {
           commit(CIRCLES_SUCCESS)
@@ -77,10 +82,12 @@ const actions = {
   },
   [ACCEPT_USER_REQUEST]: ({ commit, dispatch }, user) => {
     return new Promise((resolve, reject) => {
+      commit(SET_USER, user)
       commit(CIRCLES_REQUEST)
       apiClient.post(`api/circles/accept/${user}`)
         .then(response => {
           commit(CIRCLES_SUCCESS)
+          commit(REFRESH_REQUESTS, user)
           dispatch('Users/GET_USERS', null, { root: true })
           resolve(response)
         }).catch(error => {
@@ -91,10 +98,12 @@ const actions = {
   },
   [DECLINE_USER_REQUEST]: ({ commit, dispatch }, user) => {
     return new Promise((resolve, reject) => {
+      commit(SET_USER, user)
       commit(CIRCLES_REQUEST)
       apiClient.post(`api/circles/decline/${user}`)
         .then(response => {
           commit(CIRCLES_SUCCESS)
+          commit(REFRESH_REQUESTS, user)
           dispatch('Users/GET_USERS', null, { root: true })
           resolve(response)
         }).catch(error => {
@@ -105,6 +114,7 @@ const actions = {
   },
   [REMOVE_USER_FROM_CIRCLE]: ({ commit, dispatch }, user) => {
     return new Promise((resolve, reject) => {
+      commit(SET_USER, user)
       commit(CIRCLES_REQUEST)
       apiClient.post(`api/circles/remove/${user}`)
         .then(response => {
@@ -124,8 +134,8 @@ const mutations = {
     state.loading = true
     state.status = 'loading...'
   },
-  [REFRESH_CIRCLE]: (state, circle) => {
-    state.circle = circle
+  [REFRESH_REQUESTS]: (state, id) => {
+    state.requests = state.requests.filter(c => c.id !== id)
   },
   [CIRCLES_SUCCESS]: (state) => {
     state.user = null
@@ -145,7 +155,10 @@ const mutations = {
   [UPDATE_CIRCLES]: (state, data) => {
     state.circles.push(data)
   },
-  [CIRCLES_ERROR]: state => {
+  [CIRCLES_ERROR]: (state, errors) => {
+    console.log(errors)
+    state.errors = errors.response.data.errors
+    state.message = errors.response.data.message
     state.status = 'error'
     state.loading = false
     state.hasLoadedOnce = true

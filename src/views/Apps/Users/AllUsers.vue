@@ -9,7 +9,7 @@
             <b-button variant="primary" size="sm" v-b-modal.invite-modal>Invite User</b-button>
             <b-button variant="primary" size="sm" v-b-modal.request-modal class="ml-2">
               Requests
-              <b-badge variant="light">9 <span class="sr-only">pending requests</span></b-badge>
+              <b-badge variant="light">{{requests_count || 0}} <span class="sr-only">pending requests</span></b-badge>
             </b-button>
           </template>
           <div class="p-2">
@@ -131,7 +131,9 @@ export default {
     ...mapGetters({
       bookmark: 'Setting/bookmarkState',
       requestUser: 'Circle/user',
-      users: 'Users/users'
+      users: 'Users/users',
+      message: 'Circle/message',
+      requests_count: 'Users/requests_count'
     }),
     title: function () {
       return _.capitalize(this.$route.params.type || 'User')
@@ -148,9 +150,41 @@ export default {
     },
     befriendUser: function (user) {
       this.addUserToCircle(user)
+        .then(() => {
+          this.$bvToast.toast('Circle request sent successfully', {
+            title: `Success`,
+            variant: 'success',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
+        })
+        .catch(() => {
+          this.$bvToast.toast(this.message, {
+            title: `Error`,
+            variant: 'error',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
+        })
     },
     unfriendUser: function (user) {
       this.removeUserFromCircle(user)
+        .then(() => {
+          this.$bvToast.toast('User removed from circle', {
+            title: `Success`,
+            variant: 'success',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
+        })
+        .catch(() => {
+          this.$bvToast.toast(this.message, {
+            title: `Error`,
+            variant: 'error',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
+        })
     },
     activeLink (nav) {
       return this.$route.params.type === nav.link.params.type
