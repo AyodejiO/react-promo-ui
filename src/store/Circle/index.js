@@ -22,6 +22,7 @@ const state = {
   errors: [],
   circles: [],
   requests: [],
+  requests_count: 0,
   user: null,
   message: null,
   loading: false,
@@ -32,7 +33,9 @@ const getters = {
   user: state => state.user,
   loading: state => state.loading,
   circles: state => state.circles,
-  requests: state => state.requests
+  requests: state => state.requests,
+  message: state => state.message,
+  requests_count: state => state.requests_count
 }
 
 const actions = {
@@ -147,7 +150,8 @@ const mutations = {
     state.user = user
   },
   [SET_CIRCLES]: (state, data) => {
-    state.circles = data
+    state.circles = data.circle
+    state.requests_count = data.requests_count
   },
   [SET_CIRCLES_REQUESTS]: (state, data) => {
     state.requests = data

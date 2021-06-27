@@ -122,7 +122,7 @@ const childRoutes = (prop, mode) => [
     component: SocialProfile
   },
   {
-    path: '/circle',
+    path: '/circle/:type?',
     name: prop + '.circle',
     meta: {
       middleware: [

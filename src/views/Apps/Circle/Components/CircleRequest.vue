@@ -5,8 +5,19 @@
         <iq-card v-if="loading && requests.length === 0">
           <template v-slot:body>
             <ul class="request-list list-inline m-0 p-0">
-                <li class="d-flex align-items-center">
-                    <div class="media-support-info ml-3">
+                <li class="d-flex align-items-center p-2">
+                    <div class="media-support-info ml-3 mr-3">
+                        <b-skeleton></b-skeleton>
+                        <b-skeleton></b-skeleton>
+                        <b-skeleton></b-skeleton>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <b-skeleton class="mr-3" type="button"></b-skeleton>
+                      <b-skeleton class="mr-3" type="button"></b-skeleton>
+                    </div>
+                </li>
+                <li class="d-flex align-items-center p-2">
+                    <div class="media-support-info ml-3 mr-3">
                         <b-skeleton></b-skeleton>
                         <b-skeleton></b-skeleton>
                         <b-skeleton></b-skeleton>

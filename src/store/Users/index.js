@@ -31,8 +31,7 @@ const getters = {
   users: state => state.users,
   errors: state => state.errors,
   message: state => state.message,
-  types: state => state.types,
-  requests_count: state => state.requests_count
+  types: state => state.types
 }
 
 const actions = {
@@ -109,9 +108,8 @@ const mutations = {
     state.loading = false
     state.hasLoadedOnce = true
   },
-  [SET_USERS]: (state, data) => {
-    state.users = data.users
-    state.requests_count = data.requests_count
+  [SET_USERS]: (state, users) => {
+    state.users = users
   },
   [SET_TYPES]: (state, types) => {
     state.types = state.types.concat(types)

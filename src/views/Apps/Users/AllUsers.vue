@@ -7,10 +7,6 @@
           </template>
           <template v-slot:headerAction>
             <b-button variant="primary" size="sm" v-b-modal.invite-modal>Invite User</b-button>
-            <b-button variant="primary" size="sm" v-b-modal.request-modal class="ml-2">
-              Requests
-              <b-badge variant="light">{{requests_count || 0}} <span class="sr-only">pending requests</span></b-badge>
-            </b-button>
           </template>
           <div class="p-2">
             <ul class="nav nav-pills">
@@ -64,26 +60,18 @@
         </template>
         <invite-user></invite-user>
       </b-modal>
-
-      <b-modal id="request-modal" centered scrollable ok-disabled modal-cancel="Close" size="lg" title="Circle Requests">
-        <template v-slot:modal-footer>
-          <b-button @click="$bvModal.hide('request-modal')">Close</b-button>
-        </template>
-        <circle-request></circle-request>
-      </b-modal>
     </div>
 </b-container>
 </template>
 <script>
 import { socialvue } from '../../../config/pluginInit'
 import InviteUser from './Components/InviteUser'
-import CircleRequest from './Components/CircleRequest'
 import { mapActions, mapGetters } from 'vuex'
 import _ from 'lodash'
 
 export default {
   name: 'AllUsers',
-  components: { CircleRequest, InviteUser },
+  components: { InviteUser },
   data () {
     return {
       defaultImg: require('assets/images/user.png'),
@@ -132,8 +120,7 @@ export default {
       bookmark: 'Setting/bookmarkState',
       requestUser: 'Circle/user',
       users: 'Users/users',
-      message: 'Circle/message',
-      requests_count: 'Users/requests_count'
+      message: 'Circle/message'
     }),
     title: function () {
       return _.capitalize(this.$route.params.type || 'User')
