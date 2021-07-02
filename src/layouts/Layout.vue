@@ -74,6 +74,11 @@ export default {
   mounted () {
     this.logo = loader
     this.getAuthUser()
+      .then(response => {
+        if (response.data.needs_reset) {
+          this.$router.push({ name: 'user.edit' })
+        }
+      })
       .catch(() => {
         this.logout()
           .then(() => this.$router.push({ name: 'auth1.sign-in' }))
