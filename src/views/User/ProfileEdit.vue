@@ -310,7 +310,8 @@ export default {
             autoHideDelay: 5000,
             appendToast: true
           })
-          this.$router.push({ name: 'promo.list' })
+          this.$router.replace({ name: 'promo.list' })
+          window.location.reload()
         })
         .catch(error => {
           this.errors = error.response.data.errors
