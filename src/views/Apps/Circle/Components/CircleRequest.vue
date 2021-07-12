@@ -60,7 +60,6 @@ export default {
   name: 'CircleRequest',
   mounted () {
     socialvue.index()
-    this.getCircleRequests()
   },
   computed: {
     ...mapGetters({
@@ -80,8 +79,8 @@ export default {
       acceptUserRequest: 'Circle/ACCEPT_USER_REQUEST',
       declineUserRequest: 'Circle/DECLINE_USER_REQUEST'
     }),
-    getCircleRequests: function (type) {
-      this.getRequests(type)
+    getCircleRequests: function () {
+      this.getRequests()
     },
     acceptRequest: function (user) {
       this.acceptUserRequest(user)

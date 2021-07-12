@@ -82,7 +82,8 @@
         <p class="p-2">{{campaign.content}}</p>
       </div>
       <div class="tags-area">
-        <b-badge class="py-2 px-3 mr-2" variant="primary" v-for="(tag, index) in campaign.tags" :key="index">{{tag}}</b-badge>
+        <b-badge class="py-2 px-3 mr-2" variant="primary" v-for="(tag, index) in campaign.tags" :key="index"><i class="fa fa-tag mr-2" aria-hidden="true"></i> {{tag}}</b-badge>
+        <b-badge class="py-2 px-3 mr-2" variant="dark"><i class="fa fa-eye mr-2" aria-hidden="true"></i> {{campaign.visibility}}</b-badge>
       </div>
       <div class="comment-area p-3">
         <div class="d-flex justify-content-between align-items-center">
@@ -98,6 +99,16 @@
                   </span>
                 </div>
               </div>
+              <div class="d-flex align-items-center">
+                <div class="like-data">
+                  <i class="las la-headphones" style="font-size: 20px; line-height: 1.7"></i>
+                </div>
+                <div class="total-like-block ml-2 mr-3">
+                  <span>
+                  {{campaign.streams_count}} Streams
+                  </span>
+                </div>
+              </div>
               <div class="like-data mr-2">
                   <i class="las la-comment" style="font-size: 20px; line-height: 1.7"></i>
                 </div>
@@ -109,34 +120,6 @@
             </div>
           </div>
         </div>
-        <!-- <hr> -->
-        <!-- <ul class="post-comments p-0 m-0">
-          <li class="mb-2" v-for="(postComment, postCommentIndex) in campaign.comments" :key="postComment.id">
-            <div class="d-flex flex-wrap">
-              <div class="user-img">
-                <b-img :src="postComment.image" alt="userimg" class="avatar-35"  rounded="circle" fluid />
-              </div>
-              <div class="comment-data-block ml-3">
-                <h6>{{postComment.user.name}}</h6>
-                <p class="mb-0">{{postComment.user.msg}}</p>
-                <div class="d-flex flex-wrap align-items-center comment-activity">
-                  <b-link @click="isLikedComment(postCommentIndex, !postComment.is_commentLike)">
-                    <span v-if="!postComment.is_commentLike" class="text-primary">like</span>
-                    <span class="text-secondary" v-else>unlike</span>
-                  </b-link>
-                  <b-link href="javascript:void(0);">reply</b-link>
-                  <span>{{postComment.user.time | formatDate}}</span>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul> -->
-        <!-- <b-form class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
-          <b-form-input type="text" @keyup.enter="saveComment(commentMessage)" v-model="commentMessage" class="rounded" placeholder="Lovely!" />
-          <div class="comment-attagement d-flex">
-            <b-link href="javascript:void(0);"><i class="ri-send-plane-line mr-2" @click="saveComment(commentMessage)"></i></b-link>
-          </div>
-        </b-form> -->
       </div>
     </b-col>
     </b-row>

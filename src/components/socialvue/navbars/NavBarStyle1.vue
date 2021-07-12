@@ -40,22 +40,24 @@
                         <div class="iq-card shadow-none m-0">
                           <div class="iq-card-body p-0 ">
                               <div class="bg-primary p-3">
-                                <h5 class="mb-0 text-white">Friend Request<small class="badge  badge-light float-right pt-1">4</small></h5>
+                                <h5 class="mb-0 text-white">Circle Request<small class="badge  badge-light float-right pt-1">{{requests.length}}</small></h5>
                               </div>
-                              <div class="iq-friend-request" v-for="(item,index) in userFriendRequest" :key="index">
+                              <div class="iq-friend-request" v-for="(request,index) in requests" :key="index">
                                 <div class="iq-sub-card iq-sub-card-big d-flex align-items-center justify-content-between" >
                                     <div class="d-flex align-items-center">
-                                      <div class="">
+                                      <!-- <div class="">
                                           <img class="avatar-40 rounded" :src="item.img" alt="">
-                                      </div>
+                                      </div> -->
                                       <div class="media-body ml-3">
-                                          <h6 class="mb-0 ">{{item.name}}</h6>
-                                          <p class="mb-0">{{item.friend}}</p>
+                                          <h6 class="mb-0 ">{{request.name}}</h6>
+                                          <p class="mb-0">{{request.request_date}}</p>
                                       </div>
                                     </div>
                                     <div class="d-flex align-items-center">
-                                      <a href="#" class="mr-3 btn btn-primary rounded">Confirm</a>
-                                      <a href="#" class="mr-3 btn btn-secondary rounded">Delete Request</a>
+                                      <b-button class="mr-3" size="sm" rounded :disabled="loading && requestUser == request.id" variant="primary" @click="acceptRequest(request.id)">Accept</b-button>
+                                      <b-button class="mr-3" size="sm" rounded :disabled="loading && requestUser == request.id" variant="warning" @click="declineRequest(request.id)">Decline</b-button>
+                                      <!-- <a href="#" class="mr-3 btn btn-primary rounded" :disabled="loading && requestUser == request.id" variant="primary" @click="acceptRequest(request.id)">Confirm</a>
+                                      <a href="#" class="mr-3 btn btn-secondary rounded" :disabled="loading && requestUser == request.id" variant="warning" @click="declineRequest(request.id)">Delete Request</a> -->
                                     </div>
                                 </div>
                               </div>
@@ -278,6 +280,7 @@ export default {
   },
   mounted () {
     document.addEventListener('click', this.closeSearch, true)
+    this.getCircleRequests()
   },
   components: {
     Lottie
@@ -285,7 +288,11 @@ export default {
   computed: {
     ...mapGetters({
       bookmark: 'Setting/bookmarkState',
-      user: 'Auth/user'
+      user: 'Auth/user',
+      loading: 'Circle/loading',
+      message: 'Circle/message',
+      requestUser: 'Circle/user',
+      requests: 'Circle/requests'
     })
   },
   data () {
@@ -293,36 +300,57 @@ export default {
       sidebar: SideBarItems,
       globalSearch: '',
       showSearch: false,
-      showMenu: false,
-      userFriendRequest: [
-        {
-          img: require('assets/images/user/05.jpg'),
-          name: 'Jaques Amole',
-          friend: '40  friends'
-        },
-        {
-          img: require('assets/images/user/06.jpg'),
-          name: 'Lucy Tania',
-          friend: '12  friends'
-        },
-        {
-          img: require('assets/images/user/07.jpg'),
-          name: 'Val Adictorian',
-          friend: '0  friends'
-        },
-        {
-          img: require('assets/images/user/08.jpg'),
-          name: 'Manny Petty',
-          friend: '3  friends'
-        }
-
-      ]
+      showMenu: false
     }
   },
   methods: {
     ...mapActions({
+      getRequests: 'Circle/GET_REQUESTS',
+      acceptUserRequest: 'Circle/ACCEPT_USER_REQUEST',
+      declineUserRequest: 'Circle/DECLINE_USER_REQUEST',
       signOut: 'Auth/AUTH_LOGOUT'
     }),
+    getCircleRequests: function () {
+      this.getRequests()
+    },
+    acceptRequest: function (user) {
+      this.acceptUserRequest(user)
+        .then(() => {
+          this.$bvToast.toast('Request Accepted', {
+            title: `Success`,
+            variant: 'success',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
+        })
+        .catch(() => {
+          this.$bvToast.toast(this.message, {
+            title: `Error`,
+            variant: 'error',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
+        })
+    },
+    declineRequest: function (user) {
+      this.declineUserRequest(user)
+        .then(() => {
+          this.$bvToast.toast('Request Declined', {
+            title: `Success`,
+            variant: 'success',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
+        })
+        .catch(() => {
+          this.$bvToast.toast(this.message, {
+            title: `Error`,
+            variant: 'error',
+            autoHideDelay: 5000,
+            appendToast: true
+          })
+        })
+    },
     miniSidebar () {
       this.$emit('toggle')
     },
