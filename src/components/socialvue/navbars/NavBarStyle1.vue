@@ -77,56 +77,18 @@
                         <div class="iq-card shadow-none m-0">
                           <div class="iq-card-body p-0 ">
                               <div class="bg-primary p-3">
-                                <h5 class="mb-0 text-white">All Notifications<small class="badge  badge-light float-right pt-1">4</small></h5>
+                                <h5 class="mb-0 text-white">Notifications<small class="badge  badge-light float-right pt-1">{{notifs.length}}</small></h5>
                               </div>
-                              <a href="#" class="iq-sub-card" >
+                              <a href="#" class="iq-sub-card" v-for="(notif, index) in notifs" :key="index">
                                 <div class="media align-items-center">
-                                    <div class="">
+                                    <!-- <div class="">
                                       <img class="avatar-40 rounded" src="../../../assets/images/user/01.jpg" alt="">
-                                    </div>
+                                    </div> -->
                                     <div class="media-body ml-3">
-                                      <h6 class="mb-0 ">Emma Watson Bni</h6>
-                                      <small class="float-right font-size-12">Just Now</small>
+                                      <h6 class="mb-0 ">{{notif.data.title}}</h6>
+                                      <small class="float-right font-size-12">{{notif.data.message}}</small>
                                       <p class="mb-0">95 MB</p>
                                     </div>
-                                </div>
-                              </a>
-                              <a href="#" class="iq-sub-card" >
-                                <div class="media align-items-center">
-                                    <div class="">
-                                      <img class="avatar-40 rounded" :src="defaultImg" alt="">
-                                    </div>
-                                    <div class="media-body ml-3">
-                                      <h6 class="mb-0 ">New customer is join</h6>
-                                      <small class="float-right font-size-12">5 days ago</small>
-                                      <p class="mb-0">Cyst Bni</p>
-                                    </div>
-                                </div>
-                              </a>
-                              <a href="#" class="iq-sub-card" >
-                                <div class="media align-items-center">
-                                    <div class="">
-                                      <img class="avatar-40 rounded" src="../../../assets/images/user/03.jpg" alt="">
-                                    </div>
-                                    <div class="media-body ml-3">
-                                      <h6 class="mb-0 ">Two customer is left</h6>
-                                      <small class="float-right font-size-12">2 days ago</small>
-                                      <p class="mb-0">Cyst Bni</p>
-                                    </div>
-                                </div>
-                              </a>
-                              <a href="#" class="iq-sub-card" >
-                                <div class="media align-items-center">
-                                <div class="media align-items-center">
-                                    <div class="">
-                                      <img class="avatar-40 rounded" src="../../../assets/images/user/04.jpg" alt="">
-                                    </div>
-                                    <div class="media-body ml-3">
-                                      <h6 class="mb-0 ">New Mail from Fenny</h6>
-                                      <small class="float-right font-size-12">3 days ago</small>
-                                      <p class="mb-0">Cyst Bni</p>
-                                    </div>
-                                </div>
                                 </div>
                               </a>
                           </div>
@@ -280,6 +242,7 @@ export default {
   },
   mounted () {
     document.addEventListener('click', this.closeSearch, true)
+    this.getNotifs()
     this.getCircleRequests()
   },
   components: {
@@ -289,6 +252,7 @@ export default {
     ...mapGetters({
       bookmark: 'Setting/bookmarkState',
       user: 'Auth/user',
+      notifs: 'Auth/notifs',
       loading: 'Circle/loading',
       message: 'Circle/message',
       requestUser: 'Circle/user',
@@ -308,6 +272,7 @@ export default {
       getRequests: 'Circle/GET_REQUESTS',
       acceptUserRequest: 'Circle/ACCEPT_USER_REQUEST',
       declineUserRequest: 'Circle/DECLINE_USER_REQUEST',
+      getNotifs: 'Auth/GET_NOTIFS',
       signOut: 'Auth/AUTH_LOGOUT'
     }),
     getCircleRequests: function () {

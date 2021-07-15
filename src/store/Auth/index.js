@@ -8,7 +8,11 @@ import {
   AUTH_SUCCESS,
   AUTH_LOGOUT,
   AUTH_USER,
-  CHANGE_PASSWORD
+  CHANGE_PASSWORD,
+  GET_NOTIFS,
+  GET_NOTIFS_SUCCESS,
+  MARK_AS_READ,
+  MARK_ALL_AS_READ
 } from './constants'
 import apiClient from '@/Utils/api'
 
@@ -17,13 +21,15 @@ const state = {
   status: '',
   user: null,
   loading: false,
+  notifs: [],
   hasLoadedOnce: false
 }
 
 const getters = {
   isAuthenticated: state => !!state.isAuthenticated,
   authStatus: state => state.status,
-  user: state => state.user
+  user: state => state.user,
+  notifs: state => state.notifs
 }
 
 const actions = {
@@ -100,6 +106,46 @@ const actions = {
         })
       })
     })
+  },
+  [GET_NOTIFS]: ({ commit }) => {
+    return new Promise((resolve, reject) => {
+      commit(AUTH_REQUEST)
+      apiClient.get('api/users/notifications').then(response => {
+        commit(GET_NOTIFS_SUCCESS, response.data)
+        resolve(response)
+      }).catch(error => {
+        commit(AUTH_ERROR, error)
+        reject(error)
+      })
+    })
+  },
+  [MARK_ALL_AS_READ]: ({ commit }) => {
+    return new Promise((resolve, reject) => {
+      commit(AUTH_REQUEST)
+      apiClient.get('api/users/notifications/markAllAsRead').then(response => {
+        apiClient.post('logout').then(response => {
+          commit(AUTH_SUCCESS)
+          resolve(response)
+        }).catch(error => {
+          commit(AUTH_ERROR, error)
+          reject(error)
+        })
+      })
+    })
+  },
+  [MARK_AS_READ]: ({ commit }, notif) => {
+    return new Promise((resolve, reject) => {
+      commit(AUTH_REQUEST)
+      apiClient.get(`api/users/notifications/${notif}/markAsRead`).then(response => {
+        apiClient.post('logout').then(response => {
+          commit(AUTH_SUCCESS)
+          resolve(response)
+        }).catch(error => {
+          commit(AUTH_ERROR, error)
+          reject(error)
+        })
+      })
+    })
   }
 }
 
@@ -128,6 +174,12 @@ const mutations = {
     state.loading = false
     state.hasLoadedOnce = true
     state.user = data
+  },
+  [GET_NOTIFS_SUCCESS]: (state, data) => {
+    state.status = 'success'
+    state.loading = false
+    state.hasLoadedOnce = true
+    state.notifs = data
   }
 }
 

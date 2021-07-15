@@ -11,3 +11,8 @@ export const USER_TYPES = 'USER_TYPES'
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
 export const REFRESH_AUTH = 'REFRESH_AUTH'
 export const USER_ERROR = 'USER_ERROR'
+
+export const GET_NOTIFS = 'GET_NOTIFS'
+export const GET_NOTIFS_SUCCESS = 'GET_NOTIFS_SUCCESS'
+export const MARK_AS_READ = 'MARK_AS_READ'
+export const MARK_ALL_AS_READ = 'MARK_ALL_AS_READ'
