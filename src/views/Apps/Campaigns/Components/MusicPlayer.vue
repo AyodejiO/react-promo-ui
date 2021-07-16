@@ -1,7 +1,7 @@
 <template>
   <b-row class="p">
     <b-col sm="12" md="4" class="text-center">
-      <img :src="campaign.artwork" class="align-middle" alt="Campaign Artwork">
+      <img :src="campaign.artwork" width="200" height="200" class="align-middle" alt="Campaign Artwork">
     </b-col>
     <b-col>
       <b-row>
