@@ -9,9 +9,8 @@
                   <template #title>
                     <i class="far fa-play-circle fa-2x mr-1 align-bottom"></i> <strong>Campaign</strong>
                   </template>
-                  <div class="p-2" v-if="campaign">
+                  <div class="p-2 py-4" v-if="campaign">
                     <music-player :tracks="tracks" :campaign="campaign"></music-player>
-                    <new-feedback :campaign="campaign" :tracks="tracks" />
                   </div>
                 </b-tab>
                 <b-tab v-if="user && user.type == 'Label'">
@@ -20,6 +19,14 @@
                   </template>
                   <div class="p-2">
                     <analytics></analytics>
+                  </div>
+                </b-tab>
+                <b-tab v-if="user && user.type != 'Label'">
+                  <template #title>
+                    <i class="fas fa-download fa-2x mr-1 align-bottom"></i> <strong>Download</strong>
+                  </template>
+                  <div class="p-2">
+                    <download />
                   </div>
                 </b-tab>
               </b-tabs>
@@ -32,7 +39,7 @@
 <script>
 import { socialvue } from 'config/pluginInit'
 // import Campaign from './Components/Campaign'
-import NewFeedback from './Components/NewFeedback'
+import Download from './Components/Download'
 import IqCard from 'components/socialvue/cards/iq-card'
 import { mapActions, mapGetters } from 'vuex'
 import MusicPlayer from './Components/MusicPlayer'
@@ -40,7 +47,8 @@ import Analytics from './Components/Analytics/Index'
 
 export default {
   name: 'SingleCampaign',
-  components: { Analytics, IqCard, NewFeedback, MusicPlayer },
+  // eslint-disable-next-line vue/no-unused-components
+  components: { Analytics, IqCard, Download, MusicPlayer },
   mounted () {
     socialvue.index()
     this.getCampaign()

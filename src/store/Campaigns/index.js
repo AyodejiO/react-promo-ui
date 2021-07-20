@@ -12,7 +12,8 @@ import {
   REFRESH_USER,
   CAMPAIGN_ERROR,
   DELETE_CAMPAIGN,
-  CREATE_CAMPAIGN
+  CREATE_CAMPAIGN,
+  DOWNLOAD_TRACKS
 } from './constants'
 import apiClient from '../../Utils/api'
 
@@ -98,6 +99,21 @@ const actions = {
         apiClient.post(`api/campaigns/${campaign}/publish`).then(response => {
           commit(CAMPAIGN_SUCCESS)
           commit(MODIFY_CAMPAIGN, response.data)
+          resolve(response)
+        }).catch(error => {
+          commit(CAMPAIGN_ERROR, error)
+          reject(error)
+        })
+      })
+    })
+  },
+  [DOWNLOAD_TRACKS]: ({ commit }, { campaign, ext }) => {
+    return new Promise((resolve, reject) => {
+      // commit(CAMPAIGN_REQUEST)
+      apiClient.get('sanctum/csrf-cookie').then(response => {
+        apiClient.post(`api/campaigns/${campaign}/download/${ext}`).then(response => {
+          // commit(CAMPAIGN_SUCCESS)
+          // commit(MODIFY_CAMPAIGN, response.data)
           resolve(response)
         }).catch(error => {
           commit(CAMPAIGN_ERROR, error)
