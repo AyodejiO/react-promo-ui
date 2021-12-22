@@ -4,6 +4,11 @@
       <img :src="campaign.artwork" width="200" height="200" class="align-middle" alt="Campaign Artwork">
     </b-col>
     <b-col>
+      <div class="user-post">
+        <h3 class="pb-3">{{campaign.title}}</h3>
+        <p class="pb-3">{{campaign.content}}</p>
+      </div>
+      <br />
       <b-row>
         <b-col sm="12" md="12">
           <b-list-group flush v-for="track in tracks" :key="track.id">
