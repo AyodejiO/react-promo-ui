@@ -1,5 +1,5 @@
 <template>
-  <b-card>
+  <b-card v-if="this.tracks.length && this.tracks.length > 1">
     <b-card-header>Streams per Track / Favorite Tracks <i class="far fa-heart"></i></b-card-header>
     <b-card-body class="text-center">
       <div class="w-100" ref="chartdiv" style="min-height: 450px;"></div>
@@ -40,24 +40,26 @@ export default {
     this.chart.data = this.tracks
     this.chart.minHeight = 450
     // this.chart.responsive.enabled = true
-    this.faveSeries = this.chart.series.push(new am4charts.PieSeries())
+    if (this.tracks.length > 1) {
+      this.faveSeries = this.chart.series.push(new am4charts.PieSeries())
 
-    this.faveSeries.dataFields.value = 'feedbacks_count'
-    this.faveSeries.dataFields.category = 'title'
-    this.faveSeries.labels.template.maxWidth = 80
-    this.faveSeries.labels.template.fontSize = 11
-    this.faveSeries.labels.template.text = '{category}'
-    this.faveSeries.alignLabels = false
-    this.faveSeries.labels.template.wrap = true
+      this.faveSeries.dataFields.value = 'feedbacks_count'
+      this.faveSeries.dataFields.category = 'title'
+      this.faveSeries.labels.template.maxWidth = 80
+      this.faveSeries.labels.template.fontSize = 11
+      this.faveSeries.labels.template.text = '{category}'
+      this.faveSeries.alignLabels = false
+      this.faveSeries.labels.template.wrap = true
 
-    this.faveSeries.labels.template.disabled = true
-    this.faveSeries.ticks.template.disabled = true
+      this.faveSeries.labels.template.disabled = true
+      this.faveSeries.ticks.template.disabled = true
 
-    this.faveSeries.slices.template.stroke = am4core.color('#4a2abb')
-    this.faveSeries.slices.template.strokeWidth = 2
-    this.faveSeries.slices.template.strokeOpacity = 1
-    this.faveSeries.slices.template.tooltipText = '{value.percent}% favourited {category}'
-    // this.pieSeries.labels.template.disabled = true
+      this.faveSeries.slices.template.stroke = am4core.color('#4a2abb')
+      this.faveSeries.slices.template.strokeWidth = 2
+      this.faveSeries.slices.template.strokeOpacity = 1
+      this.faveSeries.slices.template.tooltipText = '{value.percent}% favourited {category}'
+      // this.pieSeries.labels.template.disabled = true
+    }
 
     this.streamSeries = this.chart.series.push(new am4charts.PieSeries())
 

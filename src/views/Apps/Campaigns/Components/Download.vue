@@ -45,8 +45,14 @@ export default {
       this.message = null
       this.loading = true
       this.downloadTracks({ campaign: this.campaign.slug, ext: ext })
-        .then(() => {
+        .then((res) => {
           this.loading = false
+          const url = window.URL.createObjectURL(new Blob([res.data], { type: 'application/zip' }))
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', `${this.campaign.slug}.zip`)
+          document.body.appendChild(link)
+          link.click()
           // this.$bvToast.toast(`Feedback saved successfully.`, {
           //   title: 'Success',
           //   variant: 'success',

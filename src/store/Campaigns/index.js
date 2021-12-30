@@ -111,7 +111,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       // commit(CAMPAIGN_REQUEST)
       apiClient.get('sanctum/csrf-cookie').then(response => {
-        apiClient.post(`api/campaigns/${campaign}/download/${ext}`).then(response => {
+        apiClient.post(`api/campaigns/${campaign}/download/${ext}`, [], { responseType: 'blob' }).then(response => {
           // commit(CAMPAIGN_SUCCESS)
           // commit(MODIFY_CAMPAIGN, response.data)
           resolve(response)
